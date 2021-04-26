@@ -9,9 +9,9 @@ class profile::monitoring_graylog {
     #    ensure => '2.10.2150',
     #    source => '//fp1/IT/Installs/nxlog/nxlog-ce-2.10.2150.msi'
     #}
-    file { 'C:/Program Files (x86)/nxlog/conf/nxlog.conf':
+    file { 'C:/Program Files (x86)/nxlog/conf/nxlog1.conf':
         ensure => 'present',
-        source => '//fp1/IT/Installs/nxlog/nxlog1.conf'
+        source => '//fp1/IT/Installs/nxlog/nxlog.conf'
     }
     service { 'nxlog':
         ensure => 'running',
