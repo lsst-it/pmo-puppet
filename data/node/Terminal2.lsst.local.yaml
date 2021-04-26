@@ -1,0 +1,4 @@
+---
+classes:
+  - profile::default
+  - profile::monitoring_graylog
