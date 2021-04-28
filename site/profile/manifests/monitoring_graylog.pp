@@ -5,7 +5,7 @@
 # Verify conf file exists and proper content
 # Verify service exists and is running
 class profile::monitoring_graylog {
-    package { 'nxlog':
+    package { 'NXLog-CE':
         ensure => '2.10.2150',
         source => '//fp1/IT/Installs/nxlog/nxlog-ce-2.10.2150.msi'
     }
