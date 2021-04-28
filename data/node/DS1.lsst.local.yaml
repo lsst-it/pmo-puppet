@@ -3,8 +3,8 @@ classes:
   - profile::default
   - profile::monitoring_graylog
   - profile::backup_directories
-profile::backup_directories::drive_letter: d
   - profile::backup_aws
+profile::backup_directories::drive_letter: d
 profile::backup_aws::drive_letter: d
 profile::backup_aws::bucket_path: ds1/documents
     # Require - Taksk Name
