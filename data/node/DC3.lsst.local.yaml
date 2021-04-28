@@ -2,3 +2,9 @@
 classes:
   - profile::default
   - profile::monitoring_graylog
+  - profile::backup_directories
+profile::backup_directories::drive_letter: c
+  - profile::backup_aws
+profile::backup_aws::drive_letter: c
+profile::backup_aws::bucket_path: ad-dc/dc3
+profile::backup_aws::sch_script: '/backups/scripts/backup_aws_sync.bat'
