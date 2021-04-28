@@ -2,5 +2,5 @@
 classes:
   - profile::default
   - profile::monitoring_graylog
-    - profile::backup_directories
+  - profile::backup_directories
 profile::backup_directories::drive_letter: c
