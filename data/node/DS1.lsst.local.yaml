@@ -4,3 +4,18 @@ classes:
   - profile::monitoring_graylog
   - profile::backup_directories
 profile::backup_directories::drive_letter: d
+  - profile::backup_aws
+profile::backup_aws::bucket_path: ds1/documents
+    # Require - Taksk Name
+    # String $sch_task_name = 'Backups AWS'
+#profile::backup_aws::sch_task_name: 'BackupsAWS'
+    # Require - Script and Location to run
+    # String $sch_script = '$drive_letter:/backups/scripts/backup_aws_sync.bat
+profile::backup_aws::sch_script: '/backups/scripts/backup_aws_sync.bat'
+    # Require - Period (frequency)
+    # String $sch_period = 'daily' # Need to lookup valid values for ms task scheduler
+#profile::backup_aws::sch_period: 'daily'
+    # Require - Start Time
+    # String $sch_starttime = '18:00'
+#profile::backup_aws::sch_starttime: '18:00'
+    # Required values shall be declared in node yaml
