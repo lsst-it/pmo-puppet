@@ -20,3 +20,4 @@ profile::backup_aws::sch_period: 'daily'
     # String $sch_starttime = '18:00'
 profile::backup_aws::sch_starttime: '18:00'
     # Required values shall be declared in node yaml
+    # To Do Needs to have creds for AWS (protected info)
