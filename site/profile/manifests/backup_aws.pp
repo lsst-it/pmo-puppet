@@ -21,7 +21,7 @@ class profile::backup_aws (
     }
     package { 'AWS Command Line Interface':
         ensure => '1.18.148',
-        source => 'https://project.lsst.org/aws/AWSCLI64.msi',
+        source => 'https://project.lsst.org/zpuppet/aws/AWSCLI64.msi',
         install_options => ['/qn', '/norestart']
     }
 
