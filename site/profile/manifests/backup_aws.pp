@@ -19,6 +19,15 @@ class profile::backup_aws (
         ensure => file,
         content => epp('profile/backup_aws_sync.bat.epp', { 'dl' => $drive_letter, 'bp' => $bucket_path })
     }
+
+    # NEED to have two scripts; first is the task scheduler and contains call to aws-sync-script
+    # the second is aws-sync-script
+    file { "$drive_letter:/backups/scripts/daily-backup.bat": 
+        ensure => file,
+        content => 'call $drive_letter:/backups/scripts/backup_aws_sync.bat'
+    }
+
+
     package { 'AWS Command Line Interface':
         ensure => '1.18.148',
         source => 'https://project.lsst.org/zpuppet/aws/AWSCLI64.msi',
@@ -35,10 +44,11 @@ class profile::backup_aws (
     #group   => 'users',
     #}
     
+
     # Require - Taksk Name
     # String $sch_task_name = 'Backups AWS'
     # Require - Script and Location to run
-    # String $sch_script = '$drive_letter:/backups/scripts/backup_aws_sync.bat
+    # String $sch_script = '$drive_letter:/backups/scripts/daily-backup.bat
     # Require - Period (frequency)
     # String $sch_period = 'daily' # Need to lookup valid values for ms task scheduler
     # Require - Start Time
@@ -49,7 +59,7 @@ class profile::backup_aws (
     # Creates a schedule task if not present
     scheduled_task { 'Backups AWS':
     ensure  => 'present',
-    command => "${drive_letter}:/backups/scripts/backup_aws_sync.bat",
+    command => "${drive_letter}:/backups/scripts/daily-backup.bat",
     enabled => 'true',
     trigger => [{
         'schedule'   => "${sch_period}",
