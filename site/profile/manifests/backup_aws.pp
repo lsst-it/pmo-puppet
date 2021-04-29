@@ -59,7 +59,7 @@ class profile::backup_aws (
     # Creates a schedule task if not present
     scheduled_task { 'Backups AWS':
     ensure  => 'present',
-    command => "${drive_letter}:/backups/scripts/daily_backup.bat",
+    command => "${drive_letter}:/backups/scripts/backup_daily.bat",
     enabled => 'true',
     trigger => [{
         'schedule'   => "${sch_period}",
