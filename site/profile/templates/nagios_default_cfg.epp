@@ -1,0 +1,73 @@
+# Needs to have a define host {} with 
+# host_name, alias, address, hostgroups are Required
+# multiple define service {}
+# reuse host_name and require the service_description, check_command, servicegroups
+# Checks done on every Window server
+
+# $use_type =  generic-service
+
+
+# NS Client
+define service {
+    use                     <%= $use_stype %>
+    host_name               <%= $node_name %>
+    service_description     <%= $service_description %>
+    check_command           <%= $check_command %>
+    servicegroups           <%= $service_groups %>
+}
+# Uptime
+define service {
+    use                     <%= $use_stype %>
+    host_name               <%= $node_name %>
+    service_description     <%= $service_description %>
+    check_command           <%= $check_command %>
+    servicegroups           <%= $service_groups %>
+}
+# CPU
+define service {
+    use                     <%= $use_stype %>
+    host_name               <%= $node_name %>
+    service_description     <%= $service_description %>
+    check_command           <%= $check_command %>
+    servicegroups           <%= $service_groups %>
+}
+# Memory
+define service {
+    use                     <%= $use_stype %>
+    host_name               <%= $node_name %>
+    service_description     <%= $service_description %>
+    check_command           <%= $check_command %>
+    servicegroups           <%= $service_groups %>
+} 
+# Disk
+define service {
+    use                     <%= $use_stype %>
+    host_name               <%= $node_name %>
+    service_description     <%= $service_description %>
+    check_command           <%= $check_command %>
+    servicegroups           <%= $service_groups %>
+}
+# Backup Agent BackupExec
+define service {
+    use                     <%= $use_stype %>
+    host_name               <%= $node_name %>
+    service_description     <%= $service_description %>
+    check_command           <%= $check_command %>
+    servicegroups           <%= $service_groups %>
+}
+# AntiVirus
+define service {
+    use                     <%= $use_stype %>
+    host_name               <%= $node_name %>
+    service_description     <%= $service_description %>
+    check_command           check_nt!SERVICESTATE!-d SHOWALL -l sepWscSvc
+    servicegroups           services-antivirus
+}
+# Firewall
+define service {
+    use                     <%= $use_stype %>
+    host_name               <%= $node_name %>
+    service_description     Windows Firewall Service
+    check_command           check_nt!SERVICESTATE!-d SHOWALL -l MpsSvc
+    servicegroups           services-firewall
+}

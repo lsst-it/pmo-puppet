@@ -40,6 +40,7 @@
 # Begin the work and remove from above
 class profile::nagios_cfg (
     String $use_type = 'vm-windows-guests', 
+    String $use_stype = 'generic-service',
     String $node_name = '',
     String $alias_name = $node_name,
     String $host_groups = '',
@@ -47,12 +48,15 @@ class profile::nagios_cfg (
 )
 {
     file { "$drive_letter:/backups/scripts/vm-win-$node_name.cfg": 
-    #$host_header_cfg = epp('nagios_cfg_host.epp',  { 'use_type' => $use_type, 'node_name' => $node_name, 'alias_name' => $alias_name, 'host_groups' => $host_groups, } )
     ensure => file,
-    content => epp('profile/nagios_cfg_host.epp',  { 'use_type' => $use_type, 'node_name' => $node_name, 'alias_name' => $alias_name, 'host_groups' => $host_groups, } )
+    #content => epp('profile/nagios_cfg_host.epp',  { 'use_type' => $use_type, 'node_name' => $node_name, 'alias_name' => $alias_name, 'host_groups' => $host_groups, } )
+    content => epp(
+        'profile/nagios_cfg_host.epp',  { 'use_type' => $use_type, 'node_name' => $node_name, 'alias_name' => $alias_name, 'host_groups' => $host_groups, } 
+        'nagios_default_cfg.epp', { 'use_stype' => $use_stype, 'node_name' => $node_name } 
+        )
     #content => template (
         #'nagios_cfg_host.epp',
-        #'nagios_cfg.epp'
+        #'nagios_default_cfg.epp'
         #'nagios_cfg_service.epp'
         # There is likely to be iteration so there may be an array of services
     }
