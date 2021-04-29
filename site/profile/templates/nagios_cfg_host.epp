@@ -1,0 +1,6 @@
+define host {
+    use                     <%= $use_type %>
+    host_name               <%= $node_name %>
+    alias                   <%= $alias_name %>
+    hostgroups              <%= $host_groups %>
+}

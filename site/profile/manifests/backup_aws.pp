@@ -66,5 +66,8 @@ class profile::backup_aws (
         'start_time' => "${sch_starttime}",
     }],
     user    => 'administrator',
+    # Does not set properly so aws sync does NOT run
     }
 }
+notify { "need to manually set the admin password for the task" }
+notify ( "need to manually set the admin password for the task" )

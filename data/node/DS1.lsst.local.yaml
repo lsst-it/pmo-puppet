@@ -4,6 +4,7 @@ classes:
   - profile::monitoring_graylog
   - profile::backup_directories
   - profile::backup_aws
+  - profile::nagios_cfg
 profile::backup_directories::drive_letter: d
 profile::backup_aws::drive_letter: d
 profile::backup_aws::bucket_path: ds1server/documents
@@ -21,3 +22,9 @@ profile::backup_aws::sch_period: 'daily'
 profile::backup_aws::sch_starttime: '18:00'
     # Required values shall be declared in node yaml
     # To Do Needs to have creds for AWS (protected info)
+profile::nagios_cfg::node_name: ds1
+profile::nagios_cfg::alias_name: somethingnospace 
+profile::nagios_cfg::host_groups: web,vm-win-guest
+profile::nagios_cfg::drive_letter: d
+
+
