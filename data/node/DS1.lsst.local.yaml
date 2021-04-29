@@ -28,3 +28,4 @@ profile::nagios_cfg::host_groups: web,vm-win-guest
 profile::nagios_cfg::drive_letter: d
 
 
+
