@@ -2,3 +2,10 @@
 classes:
   - profile::default
   - profile::monitoring_graylog
+  - profile::backup_directories
+profile::backup_directories::drive_letter: f 
+  - profile::backup_aws
+
+
+ # To Do Change database location from c to d preserve same folder structure
+ # To Do Change db logs location from c to e preserve same folder structure 
