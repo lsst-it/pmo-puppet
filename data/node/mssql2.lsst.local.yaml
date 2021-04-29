@@ -6,7 +6,9 @@ classes:
   - profile::backup_aws
 profile::backup_directories::drive_letter: f 
 profile::backup_aws::drive_letter: f
-# NEED the bucket to finish off the script
+profile::backup_aws::bucket_path: ds1server/mssqlstuff
+profile::backup_aws::sch_period: 'daily'
+profile::backup_aws::sch_starttime: '18:00'
   
 
 

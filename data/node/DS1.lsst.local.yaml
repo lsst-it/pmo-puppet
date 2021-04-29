@@ -9,7 +9,7 @@ profile::backup_aws::drive_letter: d
 profile::backup_aws::bucket_path: ds1server/documents
     # Require - Taksk Name
     # String $sch_task_name = 'Backups AWS'
-profile::backup_aws::sch_task_name: 'Backups AWS'
+#profile::backup_aws::sch_task_name: 'Backups AWS'
     # Require - Script and Location to run
     # String $sch_script = '$drive_letter:/backups/scripts/backup_aws_sync.bat
 #profile::backup_aws::sch_script: '/backups/scripts/backup_aws_sync.bat'
