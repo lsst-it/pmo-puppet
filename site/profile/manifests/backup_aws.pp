@@ -18,13 +18,12 @@ class profile::backup_aws (
     file { "$drive_letter:/backups/scripts/backup_aws_sync.bat": 
         ensure => file,
         content => epp('profile/backup_aws_sync.bat.epp', { 'dl' => $drive_letter, 'bp' => $bucket_path })
-        # To Do put the aws time stamp file into the epp template
     }
-    #package { 'AWSCLI64':
-    #    ensure => present,
-    #    source => '//fp1/IT/Installs/aws/AWSCLI64.msi',
-    #    install_options => ['/qn', '/norestart']
-    #}
+    package { 'AWS Command Line Interface':
+        ensure => '1.18.148',
+        source => 'https://project.lsst.org/aws/AWSCLI64.msi',
+        install_options => ['/qn', '/norestart']
+    }
 
     # NEED TO HAVE CREDS Code Here
     # Will use the lookup values in private; Need to branch ss_test3 or pull up to private's production

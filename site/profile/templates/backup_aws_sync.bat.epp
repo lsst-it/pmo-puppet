@@ -1,5 +1,3 @@
 echo %date:~10,4%%date:~4,2%%date:~7,2%-%time:~0,2%%time:~3,2%%time:~6,2% > <%= $dl %>:\backups\dumps\aws-sync-timestamp.txt
 aws s3 sync "<%= $dl %>:\backups\dumps" s3://<%= $bp %>
 echo %date:~10,4%%date:~4,2%%date:~7,2%-%time:~0,2%%time:~3,2%%time:~6,2% >> <%= $dl %>:\backups\dumps\aws-sync-timestamp.txt
-# need to have the aws-sync-test.txt file in place
-# note the 3 was added to s3 to fix typo in line 2
