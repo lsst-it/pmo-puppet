@@ -65,6 +65,6 @@ class profile::backup_aws (
         'schedule'   => "${sch_period}",
         'start_time' => "${sch_starttime}",
     }],
-    user    => 'system',
+    user    => 'administrator',
     }
 }
