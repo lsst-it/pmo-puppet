@@ -47,7 +47,7 @@ class profile::backup_aws (
     
     # To Do Need to see about getting name and path to use parameters and test changing values
     # Creates a schedule task if not present
-    #scheduled_task { 'Backup AWS':
+    #scheduled_task { '${sch_task_name}':
     #ensure  => 'present',
     #command => "${drive_letter}:/backups/scripts/backup_aws_sync.bat",
     #enabled => 'true',
