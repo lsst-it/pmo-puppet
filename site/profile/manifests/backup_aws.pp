@@ -69,5 +69,6 @@ class profile::backup_aws (
     # Does not set properly so aws sync does NOT run
     }
 }
-notify { "need to manually set the admin password for the task" }
-notify ( "need to manually set the admin password for the task" )
+# delete these lines and down
+#notify { "need to manually set the admin password for the task" }
+#notify ( "need to manually set the admin password for the task" )
