@@ -22,9 +22,9 @@ class profile::backup_aws (
 
     # NEED to have two scripts; first is the task scheduler and contains call to aws-sync-script
     # the second is aws-sync-script
-    file { "$drive_letter:/backups/scripts/daily-backup.bat": 
+    file { "$drive_letter:/backups/scripts/backkup_daily.bat": 
         ensure => file,
-        content => 'call $drive_letter:/backups/scripts/backup_aws_sync.bat'
+        content => epp('profile/backup_daily.bat.epp', { 'dl' => $drive_letter })
     }
 
 

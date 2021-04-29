@@ -1,0 +1,1 @@
+call <%= $dl %>:\backups\scripts\backup_aws_sync.bat
