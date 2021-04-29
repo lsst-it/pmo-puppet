@@ -5,6 +5,6 @@ classes:
   - profile::backup_directories
   - profile::backup_aws
 profile::backup_directories::drive_letter: c
-profile::backup_aws::drive_letter: c
-profile::backup_aws::bucket_path: ad-dc/ca1
-profile::backup_aws::sch_script: '/backups/scripts/backup_aws_sync.bat'
+#profile::backup_aws::drive_letter: c
+#profile::backup_aws::bucket_path: ad-dc/ca1
+#profile::backup_aws::sch_script: '/backups/scripts/backup_aws_sync.bat'
