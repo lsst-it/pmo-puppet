@@ -12,7 +12,6 @@ define service {
         check_command           check_nt!CLIENTVERSION
         servicegroups           services-misc
         }
-
 define service{
         use                     generic-service
         host_name               <%= $node_name %>
@@ -20,7 +19,6 @@ define service{
         check_command           check_nt!UPTIME
         servicegroups           services-misc
         }
-
 define service{
         use                     generic-service
         host_name               <%= $node_name %>
@@ -28,7 +26,6 @@ define service{
         check_command           check_nt!CPULOAD!-l 5,80,90
         servicegroups           infrastructure-cpu
         }
-
 define service{
         use                     generic-service
         host_name               <%= $node_name %>

@@ -45,17 +45,17 @@ class profile::nagios_cfg (
     String $drive_letter = 'c',
 )
 {
-    $cfg_host_defaults = epp('profile/nagios_cfg_host.epp',  { 'use_type' => $use_type, 'node_name' => $node_name, 'alias_name' => $alias_name, 'host_groups' => $host_groups, })
+    $cfg_host_defaults = epp('profile/nagios_cfg_host.epp',  { 'use_type' => $use_type, 'node_name' => $node_name, 'alias_name' => $alias_name, 'node_ip' => $node_ip, 'host_groups' => $host_groups, })
     $cfg_append_servicegroups = epp('profile/nagios_default_cfg.epp',  { 'use_stype' => $use_stype, 'node_name' => $node_name, } )
     
     file { "$drive_letter:/backups/scripts/vm-win-$node_name.cfg": 
     ensure => file,
-    content => inline_template( "${fg_host_defaults}${cfg_append_servicegroups}" )
+    content => inline_template( "${cfg_host_defaults}${cfg_append_servicegroups}" )
     }
 
     file { "$drive_letter:/backups/scripts/nagios-cfg-line-entry.cfg": 
     ensure => file,
-    content => ' cfg_file=/usr/local/nagios/etc/objects/vm-win-$node_name.cfg'
+    content => "cfg_file=/usr/local/nagios/etc/objects/vm-win-$node_name.cfg"
     # May need a \n at the enabled
     }
 }
