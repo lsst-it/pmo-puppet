@@ -55,8 +55,8 @@ class profile::nagios_cfg (
 }"
     file { "$drive_letter:/backups/scripts/vm-win-$node_name.cfg": 
     ensure => file,
-    content => $host_cfg_block
-    #content => epp('profile/nagios_cfg_host.epp',  { 'use_type' => $use_type, 'node_name' => $node_name, 'alias_name' => $alias_name, 'host_groups' => $host_groups, } )
+    #content => $host_cfg_block
+    content => epp('profile/nagios_cfg_host.epp',  { 'use_type' => $use_type, 'node_name' => $node_name, 'alias_name' => $alias_name, 'host_groups' => $host_groups, } )
     #content => epp('profile/nagios_default_cfg.epp',  { 'use_stype' => $use_stype, 'node_name' => $node_name, } )
     #content => template(
     #    'profile/nagios_cfg_host.epp',

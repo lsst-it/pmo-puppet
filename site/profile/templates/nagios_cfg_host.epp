@@ -4,3 +4,69 @@ define host {
     alias                   <%= $alias_name %>
     hostgroups              <%= $host_groups %>
 }
+define service {
+        use             generic-service
+        host_name       <%= $node_name %>
+        service_description     NSClient++ Version
+        check_command           check_nt!CLIENTVERSION
+        servicegroups       services-misc
+        }
+
+define service{
+        use                     generic-service
+        host_name               <%= $node_name %>
+        service_description     Uptime
+        check_command           check_nt!UPTIME
+        servicegroups       services-misc
+        }
+
+define service{
+        use                     generic-service
+        host_name               <%= $node_name %>
+        service_description     CPU Load
+        check_command           check_nt!CPULOAD!-l 5,80,90
+          servicegroups       infrastructure-cpu
+        }
+
+define service{
+        use                     generic-service
+        host_name               <%= $node_name %>
+        service_description     Memory Usage
+        check_command           check_nt!MEMUSE! -w 80 -c 90
+          servicegroups       infrastructure-mem
+        }
+define service{
+        use                     generic-service
+        host_name               <%= $node_name %>
+        service_description     Check Disk c-drive
+        check_command           check_nt!USEDDISKSPACE!-l c -w 80 -c 90
+          servicegroups       infrastructure-disk
+        }
+define service{
+        use                     generic-service
+        host_name               <%= $node_name %>
+        service_description     Symantec AV Master Service
+        check_command           check_nt!SERVICESTATE!-d SHOWALL -l SepMasterService
+        servicegroups           services-antivirus
+        }
+define service{
+        use                     generic-service
+        host_name               <%= $node_name %>
+        service_description     Symantec AV Scan Service
+        check_command           check_nt!SERVICESTATE!-d SHOWALL -l SepScanService
+        servicegroups           services-antivirus
+        }
+define service{
+        use                     generic-service
+        host_name               <%= $node_name %>
+        service_description     Symantec AV WSC Service
+        check_command           check_nt!SERVICESTATE!-d SHOWALL -l sepWscSvc
+        servicegroups           services-antivirus
+        }
+define service{
+        use                     generic-service
+        host_name               <%= $node_name %>
+        service_description     Windows Firewall Service
+        check_command           check_nt!SERVICESTATE!-d SHOWALL -l MpsSvc
+        servicegroups           services-firewall
+        }
