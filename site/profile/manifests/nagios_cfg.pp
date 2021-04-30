@@ -1,11 +1,8 @@
-# To Do puppet module install puppetlabs-concat --version 7.0.1
 # To prepare Nagios cfg file for the node
 # Will contain a default set of check_command
-# Will pass additional check_command set
 # Will require service_description, check_command, servicegroups
-# Will need to have template to match format
 
-# Will need to create the nagios templates
+
 # Content from nagios.cfg lines 29-37
 # Content for nagios.cfg file
 # Then we need to insert new cfg entries when new yaml is created
@@ -48,28 +45,21 @@ class profile::nagios_cfg (
     String $drive_letter = 'c',
 )
 {
-    $host_cfg_block= "define host {
-    use                     $use_type
-    host_name               $node_name
-    alias                   $alias_name
-    hostgroups              $host_groups
-}"
-    $a = epp('profile/nagios_cfg_host.epp',  { 'use_type' => $use_type, 'node_name' => $node_name, 'alias_name' => $alias_name, 'host_groups' => $host_groups, })
-    $b = epp('profile/nagios_default_cfg.epp',  { 'use_stype' => $use_stype, 'node_name' => $node_name, } )
+    $cfg_host_defaults = epp('profile/nagios_cfg_host.epp',  { 'use_type' => $use_type, 'node_name' => $node_name, 'alias_name' => $alias_name, 'host_groups' => $host_groups, })
+    $cfg_append_servicegroups = epp('profile/nagios_default_cfg.epp',  { 'use_stype' => $use_stype, 'node_name' => $node_name, } )
+    
     file { "$drive_letter:/backups/scripts/vm-win-$node_name.cfg": 
     ensure => file,
-    content => inline_template( "${a}${b}" )
-    #content => $host_cfg_block
-    #content => epp('profile/nagios_cfg_host.epp',  { 'use_type' => $use_type, 'node_name' => $node_name, 'alias_name' => $alias_name, 'host_groups' => $host_groups, })
-    #content => epp('profile/nagios_default_cfg.epp',  { 'use_stype' => $use_stype, 'node_name' => $node_name, } )
-    #content => template(
-    #    'profile/nagios_cfg_host.epp',
-    #    'profile/nagios_default_cfg.epp',
-    #    )
-    #content => template (
-        #'nagios_cfg_host.epp',
-        #'nagios_default_cfg.epp'
-        #'nagios_cfg_service.epp'
-        # There is likely to be iteration so there may be an array of services
+    content => inline_template( "${fg_host_defaults}${cfg_append_servicegroups}" )
+    }
+
+    file { "$drive_letter:/backups/scripts/nagios-cfg-line-entry.cfg": 
+    ensure => file,
+    content => ' cfg_file=/usr/local/nagios/etc/objects/vm-win-$node_name.cfg'
+    # May need a \n at the enabled
     }
 }
+
+# To Do Need to use facts to build a check for all local drives
+# To Do Need to use fact to get ip and hostname (lowercase )
+# To Do Need to to accept tuples of description, check_command, servicegroups
