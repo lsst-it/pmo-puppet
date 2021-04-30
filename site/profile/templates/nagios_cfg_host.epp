@@ -1,15 +1,16 @@
 define host {
-    use                     <%= $use_type %>
-    host_name               <%= $node_name %>
-    alias                   <%= $alias_name %>
-    hostgroups              <%= $host_groups %>
-}
+        use                     <%= $use_type %>
+        host_name               <%= $node_name %>
+        alias                   <%= $alias_name %>
+        address                 <%= $node_ip %>
+        hostgroups              <%= $host_groups %>
+        }
 define service {
-        use             generic-service
-        host_name       <%= $node_name %>
+        use                     generic-service
+        host_name               <%= $node_name %>
         service_description     NSClient++ Version
         check_command           check_nt!CLIENTVERSION
-        servicegroups       services-misc
+        servicegroups           services-misc
         }
 
 define service{
@@ -17,7 +18,7 @@ define service{
         host_name               <%= $node_name %>
         service_description     Uptime
         check_command           check_nt!UPTIME
-        servicegroups       services-misc
+        servicegroups           services-misc
         }
 
 define service{
@@ -25,7 +26,7 @@ define service{
         host_name               <%= $node_name %>
         service_description     CPU Load
         check_command           check_nt!CPULOAD!-l 5,80,90
-          servicegroups       infrastructure-cpu
+        servicegroups           infrastructure-cpu
         }
 
 define service{
@@ -33,14 +34,14 @@ define service{
         host_name               <%= $node_name %>
         service_description     Memory Usage
         check_command           check_nt!MEMUSE! -w 80 -c 90
-          servicegroups       infrastructure-mem
+        servicegroups           infrastructure-mem
         }
 define service{
         use                     generic-service
         host_name               <%= $node_name %>
         service_description     Check Disk c-drive
         check_command           check_nt!USEDDISKSPACE!-l c -w 80 -c 90
-          servicegroups       infrastructure-disk
+        servicegroups           infrastructure-disk
         }
 define service{
         use                     generic-service

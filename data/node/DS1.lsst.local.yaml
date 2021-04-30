@@ -24,6 +24,7 @@ profile::backup_aws::sch_starttime: '18:00'
     # To Do Needs to have creds for AWS (protected info)
 profile::nagios_cfg::node_name: ds1
 profile::nagios_cfg::alias_name: somethingnospace 
+profile::nagios_cfg::node_ip: 140.252.32.104
 profile::nagios_cfg::host_groups: web,vm-win-guest
 profile::nagios_cfg::drive_letter: d
 
