@@ -15,6 +15,9 @@ class profile::backup_aws (
     String $sch_starttime = '18:00',
     ) 
 {
+    $aws_id = lookup('aws_access_key_id')
+    $aws_key =lookup('aws_secret_access_key')
+    notify { 'aws_id': message => $aws_id,}
     file { "$drive_letter:/backups/scripts/backup_aws_sync.bat": 
         ensure => file,
         content => epp('profile/backup_aws_sync.bat.epp', { 'dl' => $drive_letter, 'bp' => $bucket_path })
@@ -43,6 +46,7 @@ class profile::backup_aws (
     #content => $aws_config_file_content,
     #group   => 'users',
     #}
+    # those creds need to have file locked down
     
 
     # Require - Taksk Name
@@ -69,6 +73,11 @@ class profile::backup_aws (
     # Does not set properly so aws sync does NOT run
     }
 }
+# To Do Possible to run the aws sync script as regular domain user puppetuser
+# puppetuser will need proifle and .aws Creds
+# Need a way to not store them on server or encrypt them if must live on server
+
+
 # delete these lines and down
 #notify { "need to manually set the admin password for the task" }
 #notify ( "need to manually set the admin password for the task" )

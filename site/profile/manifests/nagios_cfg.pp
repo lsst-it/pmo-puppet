@@ -38,9 +38,9 @@
 class profile::nagios_cfg (
     String $use_type = 'vm-windows-guests', 
     String $use_stype = 'generic-service',
-    String $node_name = '',
-    String $alias_name = $node_name,
-    String $node_ip = '',
+    String $node_name = downcase($facts['hostname']),
+    String $alias_name = downcase($facts['hostname']),
+    String $node_ip = $facts['ipaddress'],
     String $host_groups = '',
     String $drive_letter = 'c',
 )

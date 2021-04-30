@@ -1,3 +1,5 @@
+aws configure set aws_access_key_id <%= $backup_aws::aws2::aws_id %>
+aws configure set aws_secret_access_key <%= $backup_aws::aws2::aws_key %>
 echo %date:~10,4%%date:~4,2%%date:~7,2%-%time:~0,2%%time:~3,2%%time:~6,2% > <%= $dl %>:\backups\dumps\aws-sync-timestamp.txt
 aws s3 sync "<%= $dl %>:\backups\dumps" s3://<%= $bp %>
 echo %date:~10,4%%date:~4,2%%date:~7,2%-%time:~0,2%%time:~3,2%%time:~6,2% >> <%= $dl %>:\backups\dumps\aws-sync-timestamp.txt
