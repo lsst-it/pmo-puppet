@@ -19,7 +19,7 @@ profile::backup_aws::bucket_path: ds1server/documents
 profile::backup_aws::sch_period: 'daily'
     # Require - Start Time
     # String $sch_starttime = '11:28'
-profile::backup_aws::sch_starttime: '18:00'
+profile::backup_aws::sch_starttime: '11:45'
     # Required values shall be declared in node yaml
     # To Do Needs to have creds for AWS (protected info)
 #profile::nagios_cfg::node_name: ds1
