@@ -49,11 +49,13 @@ class profile::nagios_cfg (
     $cfg_append_servicegroups = epp('profile/nagios_default_cfg.epp',  { 'use_stype' => $use_stype, 'node_name' => $node_name, } )
     
     file { "$drive_letter:/backups/scripts/vm-win-$node_name.cfg": 
+    # This will live in nagios etc/objects/
     ensure => file,
     content => inline_template( "${cfg_host_defaults}${cfg_append_servicegroups}" )
     }
 
     file { "$drive_letter:/backups/scripts/nagios-cfg-line-entry.cfg": 
+    # This is the insert to etc/nagios.cfg of the nagios server
     ensure => file,
     content => "cfg_file=/usr/local/nagios/etc/objects/vm-win-$node_name.cfg"
     # May need a \n at the enabled
