@@ -10,6 +10,7 @@ hierarchy:
       - "site/%{site}/role/%{role}.yaml"
       - "site/%{site}.yaml"
       - "role/%{role}.yaml"
+      - "creds.yaml"
   - name: "public hiera"
     datadir: "/etc/puppetlabs/code/environments/%{environment}/data"
     paths:

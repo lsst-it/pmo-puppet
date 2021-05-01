@@ -15,12 +15,11 @@ class profile::backup_aws (
     String $sch_starttime = '18:00',
     ) 
 {
-    #$aws_id = lookup('creds::aws_access_key_id')
-    #$aws_key =lookup('aws_secret_access_key')
-    #notify { 'aws_id': message => "This is the aws_id?"$aws_id",}
+    $aws_id = lookup('aws_access_key_id')
+    $aws_key =lookup('aws_secret_access_key')
     file { "$drive_letter:/backups/scripts/backup_aws_sync.bat": 
         ensure => file,
-        content => epp('profile/backup_aws_sync.bat.epp', { 'dl' => $drive_letter, 'bp' => $bucket_path })
+        content => epp('profile/backup_aws_sync.bat.epp', { 'dl' => $drive_letter, 'bp' => $bucket_path, 'aws_id' => $aws_id, 'aws_key' => $aws_key })
     }
 
     # NEED to have two scripts; first is the task scheduler and contains call to aws-sync-script
@@ -69,7 +68,7 @@ class profile::backup_aws (
         'schedule'   => "${sch_period}",
         'start_time' => "${sch_starttime}",
     }],
-    user    => 'administrator',
+    user    => 'system',
     # Does not set properly so aws sync does NOT run
     }
 }
