@@ -18,7 +18,7 @@ profile::backup_aws::bucket_path: ds1server/documents
     # String $sch_period = 'daily' # Need to lookup valid values for ms task scheduler
 profile::backup_aws::sch_period: 'daily'
     # Require - Start Time
-    # String $sch_starttime = '18:00'
+    # String $sch_starttime = '11:28'
 profile::backup_aws::sch_starttime: '18:00'
     # Required values shall be declared in node yaml
     # To Do Needs to have creds for AWS (protected info)
