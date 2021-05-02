@@ -45,8 +45,14 @@ class profile::nagios_cfg (
     String $drive_letter = 'c',
 )
 {
-    notify {'servicegroup_hash': message => "anything?"}
-    
+    $firstentry = 
+    { 'check_command' => 'check_nt!SERVICESTATE!-d SHOWALL -l MpsSvc',
+      'service_description' => 'windows FFFWall',
+      'servicegroups' => 'services-firewall'
+    }
+    notify { 'first_entry': message => 'somethingdumb' }
+    #[$check_command, $service_description, $servicegroups]= ["check_nt!SERVICESTATE!-d SHOWALL -l MpsSvc","windows FFFWall", "services-firewall"]
+
     $cfg_host_defaults = epp('profile/nagios_cfg_host.epp',  { 'use_type' => $use_type, 'node_name' => $node_name, 'alias_name' => $alias_name, 'node_ip' => $node_ip, 'host_groups' => $host_groups, })
     $cfg_append_servicegroups = epp('profile/nagios_default_cfg.epp',  { 'use_stype' => $use_stype, 'node_name' => $node_name, } )
     
