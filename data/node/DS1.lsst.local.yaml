@@ -29,6 +29,6 @@ profile::nagios_cfg::host_groups: web,vm-win-guest
 profile::nagios_cfg::drive_letter: d
 
 # Create a tuple with check_command, service_description, servicegroups
-[$check_command, $service_description, $servicegroups]= ["check_nt!SERVICESTATE!-d SHOWALL -l MpsSvc","windows FFFWall", "services-firewall"]
-notify {'checkcommandvar': message =>"some check command array"}
+#[$check_command, $service_description, $servicegroups]= ["check_nt!SERVICESTATE!-d SHOWALL -l MpsSvc","windows FFFWall", "services-firewall"]
+
 

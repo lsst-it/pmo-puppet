@@ -45,6 +45,8 @@ class profile::nagios_cfg (
     String $drive_letter = 'c',
 )
 {
+    notify {'servicegroup_hash': message => "anything?"}
+    
     $cfg_host_defaults = epp('profile/nagios_cfg_host.epp',  { 'use_type' => $use_type, 'node_name' => $node_name, 'alias_name' => $alias_name, 'node_ip' => $node_ip, 'host_groups' => $host_groups, })
     $cfg_append_servicegroups = epp('profile/nagios_default_cfg.epp',  { 'use_stype' => $use_stype, 'node_name' => $node_name, } )
     
