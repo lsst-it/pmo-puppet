@@ -1,6 +1,6 @@
 ---
 classes:
-  - class profile::enctest
+  - profile::enctest
 #############################################################
 # Temp location.  Will be moved to a role later
 profile::enctest::file_content: >
