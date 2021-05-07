@@ -1,0 +1,27 @@
+---
+classes:
+  - class profile::enctest
+#############################################################
+# Temp location.  Will be moved to a role later
+profile::enctest::file_content: >
+  ENC[PKCS7,MIIBuQYJKoZIhvcNAQcDoIIBqjCCAaYCAQAxggEhMIIBHQIBAD
+  AFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAn/4XzL0AlAGgoNteYdpFRJdXWa
+  x3FI8OzsLHI3kOsQegqzO8HEJg6eUMB6WQfA8lqwGl08iZXzIWCtqBKLk1GY
+  jZfVVsMmpKp4ws8Cgi4GPehFuRa63IMMZDV7nLINMLwmEa+pyGEa8Nv1WWqO
+  5uLt4wm4i14+8mOiX9ht0ezrld/FWyWpeeag7ws403qZSAoWK7ZlYhDJsYXz
+  tTVCg298PQAIqT2UG++xr3mikLV8L7P/3H8OuWA5+5HdL9E8ECFeD+OAyBnd
+  To1HpdDVea+qUeb5Z2xNmj5uvHIkxVxBrkQcE9b6q8bQAVV3HATAx0+S2vKo
+  S1pYAeLQ03NMyyJjB8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBDgdahmyK
+  MX38x+e/7s/hQ3gFChL5Q+VHeRbwA9fa/9yBoTzJ6JxKCx+HqU4mWlacLMjI
+  j5sa7sc/WM3vw/pgRjooIfctSx+VfdF1E0hXDGjZ6SreFQWBDyiSsXxV9YX/
+  qcmQ==]
+profile::enctest::test_password: >
+  ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBAD
+  AFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAo0otSLOjkEbB8KpdN7Md3IW+z0
+  Z3m7/rG5lSrQl+9w10l0fxkQETegFwz5tDaM9qB4fNkx5Bka4sCrb40icZNr
+  /9tyr4CVX/EZsCo+xPmsclF+gEj/6G8I/kAJu/TQfWotB3EDANsHX2F6Ufkr
+  a4hJgRrTnwd6lDfsdt/rDQad0u3/XgxGeHVYGys+7ii+KWwPI6COMnb5W94e
+  bIr9t2ggUiR1LkSPJqqaSZyUepHzSiq5/LkwLENYCLnCWRYoZbH2dcws+W4n
+  MSvsJ7sUnxQ5lfSYsrNdZn3umwMHvA+KMI+cI5nCaHXL5yd81DL/nWVid6wk
+  ZjmX70yLEaYzTqVjA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBDlr4vAa8
+  NCKdhBna1QAab8gBBriNIz9ypzS+bQo2CrpJSS]
