@@ -1,5 +1,3 @@
 ---
 classes:
   - profile::default
-# This needs to reside on the puppet master only
-node_encrypt::certificates::ca_server: "%{facts.fqdn}"
