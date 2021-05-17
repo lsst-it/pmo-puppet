@@ -11,8 +11,7 @@ mod 'dna-notepad_plus_plus', '0.1.1'
 mod 'puppetlabs-scheduled_task', '3.0.0'
 mod 'dylanratcliffe-windows_disk_facts', '0.2.7'
 # AWS
-mod 'puppetlabs-aws', '2.1.0'
-mod 'jdowning-awscli', '2.2.0'
+mod 'puppetlabs-amazon_aws', '0.3.0' # Works on Windows
 # Linux
 mod 'saz/timezone', '6.1.0'
 mod 'puppet/rsyslog', '4.0.0'
@@ -39,3 +38,7 @@ mod 'puppetlabs/java', '6.2.0'
 mod 'puppetlabs/stdlib', '6.0.0'
 mod 'puppetlabs/vcsrepo', '3.0.0'
 mod 'puppet/ssh_keygen', '4.0.0'
+mod 'puppetlabs-hocon', '1.1.0'  # dependency
+# Encryption
+mod 'puppetlabs-puppet_authorization', '0.5.1'
+mod 'binford2k-node_encrypt', '0.4.1'
