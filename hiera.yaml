@@ -1,23 +1,17 @@
 ---
 version: 5
 defaults:
-
+  data_hash: "yaml_data"
 hierarchy:
-  - name: "public hiera"
-    lookup_key: eyaml_lookup_key # eyaml backend
-    datadir: "/etc/puppetlabs/code/environments/%{environment}/data"
+  - name: "private hiera"
+    datadir: "/etc/puppetlabs/code/data/private/%{environment}"
     paths:
       - "node/%{fqdn}.yaml"
       - "site/%{site}/role/%{role}.yaml"
       - "site/%{site}.yaml"
       - "role/%{role}.yaml"
-      - "common.yaml"
-    options:
-      pkcs7_private_key: /etc/puppetlabs/puppet/eyaml/private_key.pkcs7.pem
-      pkcs7_public_key: /etc/puppetlabs/puppet/eyaml/public_key.pkcs7.pem
-  - name: "private hiera"
-    data_hash: "yaml_data"
-    datadir: "/etc/puppetlabs/code/data/private/%{environment}"
+  - name: "public hiera"
+    datadir: "/etc/puppetlabs/code/environments/%{environment}/data"
     paths:
       - "node/%{fqdn}.yaml"
       - "site/%{site}/role/%{role}.yaml"
