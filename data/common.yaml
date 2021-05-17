@@ -1,5 +1,0 @@
----
-lookup_options:
-# Any values with these words in any of the profiles
- "^profile::.*(_password|_content|_token|_hide)$": 
-  convert_to: 'Sensitive' 
