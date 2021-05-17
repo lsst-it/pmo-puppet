@@ -11,6 +11,8 @@ mod 'dna-notepad_plus_plus', '0.1.1'
 mod 'puppetlabs-scheduled_task', '3.0.0'
 mod 'dylanratcliffe-windows_disk_facts', '0.2.7'
 mod 'puppet-nsclient', '2.1.0'
+mod 'puppetlabs-pwshlib', '0.8.0'
+mod 'puppetlabs-powershell', '5.0.0'
 mod 'puppet-download_file', '4.0.0'
 # AWS
 mod 'puppetlabs-aws', '2.1.0'
