@@ -3,4 +3,4 @@ lookup_options:
 # Any values with these words in any of the profiles
  "^profile::.*(_password|_content|_token|_hide)$": 
   convert_to: 'Sensitive' 
-  
+  profile::nsclient::nagios_password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEABzv8CuLWf33/7xy/7CzPDYXVx8gcnQBTAT2hxML+ch5OVYZBmmDVI/tRjOwLXcjVBlxCPoSDBPrz3dkqXJGb61v3pV1cop/UZpa6SY6QL5+ApAei8AwUSbMAc1SBMdUSKC/JumY0Tp6S+mwqDQgKno/w1yeXAtYrOEiYwWjuLDv0HIS5Pam3whcHNYYsb8ZaCNlOGkUB4iygaE30Qf8uhsGcOzsFCL/ez/yPIC+6ggrmZwcMWlrW3PTBCkYRjxa1LEfzvAHzT3BRM7wgjVMrL4bFDFAIHIsfaKrtwD0r3q6e9bUajyF8uib46EIPbT/3g/Nd52A4pNurIqwn0mnueTA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBCD6i6mxl/XIwnlRmruCmJogBBHQ64HcSFXOlfNHuIg850/]
