@@ -1,0 +1,41 @@
+---
+prometheus::manage_prometheus_server: true
+
+prometheus::version: '2.27.0'
+
+prometheus::alerts:
+  groups:
+    - name: 'alert.rules'
+      rules:
+        - alert: 'InstanceDown'
+          expr: 'up == 0'
+          for: '5m'
+          labels:
+            severity: 'page'
+          annotations:
+            summary: 'Instance {{ $labels.instance }} down'
+            description: '{{ $labels.instance }} of job {{ $labels.job }} has been
+              down for more than 5 minutes.'
+
+prometheus::scrape_configs:
+  - job_name: 'prometheus'
+    scrape_interval: '10s'
+    scrape_timeout: '10s'
+    static_configs:
+      - targets:
+          - 'prometheus.us.lsst.org:9090'
+        labels:
+          alias: 'Prometheus'
+  - job_name: 'node'
+    scrape_interval: '10s'
+    scrape_timeout: '10s'
+    static_configs:
+      - targets:
+          - 'prometheus.us.lsst.org:9100'
+          - 'puppetm-tuc-1.us.lsst.org:9100'
+          - 'hyperv-4.lsst.org:9182'
+          - 'be1.lsst.org:9182'
+          - 'ds1.lsst.org:9182'
+          - 'grafana.us.lsst.org:9100'
+        labels:
+          alias: 'none'
