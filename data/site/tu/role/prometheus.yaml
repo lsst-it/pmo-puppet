@@ -7,15 +7,118 @@ prometheus::alerts:
   groups:
     - name: 'alert.rules'
       rules:
+# Applies to all devices
         - alert: 'InstanceDown'
           expr: 'up == 0'
-          for: '5m'
+          for: '1m'
           labels:
             severity: 'page'
           annotations:
-            summary: 'Instance {{ $labels.instance }} down'
+            summary: 'Instance {{ .Labels.instance }} {{ .Value }} down'
             description: '{{ $labels.instance }} of job {{ $labels.job }} has been
-              down for more than 5 minutes.'
+              down for more than 1 minutes.'
+# Specivic to Prometheus jobs
+        - alert: PrometheusJobMissing
+          expr: absent(up{job="prometheus"})
+          for: 0m
+          labels:
+            severity: warning
+          annotations:
+            summary: Prometheus job missing (instance {{ $labels.instance }})
+            description: "A Prometheus job has disappeared\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# BackupExec SQL status
+        - alert: Windowsmssql$bkupexecServiceStatus
+          expr: windows_service_status{name="sqlagent$bkupexec", state="running"} == 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: Windows BKSQL service Status (instance {{ $labels.instance }})
+            description: "Windows Service state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Windows Disk space usage
+        - alert: WindowsServerDiskSpaceUsage
+          expr: 100.0 - 100 * (((windows_logical_disk_free_bytes{volume!="HarddiskVolume2"}) / 1024 / 1024 ) / ((windows_logical_disk_size_bytes{volume!="HarddiskVolume2"}) / 1024 / 1024)) > 80
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: Windows Server disk Space Usage (instance {{ $labels.instance }})
+            description: "Disk usage is more than 80%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Clock skew detected for Linux
+        - alert: HostClockSkew
+          expr: (node_timex_offset_seconds > 0.05 and deriv(node_timex_offset_seconds[5m]) >= 0) or (node_timex_offset_seconds < -0.05 and deriv(node_timex_offset_seconds[5m]) <= 0)
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: Host clock skew (instance {{ $labels.instance }})
+            description: "Clock skew detected. Clock is out of sync.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+# Windows Hyperv managemnt service
+        - alert: WindowsHypervServiceStatus
+          expr: windows_service_state{name="vmms", state="running"} == 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: Windows Hyperv service Status (instance {{ $labels.instance }})
+            description: "Windows Hyperv state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Symantec monitoring
+        - alert: WindowsSymantecServiceStatus
+          expr: windows_service_state{name="sepWscSvc", state="running"} == 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: Windows Symantec service Status (instance {{ $labels.instance }})
+            description: "Windows Symantec AV state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# IIS Service
+        - alert: WindowsIISServiceStatus
+          expr: windows_service_state{name="W3SVC", state="running"} == 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: Windows IIS service Status (instance {{ $labels.instance }})
+            description: "Windows IIS state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# BackupExec Agent Service
+        - alert: WindowsBEAgentServiceStatus
+          expr: windows_service_state{name="BackupExecAgentAccelerator", state="running"} == 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: Windows BackupExec Agent service Status (instance {{ $labels.instance }})
+            description: "Windows BackupExec Agent state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+# windows_Exporter service
+        - alert: windows_exporterServiceStatus
+          expr: windows_service_state{name="windows_exporter", state="running"} == 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: Windows_Exporter service Status (instance {{ $labels.instance }})
+            description: "Windows windows_exporter state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# 80% of mysql connections in use
+        - alert: MysqlTooManyConnections(>80%)
+          expr: avg by (instance) (rate(mysql_global_status_threads_connected[1m])) / avg by (instance) (mysql_global_variables_max_connections) * 100 > 80
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: MySQL too many connections (> 80%) (instance {{ $labels.instance }})
+            description: "More than 80% of MySQL connections are in use on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# MySQL server down
+        - alert: SqlServerDown
+          expr: mssql_up == 0
+          for: 0m
+          labels:
+            severity: critical
+          annotations:
+            summary: SQL Server down (instance {{ $labels.instance }})
+            description: "SQL server instance is down\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
 
 prometheus::scrape_configs:
   - job_name: 'prometheus'
