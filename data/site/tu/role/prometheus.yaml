@@ -65,7 +65,7 @@ prometheus::alerts:
             description: "Windows Hyperv state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Symantec monitoring
         - alert: WindowsSymantecServiceStatus
-          expr: windows_service_state{name="sepWscSvc", state="running"} == 0
+          expr: windows_service_state{name="sepwscsvc", state="running"} == 0
           for: 1m
           labels:
             severity: critical
@@ -74,7 +74,7 @@ prometheus::alerts:
             description: "Windows Symantec AV state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # IIS Service
         - alert: WindowsIISServiceStatus
-          expr: windows_service_state{name="W3SVC", state="running"} == 0
+          expr: windows_service_state{name="w3svc", state="running"} == 0
           for: 1m
           labels:
             severity: critical
@@ -83,7 +83,7 @@ prometheus::alerts:
             description: "Windows IIS state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # BackupExec Agent Service
         - alert: WindowsBEAgentServiceStatus
-          expr: windows_service_state{name="BackupExecAgentAccelerator", state="running"} == 0
+          expr: windows_service_state{name="backupexecagentaccelerator", state="running"} == 0
           for: 1m
           labels:
             severity: critical
