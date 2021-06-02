@@ -178,10 +178,10 @@ prometheus::scrape_configs:
         - https://graylog-tuc.lsst.org
         - https://ecam.lsst.org
         - https://lists.lsst.org
-        - https://gallery.lsst.org
+        - https://gallery.lsst.org/cookieconsent.php?path=%2F
         - https://mailfiltertm.lsst.org:8445
-        - https://magicdraw.lsst.org
-        - https://pfs1-tuc.lsst.org:8080
+        # - https://magicdraw.lsst.org
+        # - https://pfs1-tuc.lsst.org:8080
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
