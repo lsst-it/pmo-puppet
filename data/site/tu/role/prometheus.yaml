@@ -53,6 +53,15 @@ prometheus::alerts:
           annotations:
             summary: Host clock skew (instance {{ $labels.instance }})
             description: "Clock skew detected. Clock is out of sync.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Windows Defender Firewall service
+        - alert: WindowsFirewallServiceStatus
+          expr: windows_service_state{name="mpssvc", state="running"} == 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: Windows Firewall service Status (instance {{ $labels.instance }})
+            description: "Windows firewall state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
 # Windows Hyperv managemnt service
         - alert: WindowsHypervServiceStatus
@@ -167,6 +176,12 @@ prometheus::scrape_configs:
         - https://pwdreset.lsst.org
         - http://ds1.lsst.local
         - https://graylog-tuc.lsst.org
+        - https://ecam.lsst.org
+        - https://lists.lsst.org
+        - https://gallery.lsst.org
+        - https://mailfiltertm.lsst.org:8445
+        - https://magicdraw.lsst.org
+        - https://pfs1-tuc.lsst.org:8080
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
