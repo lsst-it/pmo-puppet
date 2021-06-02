@@ -142,3 +142,26 @@ prometheus::scrape_configs:
           - 'grafana.us.lsst.org:9100'
         labels:
           alias: 'none'
+  - job_name: 'webpage'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets:
+        - https://jira.lsstcorp.org
+        - https://atlantis.lsst.org
+        - https://endeavour.lsst.org
+        - https://ls.st
+        - http://confluence.lsstcorp.org
+        - http://www.lsst.org
+        - https://docushare.lsstcorp.org/docushare/dsweb/HomePage
+        - https://pwdreset.lsst.org
+        - http://ds1.lsst.local
+        - https://graylog-tuc.lsst.org
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: localhost:9115
