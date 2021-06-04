@@ -158,6 +158,8 @@ prometheus::scrape_configs:
           - 'be1.lsst.local:9182'
           - 'ds1.lsst.local:9182'
           - 'grafana.us.lsst.org:9100'
+          - 'jira.lsstcorp.org:9100'
+          - 'confluence.lsstcorp.org:9100'
         labels:
           alias: 'none'
   - job_name: 'webpage'
