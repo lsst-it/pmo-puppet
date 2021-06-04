@@ -2,6 +2,7 @@
 class profile::prometheus (Sensitive[String]
 $account_hide,
 $account_token,
+$to_hide,
 ){
   include prometheus
   class { 'prometheus::blackbox_exporter':
@@ -32,12 +33,12 @@ class { 'prometheus::alertmanager':
       'name'          => 'email',
       'email_configs' => [
         {
-          'to'            => $account_hide,
-          'from'          => $account_hide,
+          'to'            => unwrap($to_hide),
+          'from'          => unwrap($account_hide),
           'smarthost'     => 'smtp.gmail.com:587',
-          'auth_username' => $account_hide,
-          'auth_identity' => $account_hide,
-          'auth_password' => $account_token,
+          'auth_username' => unwrap($account_hide),
+          'auth_identity' => unwrap($account_hide),
+          'auth_password' => unwrap($account_token),
           'require_tls'   => true,
           'send_resolved' => true,
         },
