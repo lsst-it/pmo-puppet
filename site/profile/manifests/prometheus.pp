@@ -21,29 +21,29 @@ $to_hide,
 # Alertmanager config
 class { 'prometheus::alertmanager':
   version   => '0.22.2',
-  route     => {
-    'group_by'        => ['alertname', 'job'],
-    'group_wait'      => '30s',
-    'group_interval'  => '5m',
-    'repeat_interval' => '3h',
-    'receiver'        => 'email',
-  },
-  receivers => [
-    {
-      'name'          => 'email',
-      'email_configs' => [
-        {
-          'to'            => unwrap($to_hide),
-          'from'          => unwrap($account_hide),
-          'smarthost'     => 'smtp.gmail.com:587',
-          'auth_username' => unwrap($account_hide),
-          'auth_identity' => unwrap($account_hide),
-          'auth_password' => unwrap($account_token),
-          'require_tls'   => true,
-          'send_resolved' => true,
-        },
-      ],
-    },
-  ],
+  # route     => {
+  #   'group_by'        => ['job'],
+  #   'group_wait'      => '30s',
+  #   'group_interval'  => '5m',
+  #   'repeat_interval' => '3h',
+  #   'receiver'        => 'email',
+  # },
+  # receivers => [
+  #   {
+  #     'name'          => 'email',
+  #     'email_configs' => [
+  #       {
+  #         'to'            => unwrap($to_hide),
+  #         'from'          => unwrap($account_hide),
+  #         'smarthost'     => 'smtp.gmail.com:587',
+  #         'auth_username' => unwrap($account_hide),
+  #         'auth_identity' => unwrap($account_hide),
+  #         'auth_password' => unwrap($account_token),
+  #         'require_tls'   => true,
+  #         'send_resolved' => true,
+  #       },
+  #     ],
+  #   },
+  # ],
 }
 }
