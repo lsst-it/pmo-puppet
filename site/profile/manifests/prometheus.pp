@@ -32,11 +32,11 @@ class { 'prometheus::alertmanager':
       'name'          => 'email',
       'email_configs' => [
         {
-          'to'            => account_hide,
-          'from'          => account_hide,
+          'to'            => $account_hide,
+          'from'          => $account_hide,
           'smarthost'     => 'smtp.gmail.com:587',
-          'auth_username' => account_hide,
-          'auth_identity' => account_hide,
+          'auth_username' => $account_hide,
+          'auth_identity' => $account_hide,
           'auth_password' => $account_token,
           'require_tls'   => true,
           'send_resolved' => true,
