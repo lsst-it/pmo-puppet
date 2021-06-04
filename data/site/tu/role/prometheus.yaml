@@ -189,3 +189,8 @@ prometheus::scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: localhost:9115
+# Alertmanger config
+prometheus::alertmanagers_config:
+  - static_configs:
+      - targets:
+          - 'localhost:9093'

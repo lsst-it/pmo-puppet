@@ -1,5 +1,8 @@
 # Prometheus monitoring URL: http://prometheus.us.lsst.org:9090/ 
-class profile::prometheus {
+class profile::prometheus (Sensitive[String]
+$account_hide,
+$account_token,
+){
   include prometheus
   class { 'prometheus::blackbox_exporter':
     version => '0.19.0',
@@ -14,4 +17,32 @@ class profile::prometheus {
       }
     }
   }
+# Alertmanager config
+class { 'prometheus::alertmanager':
+  version   => '0.22.2',
+  route     => {
+    'group_by'        => ['alertname', 'job'],
+    'group_wait'      => '30s',
+    'group_interval'  => '5m',
+    'repeat_interval' => '3h',
+    'receiver'        => 'email',
+  },
+  receivers => [
+    {
+      'name'          => 'email',
+      'email_configs' => [
+        {
+          'to'            => account_hide,
+          'from'          => account_hide,
+          'smarthost'     => 'smtp.gmail.com:587',
+          'auth_username' => account_hide,
+          'auth_identity' => account_hide,
+          'auth_password' => $account_token,
+          'require_tls'   => true,
+          'send_resolved' => true,
+        },
+      ],
+    },
+  ],
+}
 }
