@@ -20,7 +20,7 @@ $to_hide,
   }
 # Alertmanager config
 class { 'prometheus::alertmanager':
-  version   => '0.22.2',
+  version   => '0.22.1',
 
   route     => {
     'group_by'        => ['job'],
