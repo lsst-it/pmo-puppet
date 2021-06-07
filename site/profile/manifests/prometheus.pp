@@ -20,16 +20,16 @@ $to_hide,
   }
 # Alertmanager config
 class { 'prometheus::alertmanager':
-  version   => '0.22.1',
-
-  route     => {
+  version       => '0.22.2',
+  extra_options => '--cluster.listen-address=',
+  route         => {
     'group_by'        => ['job'],
     'group_wait'      => '30s',
     'group_interval'  => '5m',
     'repeat_interval' => '3h',
     'receiver'        => 'email',
   },
-  receivers => [
+  receivers     => [
     {
       'name'          => 'email',
       'email_configs' => [
