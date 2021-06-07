@@ -23,9 +23,9 @@ class { 'prometheus::alertmanager':
   extra_options => '--cluster.listen-address=',
   route         => {
     'group_by'        => ['job'],
-    'group_wait'      => '30s',
-    'group_interval'  => '5m',
-    'repeat_interval' => '3h',
+    'group_wait'      => '30s', # how long to wait to buffer alerts of the same group before sending a notification initially
+    'group_interval'  => '1m',  # ^^^before sending an alert that has been added to a group for which there has already been a notification
+    'repeat_interval' => '3h',  # how long to wait before re-sending a given alert that has already been sent in a notification
     'receiver'        => 'slack',
   },
   receivers     => [
@@ -36,7 +36,7 @@ class { 'prometheus::alertmanager':
           'api_url'       => unwrap($slackapi_hide),
           'channel'       => '#it_monitoring',
           'send_resolved' => true,
-          'username'      => unwrap($slackuser_hide)
+          'username'      => unwrap($slackuser_hide),
         },
       ],
     },
