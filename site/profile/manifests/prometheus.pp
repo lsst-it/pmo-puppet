@@ -1,9 +1,8 @@
 # Prometheus monitoring URL: http://prometheus.us.lsst.org:9090/ 
 class profile::prometheus (Sensitive[String]
-$account_hide,
-$account_token,
-$to_hide,
-){
+$slackapi_hide,
+$slackuser_hide,
+) {
   include prometheus
   class { 'prometheus::blackbox_exporter':
     version => '0.19.0',
@@ -27,21 +26,17 @@ class { 'prometheus::alertmanager':
     'group_wait'      => '30s',
     'group_interval'  => '5m',
     'repeat_interval' => '3h',
-    'receiver'        => 'email',
+    'receiver'        => 'slack',
   },
   receivers     => [
-    {
-      'name'          => 'email',
-      'email_configs' => [
+      {
+      'name'          => 'slack',
+      'slack_configs' => [
         {
-          'to'            => unwrap($to_hide),
-          'from'          => unwrap($account_hide),
-          'smarthost'     => 'smtp.gmail.com:587',
-          'auth_username' => unwrap($account_hide),
-          'auth_identity' => unwrap($account_hide),
-          'auth_password' => unwrap($account_token),
-          'require_tls'   => true,
+          'api_url'       => unwrap($slackapi_hide),
+          'channel'       => '#it_monitoring',
           'send_resolved' => true,
+          'username'      => unwrap($slackuser_hide)
         },
       ],
     },
