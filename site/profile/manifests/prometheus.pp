@@ -2,6 +2,7 @@
 class profile::prometheus (Sensitive[String]
 $slackapi_hide,
 $slackuser_hide,
+$cluster_hide,
 ) {
   include prometheus
   class { 'prometheus::blackbox_exporter':
@@ -20,7 +21,7 @@ $slackuser_hide,
 # Alertmanager config
 class { 'prometheus::alertmanager':
   version       => '0.22.2',
-  extra_options => '--cluster.listen-address=',
+  extra_options => "--cluster.peer=${unwrap($cluster_hide)}",
   route         => {
     'group_by'        => ['job'],
     'group_wait'      => '30s', # how long to wait to buffer alerts of the same group before sending a notification initially

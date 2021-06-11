@@ -154,6 +154,8 @@ prometheus::scrape_configs:
       - targets:
           - 'prometheus.us.lsst.org:9100'
           - 'puppetm-tuc-1.lsst.org:9100'
+          - 'mr-tuc-1.lsst.org:9100'
+          - 'mr-tuc-2.lsst.org:9100'
           - 'hyperv-4.lsst.local:9182'
           - 'be1.lsst.local:9182'
           - 'ds1.lsst.local:9182'
@@ -195,4 +197,6 @@ prometheus::scrape_configs:
 prometheus::alertmanagers_config:
   - static_configs:
       - targets:
-          - 'localhost:9093'
+          - 'mr-tuc-1.lsst.org:9093'
+          - 'mr-tuc-1.lsst.org:9093'
+          - 'prometheus.us.lsst.org:9093'

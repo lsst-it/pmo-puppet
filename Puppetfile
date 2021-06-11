@@ -47,6 +47,7 @@ mod 'puppetlabs-stdlib', '7.1.0'
 mod 'puppetlabs/vcsrepo', '3.0.0'
 mod 'puppet/ssh_keygen', '4.0.0'
 mod 'puppetlabs-hocon', '1.1.0'  # dependency
+mod 'example42-network', '3.6.0'
 # Encryption
 mod 'puppetlabs-puppet_authorization', '0.5.1'
 mod 'binford2k-node_encrypt', '0.4.1'
