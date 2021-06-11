@@ -198,5 +198,5 @@ prometheus::alertmanagers_config:
   - static_configs:
       - targets:
           - 'mr-tuc-1.lsst.org:9093'
-          - 'mr-tuc-1.lsst.org:9093'
+          - 'mr-tuc-2.lsst.org:9093'
           - 'prometheus.us.lsst.org:9093'
