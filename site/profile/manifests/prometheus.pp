@@ -14,8 +14,9 @@ $advertise_ip,
         'prober'  => 'http',
         'timeout' => '5s',
         'http'    => {
-          'valid_status_codes' => [],
-          'method'             => 'GET',
+          'valid_status_codes'    => [],
+          'method'                => 'GET',
+          'preferred_ip_protocol' => 'ipv4',
         }
       }
     }
