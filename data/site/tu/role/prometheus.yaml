@@ -20,7 +20,7 @@ prometheus::alerts:
 # Alerts for URL endpoints
         - alert: EndpointDown
           expr: probe_success == 0
-          for: 4m
+          for: 2m
           labels:
             severity: "critical"
           annotations:
