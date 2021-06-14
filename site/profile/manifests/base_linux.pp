@@ -1,6 +1,7 @@
 # Base profile for Linux OS
 class profile::base_linux {
   include network
+  include firewalld
   include prometheus::node_exporter
 class { 'timezone':
     timezone => 'UTC',

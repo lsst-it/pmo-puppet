@@ -5,6 +5,7 @@ $slackuser_hide,
 $cluster_hide,
 $advertise_ip,
 ) {
+# Firewall rules are in private repo
   include prometheus
   class { 'prometheus::blackbox_exporter':
     version => '0.19.0',
