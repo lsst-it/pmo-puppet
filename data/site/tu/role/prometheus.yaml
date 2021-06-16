@@ -172,9 +172,9 @@ prometheus::scrape_configs:
           - 'confluence.lsstcorp.org:9100'
         labels:
           alias: 'none'
-  - job_name: 'nginx'
-      static_configs:
-      - targets: ['0.0.0.0:9113']          
+  # - job_name: 'nginx'
+  #     static_configs:
+  #     - targets: ['0.0.0.0:9113']          
   - job_name: 'webpage'
     metrics_path: /probe
     params:
