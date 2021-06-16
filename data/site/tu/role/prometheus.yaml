@@ -172,6 +172,9 @@ prometheus::scrape_configs:
           - 'confluence.lsstcorp.org:9100'
         labels:
           alias: 'none'
+  - job_name: 'nginx'
+      static_configs:
+      - targets: ['0.0.0.0:9113']          
   - job_name: 'webpage'
     metrics_path: /probe
     params:
@@ -187,7 +190,6 @@ prometheus::scrape_configs:
         - https://docushare.lsstcorp.org/docushare/dsweb/HomePage
         - https://pwdreset.lsst.org
         - http://ds1.lsst.local
-        - https://graylog-tuc.lsst.org
         - https://ecam.lsst.org
         - https://lists.lsst.org
         - https://gallery.lsst.org/cookieconsent.php?path=%2F
