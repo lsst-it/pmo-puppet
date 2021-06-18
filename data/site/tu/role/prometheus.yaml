@@ -170,6 +170,7 @@ prometheus::scrape_configs:
           - 'grafana.us.lsst.org:9100'
           - 'jira.lsstcorp.org:9100'
           - 'confluence.lsstcorp.org:9100'
+          - 'jira.lsstcorp.org/plugins/servlet/prometheus'
         labels:
           alias: 'none'
   # - job_name: 'nginx'
