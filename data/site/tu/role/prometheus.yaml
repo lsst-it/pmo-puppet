@@ -170,12 +170,15 @@ prometheus::scrape_configs:
           - 'grafana.us.lsst.org:9100'
           - 'jira.lsstcorp.org:9100'
           - 'confluence.lsstcorp.org:9100'
-          - 'jira.lsstcorp.org/plugins/servlet/prometheus'
         labels:
           alias: 'none'
-  # - job_name: 'nginx'
-  #     static_configs:
-  #     - targets: ['0.0.0.0:9113']          
+# Jira specific data collection
+  - job_name: 'jira'
+    scheme: https 
+    metrics_path: '/plugins/servlet/prometheus/metrics'
+    static_configs:
+      - targets: ['jira.lsstcorp.org:443']   
+# Website monitoring
   - job_name: 'webpage'
     metrics_path: /probe
     params:
