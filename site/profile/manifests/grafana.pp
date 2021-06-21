@@ -14,6 +14,12 @@ class profile::grafana {
         isDefault => true,
       },
     ],
+  },
+    cfg                      => {
+    'auth.ldap' => {
+      enabled     => true,
+      config_file => '/etc/grafana/ldap.toml',
+    },
   }
-  }
+}
 }
