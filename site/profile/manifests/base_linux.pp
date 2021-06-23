@@ -3,6 +3,9 @@ class profile::base_linux {
   include network
   include firewalld
   include prometheus::node_exporter
+class { 'ntp':
+  servers => [ '140.252.1.140', '140.252.1.141' ],
+}
 class { 'timezone':
     timezone => 'UTC',
 }
