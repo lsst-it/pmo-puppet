@@ -162,6 +162,8 @@ prometheus::scrape_configs:
       - targets:
           - 'prometheus.us.lsst.org:9100'
           - 'puppetm-tuc-1.lsst.org:9100'
+          - 'atlantis.lsst.org:9182'
+          - 'endeavour.lsst.org:9182'
           - 'mr-tuc-1.lsst.org:9100'
           - 'mr-tuc-2.lsst.org:9100'
           - 'hyperv-4.lsst.local:9182'
