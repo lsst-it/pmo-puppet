@@ -2,3 +2,5 @@
 classes:
   - profile::default
   - profile::base_linux
+  - profile::puppet_master
+  
