@@ -144,3 +144,60 @@ prometheus::alerts:
           annotations:
             summary: SQL Server down (instance {{ $labels.instance }})
             description: "SQL server instance is down\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+###########################################
+### Below this line Linux services only ###
+###########################################
+# Hotswap filling up
+        - alert: HostSwapIsFillingUp
+          expr: (1 - (node_memory_SwapFree_bytes / node_memory_SwapTotal_bytes)) * 100 > 80
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: Host swap is filling up (instance {{ $labels.instance }})
+            description: "Swap is filling up (>80%)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Systemd crashed
+        - alert: HostSystemdServiceCrashed
+          expr: node_systemd_unit_state{state="failed"} == 1
+          for: 0m
+          labels:
+            severity: warning
+          annotations:
+            summary: Host systemd service crashed (instance {{ $labels.instance }})
+            description: "systemd service crashed\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Kernel version deviation
+        - alert: HostKernelVersionDeviations
+          expr: count(sum(label_replace(node_uname_info, "kernel", "$1", "release", "([0-9]+.[0-9]+.[0-9]+).*")) by (kernel)) > 1
+          for: 6h
+          labels:
+            severity: warning
+          annotations:
+            summary: Host kernel version deviations (instance {{ $labels.instance }})
+            description: "Different kernel versions are running\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Clock not sync'ing
+        - alert: HostClockNotSynchronising
+          expr: min_over_time(node_timex_sync_status[1m]) == 0 and node_timex_maxerror_seconds >= 16
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: Host clock not synchronising (instance {{ $labels.instance }})
+            description: "Clock not synchronising.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# MySQLD down (needs mysqld exporter)
+        - alert: MysqlDown
+          expr: mysql_up == 0
+          for: 0m
+          labels:
+            severity: critical
+          annotations:
+            summary: MySQLd down (instance {{ $labels.instance }})
+            description: "MySQLd instance is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Jira down 
+        - alert: Jira
+          expr: jira_up == 0
+          for: 0m
+          labels:
+            severity: critical
+          annotations:
+            summary: Jira down (instance {{ $labels.instance }})
+            description: "Jira service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
