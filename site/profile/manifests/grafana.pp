@@ -17,7 +17,7 @@ class profile::grafana {
         name      => 'mr-tuc-1',
         type      => 'prometheus',
         access    => 'proxy',
-        url       => 'http://mr-tuc-1.us.lsst.org:9090/',
+        url       => 'http://mr-tuc-1.lsst.org:9090/',
         isDefault => true,
       },
       {
