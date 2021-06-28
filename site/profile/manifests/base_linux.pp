@@ -3,6 +3,7 @@ class profile::base_linux {
   include network
   include ::firewalld
   include ssh
+  include accounts
 # config: /etc/systemd/system/node_exporter.service
   class { 'prometheus::node_exporter':
     version       => '1.1.2',
