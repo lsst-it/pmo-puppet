@@ -7,13 +7,6 @@ class profile::grafana {
     apiVersion  => 1,
     datasources => [
       {
-        name      => 'Prometheus',
-        type      => 'prometheus',
-        access    => 'proxy',
-        url       => 'http://prometheus.us.lsst.org:9090/',
-        isDefault => false,
-      },
-      {
         name      => 'mr-tuc-1',
         type      => 'prometheus',
         access    => 'proxy',
