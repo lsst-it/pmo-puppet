@@ -1,0 +1,26 @@
+---
+timezone::timezone: "America/Phoenix"
+ssh::server_options:
+  Port: 22
+  Protocol: 2
+  SyslogFacility: "AUTHPRIV"
+  # LogLevel: "INFO"
+  LoginGraceTime: 195
+  PermitRootLogin: "no"
+  PubkeyAuthentication: "yes"
+  AuthorizedKeysFile: ".ssh/authorized_keys"
+  PasswordAuthentication: "no"
+  ChallengeResponseAuthentication: "no"
+  GSSAPIAuthentication: "yes"
+  GSSAPICleanupCredentials: "no"
+  UsePAM: "yes"
+  AllowTcpForwarding: "yes"
+  X11Forwarding: "yes"
+  X11UseLocalhost: "yes"
+  UsePrivilegeSeparation: "no"
+  PrintMotd: "no"
+  TCPKeepAlive: "yes"
+  KbdInteractiveAuthentication: "no"
+  # ClientAliveInterval: 0
+  # ClientAliveCountMax: 3
+  Banner: "no" # To be added later "/etc/ssh/sshd_banner"
