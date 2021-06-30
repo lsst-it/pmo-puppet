@@ -17,7 +17,7 @@ class profile::base_linux {
   }
   Package { [ 'tree', 'tcpdump', 'telnet', 'lvm2', 'gcc', 'xinetd',
   'bash-completion', 'sudo', 'screen', 'vim', 'openssl', 'openssl-devel',
-  'wget', 'nmap', 'iputils', 'bind-utils']:
+  'wget', 'nmap', 'iputils', 'bind-utils', 'traceroute' ]:
   ensure => installed,
   }
 }
