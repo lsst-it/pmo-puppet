@@ -20,4 +20,20 @@ class profile::base_linux {
   'wget', 'nmap', 'iputils', 'bind-utils', 'traceroute' ]:
   ensure => installed,
   }
+# Modify these files to secure servers
+$sshd_banner = lookup('sshd_banner')
+file { '/etc/ssh/sshd_banner' :
+  ensure  => file,
+  content => $sshd_banner,
+}
+$denyhosts = lookup ('denyhosts')
+file { '/etc/hosts.deny' :
+  ensure  => file,
+  content => $denyhosts,
+}
+$allowhosts = lookup ('allowhosts')
+file { '/etc/hosts.allow' :
+  ensure  => file,
+  content => $allowhosts,
+}
 }
