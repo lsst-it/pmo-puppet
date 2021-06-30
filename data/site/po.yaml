@@ -23,7 +23,7 @@ ssh::server_options:
   KbdInteractiveAuthentication: "no"
   # ClientAliveInterval: 0
   # ClientAliveCountMax: 3
-  Banner: "no" # To be added later "/etc/ssh/sshd_banner"
+  Banner: "/etc/ssh/sshd_banner"
 #############################################
 ### Keep users created by puppet distinct ###
 #############################################
