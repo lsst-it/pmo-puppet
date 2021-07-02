@@ -28,7 +28,7 @@ class { 'prometheus::alertmanager':
   route         => {
     'group_by'        => ['job'],
     'group_wait'      => '30s', # how long to wait to buffer alerts of the same group before sending a notification initially
-    'group_interval'  => '45s',  # ^^^before sending an alert that has been added to a group for which there has already been a notification
+    'group_interval'  => '45s',  # ^^before sending an alert that has been added to a group for which there has already been a notification
     'repeat_interval' => '3h',  # how long to wait before re-sending a given alert that has already been sent in a notification
     'receiver'        => 'slack',
   },

@@ -10,7 +10,7 @@ class profile::base_linux {
     extra_options => '--collector.systemd \--collector.processes \--collector.meminfo_numa',
   }
   class { 'ntp':
-    servers => [ '140.252.1.140', '140.252.1.141' ],
+    servers => [ '140.252.1.140', '140.252.1.141', '0.pool.ntp.arizona.edu' ],
   }
   class { 'timezone':
       timezone => 'UTC',
