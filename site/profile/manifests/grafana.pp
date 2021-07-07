@@ -1,4 +1,4 @@
-# Grafana url: http://grafana.us.lsst.org:3000
+# Grafana url: http://grafana-x.lsst.org:3000
 class profile::grafana {
 
   class { 'grafana':
