@@ -61,7 +61,6 @@ prometheus::alerts:
           annotations:
             summary: Windows Firewall service Status (instance {{ $labels.instance }})
             description: "Windows firewall state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
-
 # Windows Hyperv managemnt service
         - alert: WindowsHypervServiceStatus
           expr: windows_service_state{name="vmms", state="running"} == 0
@@ -88,11 +87,10 @@ prometheus::alerts:
           annotations:
             summary: Windows Symantec service Status (instance {{ $labels.instance }})
             description: "Windows Symantec AV state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
-
 # IIS Service
         - alert: WindowsIISServiceStatus
           expr: windows_service_state{name="w3svc", state="running"} == 0
-          for: 1m
+          for: 5m
           labels:
             severity: critical
           annotations:
@@ -146,30 +144,48 @@ prometheus::alerts:
 # windows_Exporter service
         - alert: windows_exporterServiceStatus
           expr: windows_service_state{name="windows_exporter", state="running"} == 0
-          for: 1m
+          for: 5m
           labels:
             severity: critical
           annotations:
             summary: Windows_Exporter service Status (instance {{ $labels.instance }})
             description: "Windows windows_exporter state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
-# 80% of mysql connections in use
-        - alert: MysqlTooManyConnections(>80%)
-          expr: avg by (instance) (rate(mysql_global_status_threads_connected[1m])) / avg by (instance) (mysql_global_variables_max_connections) * 100 > 80
-          for: 2m
-          labels:
-            severity: warning
-          annotations:
-            summary: MySQL too many connections (> 80%) (instance {{ $labels.instance }})
-            description: "More than 80% of MySQL connections are in use on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
-# MySQL server down
-        - alert: SqlServerDown
-          expr: mssql_up == 0
-          for: 0m
+# Terminal Server Remote Gateway service
+        - alert: TSGateway
+          expr: windows_service_state{name="tsgateway", state="running"} == 0
+          for: 5m
           labels:
             severity: critical
           annotations:
-            summary: SQL Server down (instance {{ $labels.instance }})
-            description: "SQL server instance is down\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+            summary: Terminal Server Remote Gateway service Status (instance {{ $labels.instance }})
+            description: "Terminal Server Remote Gateway state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Terminal Server Remote Desktop Connection Broke service
+        - alert: Tssdis
+          expr: windows_service_state{name="tssdis", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Remote Desktop Connection Broker service Status (instance {{ $labels.instance }})
+            description: "Remote Desktop Connection Broke state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Remote Desktop Services service
+        - alert: TermService
+          expr: windows_service_state{name="termservice", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Remote Desktop Services service Status (instance {{ $labels.instance }})
+            description: "Remote Desktop Services state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Remote Desktop Management service
+        - alert: RDMS
+          expr: windows_service_state{name="rdms", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Remote Desktop Management service Status (instance {{ $labels.instance }})
+            description: "Remote Desktop Management state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # MSExchangeTransport down
         - alert: MSExchangeTransport
           expr: windows_service_state{name="msexchangetransport", state="running"} == 0
@@ -206,6 +222,15 @@ prometheus::alerts:
           annotations:
             summary: MSExchange IMAP4 Back End service Status (instance {{ $labels.instance }})
             description: "MSExchange IMAP4 Back End state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Puppet agent down
+        - alert: puppet
+          expr: windows_service_state{name="puppet", state="running"} == 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: Puppet agent service Status (instance {{ $labels.instance }})
+            description: "Puppet agent state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 ###########################################
 ### Below this line Linux services only ###
 ###########################################
@@ -245,6 +270,15 @@ prometheus::alerts:
           annotations:
             summary: Host clock not synchronising (instance {{ $labels.instance }})
             description: "Clock not synchronising.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# MySQL server down
+        - alert: SqlServerDown
+          expr: mssql_up == 0
+          for: 0m
+          labels:
+            severity: critical
+          annotations:
+            summary: SQL Server down (instance {{ $labels.instance }})
+            description: "SQL server instance is down\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # MySQLD down (needs mysqld exporter)
         - alert: MysqlDown
           expr: node_systemd_unit_state{name="mysqld.service", state="active"} != 1
@@ -290,3 +324,12 @@ prometheus::alerts:
           annotations:
             summary: firewalld down (instance {{ $labels.instance }})
             description: "firewalld service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# 80% of mysql connections in use
+        - alert: MysqlTooManyConnections(>80%)
+          expr: avg by (instance) (rate(mysql_global_status_threads_connected[1m])) / avg by (instance) (mysql_global_variables_max_connections) * 100 > 80
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: MySQL too many connections (> 80%) (instance {{ $labels.instance }})
+            description: "More than 80% of MySQL connections are in use on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
