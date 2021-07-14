@@ -2,7 +2,7 @@
 prometheus::manage_prometheus_server: true
 
 prometheus::version: '2.27.0'
-
+prometheus::storage_retention: '30d'
 prometheus::alerts:
   groups:
     - name: 'alert.rules'
@@ -231,6 +231,15 @@ prometheus::alerts:
           annotations:
             summary: Puppet agent service Status (instance {{ $labels.instance }})
             description: "Puppet agent state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# NXlog down
+        - alert: nxlog
+          expr: windows_service_state{name="nxlog", state="running"} == 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: nxlog service Status (instance {{ $labels.instance }})
+            description: "nxlog state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 ###########################################
 ### Below this line Linux services only ###
 ###########################################
