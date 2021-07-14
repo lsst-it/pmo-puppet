@@ -34,15 +34,6 @@ prometheus::alerts:
           annotations:
             summary: Prometheus job missing (instance {{ $labels.instance }})
             description: "A Prometheus job has disappeared\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
-# BackupExec SQL status
-        - alert: Windowsmssql$bkupexecServiceStatus
-          expr: windows_service_status{name="sqlagent$bkupexec", state="running"} == 0
-          for: 1m
-          labels:
-            severity: critical
-          annotations:
-            summary: Windows BKSQL service Status (instance {{ $labels.instance }})
-            description: "Windows Service state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Windows Disk space usage
         - alert: WindowsServerDiskSpaceUsage
           expr: 100.0 - 100 * (((windows_logical_disk_free_bytes{volume!="HarddiskVolume1"}) / 1024 / 1024 ) / ((windows_logical_disk_size_bytes{volume!="HarddiskVolume1"}) / 1024 / 1024)) > 80
@@ -110,12 +101,48 @@ prometheus::alerts:
 # BackupExec Agent Service
         - alert: WindowsBEAgentServiceStatus
           expr: windows_service_state{name="backupexecagentaccelerator", state="running"} == 0
-          for: 1m
+          for: 5m
           labels:
             severity: critical
           annotations:
             summary: Windows BackupExec Agent service Status (instance {{ $labels.instance }})
             description: "Windows BackupExec Agent state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# BackupExec SQL status
+        - alert: Windowsmssql$bkupexecServiceStatus
+          expr: windows_service_status{name="sqlagent$bkupexec", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Windows BKSQL service Status (instance {{ $labels.instance }})
+            description: "Windows Service state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# BackupExec BackupExecDeviceMediaService Service
+        - alert: BackupExecDeviceMediaService
+          expr: windows_service_state{name="backupexecdevicemediaservice", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: BackupExecDeviceMediaService service Status (instance {{ $labels.instance }})
+            description: "BackupExecDeviceMediaService state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# BackupExec BackupExecJobEngine Service
+        - alert: BackupExecJobEngine
+          expr: windows_service_state{name="backupexecjobengine", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: BackupExecJobEngine service Status (instance {{ $labels.instance }})
+            description: "BackupExecJobEngine state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# BackupExec BackupExecRPCService Service
+        - alert: BackupExecRPCService
+          expr: windows_service_state{name="backupexecrpcservice", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: BackupExecRPCService service Status (instance {{ $labels.instance }})
+            description: "BackupExecRPCService state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # windows_Exporter service
         - alert: windows_exporterServiceStatus
           expr: windows_service_state{name="windows_exporter", state="running"} == 0
