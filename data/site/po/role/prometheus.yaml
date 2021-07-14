@@ -116,7 +116,6 @@ prometheus::alerts:
           annotations:
             summary: Windows BackupExec Agent service Status (instance {{ $labels.instance }})
             description: "Windows BackupExec Agent state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
-
 # windows_Exporter service
         - alert: windows_exporterServiceStatus
           expr: windows_service_state{name="windows_exporter", state="running"} == 0
@@ -144,6 +143,42 @@ prometheus::alerts:
           annotations:
             summary: SQL Server down (instance {{ $labels.instance }})
             description: "SQL server instance is down\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# MSExchangeTransport down
+        - alert: MSExchangeTransport
+          expr: windows_service_state{name="msexchangetransport", state="running"} == 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: MSExchange Transport service Status (instance {{ $labels.instance }})
+            description: "MSExchange Transport state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# MSExchange Information Store down
+        - alert: MSExchangeIS
+          expr: windows_service_state{name="msexchangeis", state="running"} == 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: MSExchange Information Store service Status (instance {{ $labels.instance }})
+            description: "MSExchange Information Store state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# MSExchange IMAP4 down
+        - alert: MSExchangeIMAP4
+          expr: windows_service_state{name="msexchangeimap4", state="running"} == 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: MSExchange IMAP4 service Status (instance {{ $labels.instance }})
+            description: "MSExchange IMAP4 state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# MSExchange IMAP4 Back End down
+        - alert: MSExchangeIMAP4BE
+          expr: windows_service_state{name="msexchangeimap4be", state="running"} == 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: MSExchange IMAP4 Back End service Status (instance {{ $labels.instance }})
+            description: "MSExchange IMAP4 Back End state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 ###########################################
 ### Below this line Linux services only ###
 ###########################################
