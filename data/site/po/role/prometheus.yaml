@@ -231,6 +231,15 @@ prometheus::alerts:
           annotations:
             summary: nxlog service Status (instance {{ $labels.instance }})
             description: "nxlog state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Docushare7 service down
+        - alert: Docushare7
+          expr: windows_service_state{name="20f1124b5ac4b800155d91acfd3", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Docushare7 service Status (instance {{ $labels.instance }})
+            description: "Docushare7 state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 ###########################################
 ### Below this line Linux services only ###
 ###########################################
