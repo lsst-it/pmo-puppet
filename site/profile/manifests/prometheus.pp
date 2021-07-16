@@ -7,10 +7,11 @@ $advertise_ip,
 ) {
 # Firewall rules are in private repo
   include prometheus
+  include prometheus::snmp_exporter
   class { 'prometheus::blackbox_exporter':
     version => '0.19.0',
     modules => {
-      'http_2xx' => {
+      'http_2xx'    => {
         'prober'  => 'http',
         'timeout' => '5s',
         'http'    => {
@@ -18,7 +19,13 @@ $advertise_ip,
           'method'                => 'GET',
           'preferred_ip_protocol' => 'ipv4',
         }
-      }
+      },
+      'tcp_connect' => {
+        'prober' => 'tcp',
+      },
+      'icmp'        => {
+        'prober' => 'icmp',
+      },
     }
   }
 # Alertmanager config

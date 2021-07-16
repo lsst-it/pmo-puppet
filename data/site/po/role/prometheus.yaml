@@ -213,6 +213,24 @@ prometheus::alerts:
           annotations:
             summary: MSExchange IMAP4 Back End service Status (instance {{ $labels.instance }})
             description: "MSExchange IMAP4 Back End state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Certificate propagation down
+        - alert: CertPropSvc
+          expr: windows_service_state{name="certpropsvc", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Certificate propagation service Status (instance {{ $labels.instance }})
+            description: "Certificate propagation state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Network Policy Server down
+        - alert: ias
+          expr: windows_service_state{name="ias", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Network Policy Server Status (instance {{ $labels.instance }})
+            description: "Network Policy Server is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Puppet agent down
         - alert: puppet
           expr: windows_service_state{name="puppet", state="running"} == 0
