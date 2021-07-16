@@ -10,7 +10,7 @@ prometheus::alerts:
 # Applies to all devices
         - alert: 'InstanceDown'
           expr: 'up == 0'
-          for: '1m'
+          for: '4m'
           labels:
             severity: 'page'
           annotations:
@@ -28,7 +28,7 @@ prometheus::alerts:
 # Specific to Prometheus jobs
         - alert: PrometheusJobMissing
           expr: absent(up{job="prometheus"})
-          for: 0m
+          for: 10m
           labels:
             severity: warning
           annotations:
@@ -37,7 +37,7 @@ prometheus::alerts:
 # Windows Disk space usage
         - alert: WindowsServerDiskSpaceUsage
           expr: 100.0 - 100 * (((windows_logical_disk_free_bytes{volume!="HarddiskVolume1"}) / 1024 / 1024 ) / ((windows_logical_disk_size_bytes{volume!="HarddiskVolume1"}) / 1024 / 1024)) > 80
-          for: 1m
+          for: 5m
           labels:
             severity: critical
           annotations:
@@ -46,7 +46,7 @@ prometheus::alerts:
 # Windows Defender Firewall service
         - alert: WindowsFirewallServiceStatus
           expr: windows_service_state{name="mpssvc", state="running"} == 0
-          for: 1m
+          for: 10m
           labels:
             severity: critical
           annotations:
@@ -55,7 +55,7 @@ prometheus::alerts:
 # Windows Hyperv managemnt service
         - alert: WindowsHypervServiceStatus
           expr: windows_service_state{name="vmms", state="running"} == 0
-          for: 1m
+          for: 5m
           labels:
             severity: critical
           annotations:
@@ -64,7 +64,7 @@ prometheus::alerts:
 # Symantec monitoring
         - alert: WindowsSymantecServiceStatus
           expr: windows_service_state{name="sepwscsvc", state="running"} == 0
-          for: 1m
+          for: 5m
           labels:
             severity: critical
           annotations:
@@ -180,7 +180,7 @@ prometheus::alerts:
 # MSExchangeTransport down
         - alert: MSExchangeTransport
           expr: windows_service_state{name="msexchangetransport", state="running"} == 0
-          for: 1m
+          for: 2m
           labels:
             severity: critical
           annotations:
@@ -189,7 +189,7 @@ prometheus::alerts:
 # MSExchange Information Store down
         - alert: MSExchangeIS
           expr: windows_service_state{name="msexchangeis", state="running"} == 0
-          for: 1m
+          for: 2m
           labels:
             severity: critical
           annotations:
@@ -198,7 +198,7 @@ prometheus::alerts:
 # MSExchange IMAP4 down
         - alert: MSExchangeIMAP4
           expr: windows_service_state{name="msexchangeimap4", state="running"} == 0
-          for: 1m
+          for: 2m
           labels:
             severity: critical
           annotations:
@@ -207,7 +207,7 @@ prometheus::alerts:
 # MSExchange IMAP4 Back End down
         - alert: MSExchangeIMAP4BE
           expr: windows_service_state{name="msexchangeimap4be", state="running"} == 0
-          for: 1m
+          for: 2m
           labels:
             severity: critical
           annotations:
@@ -216,7 +216,7 @@ prometheus::alerts:
 # Puppet agent down
         - alert: puppet
           expr: windows_service_state{name="puppet", state="running"} == 0
-          for: 1m
+          for: 2m
           labels:
             severity: critical
           annotations:
@@ -264,12 +264,21 @@ prometheus::alerts:
 # Hotswap filling up
         - alert: HostSwapIsFillingUp
           expr: (1 - (node_memory_SwapFree_bytes / node_memory_SwapTotal_bytes)) * 100 > 80
-          for: 2m
+          for: 10m
           labels:
             severity: warning
           annotations:
             summary: Host swap is filling up (instance {{ $labels.instance }})
             description: "Swap is filling up (>80%)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Disk space free
+        - alert: DiskSpace>10%Free
+          expr: 100 - (100 * node_filesystem_avail_bytes / node_filesystem_size_bytes) > 90
+          for: 1m
+          labels:
+            severity: moderate
+          annotations:
+            summary: "Instance {{ $labels.instance }} is low on disk space"
+            description: "diskspace on {{ $labels.instance }} is used over {{ $value }}% ."
 # Systemd crashed
         - alert: HostSystemdServiceCrashed
           expr: node_systemd_unit_state{state="failed"} == 1
@@ -291,7 +300,7 @@ prometheus::alerts:
 # MySQL server down
         - alert: SqlServerDown
           expr: mssql_up == 0
-          for: 0m
+          for: 5m
           labels:
             severity: critical
           annotations:
@@ -300,7 +309,7 @@ prometheus::alerts:
 # MySQLD down (needs mysqld exporter)
         - alert: MysqlDown
           expr: node_systemd_unit_state{name="mysqld.service", state="active"} != 1
-          for: 1m
+          for: 5m
           labels:
             severity: critical
           annotations:
@@ -327,7 +336,7 @@ prometheus::alerts:
 # SSH down 
         - alert: SSH
           expr: node_systemd_unit_state{name="sshd.service", state="active"} != 1
-          for: 1m
+          for: 4m
           labels:
             severity: critical
           annotations:
@@ -336,7 +345,7 @@ prometheus::alerts:
 # firewalld down 
         - alert: firewalld
           expr: node_systemd_unit_state{name="firewalld.service", state="active"} != 1
-          for: 1m
+          for: 3m
           labels:
             severity: critical
           annotations:
