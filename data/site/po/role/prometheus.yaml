@@ -87,6 +87,33 @@ prometheus::alerts:
           annotations:
             summary: Windows IIS service Status (instance {{ $labels.instance }})
             description: "Windows IIS state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# SQL Server (MSSQLSERVER) service
+        - alert: MSSQLSERVER
+          expr: windows_service_state{name="mssqlserver", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: SQL Server (MSSQLSERVER) service Status (instance {{ $labels.instance }})
+            description: "SQL Server (MSSQLSERVER) state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# SQL Server Agent (MSSQLSERVER) service
+        - alert: SQLSERVERAGENT
+          expr: windows_service_state{name="sqlserveragent", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: SQL Agen service Status (instance {{ $labels.instance }})
+            description: "SQL Agent  state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# alfrescoPostgreSQL service
+        - alert: alfrescoPostgreSQL
+          expr: windows_service_state{name="alfrescopostgresql", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: alfrescoPostgreSQL service Status (instance {{ $labels.instance }})
+            description: "alfrescoPostgreSQL state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # BackupExec Agent Service
         - alert: WindowsBEAgentServiceStatus
           expr: windows_service_state{name="backupexecagentaccelerator", state="running"} == 0
@@ -231,6 +258,60 @@ prometheus::alerts:
           annotations:
             summary: Network Policy Server Status (instance {{ $labels.instance }})
             description: "Network Policy Server is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# DHCP Server down
+        - alert: dhcpserver
+          expr: windows_service_state{name="dhcpserver", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: DHCP Server Status (instance {{ $labels.instance }})
+            description: "DHCP Server is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# DNS Server down
+        - alert: DNSserver
+          expr: windows_service_state{name="dns", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: DNS Server Status (instance {{ $labels.instance }})
+            description: "DNS Server is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Remote Registry Service down
+        - alert: RemoteRegistry
+          expr: windows_service_state{name="remoteregistry", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: RemoteRegistry Service Status (instance {{ $labels.instance }})
+            description: "RemoteRegistry Service is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Tomcat8 Service down
+        - alert: Tomcat8
+          expr: windows_service_state{name="tomcat8", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Tomcat8 Service Status (instance {{ $labels.instance }})
+            description: "Tomcat8 Service is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# alfrescoTomcat Service down
+        - alert: alfrescoTomcat
+          expr: windows_service_state{name="alfrescotomcat", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: alfrescoTomcat Service Status (instance {{ $labels.instance }})
+            description: "alfrescoTomcat Service is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# PingFederate Service down
+        - alert: PingFederate
+          expr: windows_service_state{name="pingfederate", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: PingFederate Service Status (instance {{ $labels.instance }})
+            description: "PingFederate Service is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Puppet agent down
         - alert: puppet
           expr: windows_service_state{name="puppet", state="running"} == 0
@@ -351,6 +432,15 @@ prometheus::alerts:
           annotations:
             summary: Confluence down (instance {{ $labels.instance }})
             description: "Confluence service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Crowd down 
+        - alert: Crowd
+          expr: node_systemd_unit_state{name="crowd.service", state="active"} != 1
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: Crowd down (instance {{ $labels.instance }})
+            description: "Crowd service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # SSH down 
         - alert: SSH
           expr: node_systemd_unit_state{name="sshd.service", state="active"} != 1
@@ -378,3 +468,21 @@ prometheus::alerts:
           annotations:
             summary: MySQL too many connections (> 80%) (instance {{ $labels.instance }})
             description: "More than 80% of MySQL connections are in use on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Apache down 
+        - alert: Apache
+          expr: node_systemd_unit_state{name="apache2.service", state="active"} != 1
+          for: 3m
+          labels:
+            severity: critical
+          annotations:
+            summary: Apache down (instance {{ $labels.instance }})
+            description: "Apache service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Nginx down 
+        - alert: Nginx
+          expr: node_systemd_unit_state{name="nginx.service", state="active"} != 1
+          for: 3m
+          labels:
+            severity: critical
+          annotations:
+            summary: Nginx down (instance {{ $labels.instance }})
+            description: "Nginx service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
