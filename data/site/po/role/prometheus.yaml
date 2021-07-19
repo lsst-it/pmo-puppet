@@ -276,15 +276,15 @@ prometheus::alerts:
           annotations:
             summary: DNS Server Status (instance {{ $labels.instance }})
             description: "DNS Server is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
-# Remote Registry Service down
-        - alert: RemoteRegistry
-          expr: windows_service_state{name="remoteregistry", state="running"} == 0
-          for: 5m
-          labels:
-            severity: critical
-          annotations:
-            summary: RemoteRegistry Service Status (instance {{ $labels.instance }})
-            description: "RemoteRegistry Service is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# # Remote Registry Service down
+#         - alert: RemoteRegistry
+#           expr: windows_service_state{name="remoteregistry", state="running"} == 0
+#           for: 5m
+#           labels:
+#             severity: critical
+#           annotations:
+#             summary: RemoteRegistry Service Status (instance {{ $labels.instance }})
+#             description: "RemoteRegistry Service is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Tomcat8 Service down
         - alert: Tomcat8
           expr: windows_service_state{name="tomcat8", state="running"} == 0
