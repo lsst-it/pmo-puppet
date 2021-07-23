@@ -1,0 +1,40 @@
+---
+ssh::server_options:
+  Port: 22
+  Protocol: 2
+  SyslogFacility: "AUTHPRIV"
+  # LogLevel: "INFO"
+  LoginGraceTime: 195
+  PermitRootLogin: "no"
+  PubkeyAuthentication: "yes"
+  AuthorizedKeysFile: ".ssh/authorized_keys"
+  PasswordAuthentication: "no"
+  ChallengeResponseAuthentication: "no"
+  GSSAPIAuthentication: "yes"
+  GSSAPICleanupCredentials: "no"
+  UsePAM: "yes"
+  AllowTcpForwarding: "yes"
+  X11Forwarding: "yes"
+  X11UseLocalhost: "yes"
+  UsePrivilegeSeparation: "no"
+  PrintMotd: "no"
+  TCPKeepAlive: "yes"
+  KbdInteractiveAuthentication: "no"
+  # ClientAliveInterval: 0
+  # ClientAliveCountMax: 3
+  Banner: "/etc/ssh/sshd_banner"
+#############################################
+### Keep users created by puppet distinct ###
+#############################################
+accounts::user_list:
+  shahram_local:
+    groups:
+      - 'wheel'
+    sshkeys:
+      - 'ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAictUaJdM0LsjA4Lx8zWtZOHM82VNrwBaK507GRFW6FcDcs2ggaLQkqAIAmA2kCemkDeM31ylR9QJ4gkM17pq57NITER4MkODR8BmLYLcNPhcJ33Eje5qHuc6wapuE9mg5OJcSeBt/PimdKxqNl+bmYFXe6UkCPiAGFPv6hEobWA7O2p8Tp92SkDhxE0wST8Sxs/FpQN5LWQ8BjOU3mdbOZairdIXHzdl308VY0aMYvD/uhi22l6CndCTCRe8WJ0UjOaY5CmKHQZWVb1auxFj0LEz1qVB/ZZd9Kn0NPJ2f3zzll8mJCZSUJtcLZCgGiX9Dyf4J071aHUTUdXe+5UnPQ== rsa-key-20190116'
+    password: ''
+    ignore_password_if_empty: true
+  root:
+    groups:
+      - 'wheel'
+    password: "%{lookup('root_pwd')}"

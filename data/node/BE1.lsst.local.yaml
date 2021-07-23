@@ -2,5 +2,5 @@
 classes:
   - profile::default
   - profile::monitoring_graylog
-  - profile::nsclient
+  - profile::base_windows
   
