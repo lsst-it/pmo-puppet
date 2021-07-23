@@ -1,0 +1,488 @@
+---
+prometheus::manage_prometheus_server: true
+
+prometheus::version: '2.27.0'
+prometheus::storage_retention: '30d'
+prometheus::alerts:
+  groups:
+    - name: 'alert.rules'
+      rules:
+# Applies to all devices
+        - alert: 'InstanceDown'
+          expr: 'up == 0'
+          for: '4m'
+          labels:
+            severity: 'page'
+          annotations:
+            summary: 'Instance {{ .Labels.instance }} {{ .Value }} down'
+            description: '{{ $labels.instance }} of job {{ $labels.job }} has been
+              down for more than 1 minutes.'
+# Alerts for URL endpoints
+        - alert: EndpointDown
+          expr: probe_success == 0
+          for: 2m
+          labels:
+            severity: "critical"
+          annotations:
+            summary: "Endpoint  down"
+# Specific to Prometheus jobs
+        - alert: PrometheusJobMissing
+          expr: absent(up{job="prometheus"})
+          for: 10m
+          labels:
+            severity: warning
+          annotations:
+            summary: Prometheus job missing (instance {{ $labels.instance }})
+            description: "A Prometheus job has disappeared\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Windows Disk space usage
+        - alert: WindowsServerDiskSpaceUsage
+          expr: 100.0 - 100 * (((windows_logical_disk_free_bytes{volume!="HarddiskVolume1"}) / 1024 / 1024 ) / ((windows_logical_disk_size_bytes{volume!="HarddiskVolume1"}) / 1024 / 1024)) > 80
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Windows Server disk Space Usage (instance {{ $labels.instance }})
+            description: "Disk usage is more than 80%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Windows Defender Firewall service
+        - alert: WindowsFirewallServiceStatus
+          expr: windows_service_state{name="mpssvc", state="running"} == 0
+          for: 10m
+          labels:
+            severity: critical
+          annotations:
+            summary: Windows Firewall service Status (instance {{ $labels.instance }})
+            description: "Windows firewall state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Windows Hyperv managemnt service
+        - alert: WindowsHypervServiceStatus
+          expr: windows_service_state{name="vmms", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Windows Hyperv service Status (instance {{ $labels.instance }})
+            description: "Windows Hyperv state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Symantec monitoring
+        - alert: WindowsSymantecServiceStatus
+          expr: windows_service_state{name="sepwscsvc", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Windows Symantec Master service Status (instance {{ $labels.instance }})
+            description: "Windows Symantec AV state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+        - alert: WindowsSymantecMasterServiceStatus
+          expr: windows_service_state{name="sepwsepmasterservicescsvc", state="running"} == 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: Windows Symantec service Status (instance {{ $labels.instance }})
+            description: "Windows Symantec AV state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# IIS Service
+        - alert: WindowsIISServiceStatus
+          expr: windows_service_state{name="w3svc", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Windows IIS service Status (instance {{ $labels.instance }})
+            description: "Windows IIS state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# SQL Server (MSSQLSERVER) service
+        - alert: MSSQLSERVER
+          expr: windows_service_state{name="mssqlserver", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: SQL Server (MSSQLSERVER) service Status (instance {{ $labels.instance }})
+            description: "SQL Server (MSSQLSERVER) state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# SQL Server Agent (MSSQLSERVER) service
+        - alert: SQLSERVERAGENT
+          expr: windows_service_state{name="sqlserveragent", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: SQL Agen service Status (instance {{ $labels.instance }})
+            description: "SQL Agent  state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# alfrescoPostgreSQL service
+        - alert: alfrescoPostgreSQL
+          expr: windows_service_state{name="alfrescopostgresql", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: alfrescoPostgreSQL service Status (instance {{ $labels.instance }})
+            description: "alfrescoPostgreSQL state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# BackupExec Agent Service
+        - alert: WindowsBEAgentServiceStatus
+          expr: windows_service_state{name="backupexecagentaccelerator", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Windows BackupExec Agent service Status (instance {{ $labels.instance }})
+            description: "Windows BackupExec Agent state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# BackupExec SQL status
+        - alert: Windowsmssql$bkupexecServiceStatus
+          expr: windows_service_status{name="sqlagent$bkupexec", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Windows BKSQL service Status (instance {{ $labels.instance }})
+            description: "Windows Service state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# BackupExec BackupExecDeviceMediaService Service
+        - alert: BackupExecDeviceMediaService
+          expr: windows_service_state{name="backupexecdevicemediaservice", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: BackupExecDeviceMediaService service Status (instance {{ $labels.instance }})
+            description: "BackupExecDeviceMediaService state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# BackupExec BackupExecJobEngine Service
+        - alert: BackupExecJobEngine
+          expr: windows_service_state{name="backupexecjobengine", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: BackupExecJobEngine service Status (instance {{ $labels.instance }})
+            description: "BackupExecJobEngine state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# BackupExec BackupExecRPCService Service
+        - alert: BackupExecRPCService
+          expr: windows_service_state{name="backupexecrpcservice", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: BackupExecRPCService service Status (instance {{ $labels.instance }})
+            description: "BackupExecRPCService state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# windows_Exporter service
+        - alert: windows_exporterServiceStatus
+          expr: windows_service_state{name="windows_exporter", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Windows_Exporter service Status (instance {{ $labels.instance }})
+            description: "Windows windows_exporter state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Terminal Server Remote Gateway service
+        - alert: TSGateway
+          expr: windows_service_state{name="tsgateway", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Terminal Server Remote Gateway service Status (instance {{ $labels.instance }})
+            description: "Terminal Server Remote Gateway state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Terminal Server Remote Desktop Connection Broke service
+        - alert: Tssdis
+          expr: windows_service_state{name="tssdis", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Remote Desktop Connection Broker service Status (instance {{ $labels.instance }})
+            description: "Remote Desktop Connection Broke state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Remote Desktop Services service
+        - alert: TermService
+          expr: windows_service_state{name="termservice", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Remote Desktop Services service Status (instance {{ $labels.instance }})
+            description: "Remote Desktop Services state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Remote Desktop Management service
+        - alert: RDMS
+          expr: windows_service_state{name="rdms", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Remote Desktop Management service Status (instance {{ $labels.instance }})
+            description: "Remote Desktop Management state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# MSExchangeTransport down
+        - alert: MSExchangeTransport
+          expr: windows_service_state{name="msexchangetransport", state="running"} == 0
+          for: 2m
+          labels:
+            severity: critical
+          annotations:
+            summary: MSExchange Transport service Status (instance {{ $labels.instance }})
+            description: "MSExchange Transport state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# MSExchange Information Store down
+        - alert: MSExchangeIS
+          expr: windows_service_state{name="msexchangeis", state="running"} == 0
+          for: 2m
+          labels:
+            severity: critical
+          annotations:
+            summary: MSExchange Information Store service Status (instance {{ $labels.instance }})
+            description: "MSExchange Information Store state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# MSExchange IMAP4 down
+        - alert: MSExchangeIMAP4
+          expr: windows_service_state{name="msexchangeimap4", state="running"} == 0
+          for: 2m
+          labels:
+            severity: critical
+          annotations:
+            summary: MSExchange IMAP4 service Status (instance {{ $labels.instance }})
+            description: "MSExchange IMAP4 state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# MSExchange IMAP4 Back End down
+        - alert: MSExchangeIMAP4BE
+          expr: windows_service_state{name="msexchangeimap4be", state="running"} == 0
+          for: 2m
+          labels:
+            severity: critical
+          annotations:
+            summary: MSExchange IMAP4 Back End service Status (instance {{ $labels.instance }})
+            description: "MSExchange IMAP4 Back End state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Certificate propagation down
+        - alert: CertPropSvc
+          expr: windows_service_state{name="certpropsvc", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Certificate propagation service Status (instance {{ $labels.instance }})
+            description: "Certificate propagation state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Network Policy Server down
+        - alert: ias
+          expr: windows_service_state{name="ias", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Network Policy Server Status (instance {{ $labels.instance }})
+            description: "Network Policy Server is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# DHCP Server down
+        - alert: dhcpserver
+          expr: windows_service_state{name="dhcpserver", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: DHCP Server Status (instance {{ $labels.instance }})
+            description: "DHCP Server is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# DNS Server down
+        - alert: DNSserver
+          expr: windows_service_state{name="dns", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: DNS Server Status (instance {{ $labels.instance }})
+            description: "DNS Server is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# # Remote Registry Service down
+#         - alert: RemoteRegistry
+#           expr: windows_service_state{name="remoteregistry", state="running"} == 0
+#           for: 5m
+#           labels:
+#             severity: critical
+#           annotations:
+#             summary: RemoteRegistry Service Status (instance {{ $labels.instance }})
+#             description: "RemoteRegistry Service is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Tomcat8 Service down
+        - alert: Tomcat8
+          expr: windows_service_state{name="tomcat8", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Tomcat8 Service Status (instance {{ $labels.instance }})
+            description: "Tomcat8 Service is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# alfrescoTomcat Service down
+        - alert: alfrescoTomcat
+          expr: windows_service_state{name="alfrescotomcat", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: alfrescoTomcat Service Status (instance {{ $labels.instance }})
+            description: "alfrescoTomcat Service is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# PingFederate Service down
+        - alert: PingFederate
+          expr: windows_service_state{name="pingfederate", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: PingFederate Service Status (instance {{ $labels.instance }})
+            description: "PingFederate Service is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Puppet agent down
+        - alert: puppet
+          expr: windows_service_state{name="puppet", state="running"} == 0
+          for: 2m
+          labels:
+            severity: critical
+          annotations:
+            summary: Puppet agent service Status (instance {{ $labels.instance }})
+            description: "Puppet agent state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# NXlog down
+        - alert: nxlog
+          expr: windows_service_state{name="nxlog", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: nxlog service Status (instance {{ $labels.instance }})
+            description: "nxlog state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Docushare7 service down
+        - alert: Docushare7
+          expr: windows_service_state{name="20f1124b5ac4b800155d91acfd3", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Docushare7 service Status (instance {{ $labels.instance }})
+            description: "Docushare7 state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+###########################################
+### Below this line Linux services only ###
+###########################################
+# Clock skew detected for Linux
+        - alert: HostClockSkew
+          expr: (node_timex_offset_seconds > 0.05 and deriv(node_timex_offset_seconds[5m]) >= 0) or (node_timex_offset_seconds < -0.05 and deriv(node_timex_offset_seconds[5m]) <= 0)
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: Host clock skew (instance {{ $labels.instance }})
+            description: "Clock skew detected. Clock is out of sync.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Clock not sync'ing
+        - alert: HostClockNotSynchronising
+          expr: min_over_time(node_timex_sync_status[1m]) == 0 and node_timex_maxerror_seconds >= 16
+          for: 15m
+          labels:
+            severity: warning
+          annotations:
+            summary: Host clock not synchronising (instance {{ $labels.instance }})
+            description: "Clock not synchronising.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Hotswap filling up
+        - alert: HostSwapIsFillingUp
+          expr: (1 - (node_memory_SwapFree_bytes / node_memory_SwapTotal_bytes)) * 100 > 80
+          for: 10m
+          labels:
+            severity: warning
+          annotations:
+            summary: Host swap is filling up (instance {{ $labels.instance }})
+            description: "Swap is filling up (>80%)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Disk space free
+        - alert: DiskSpace>10%Free
+          expr: 100 - (100 * node_filesystem_avail_bytes / node_filesystem_size_bytes) > 90
+          for: 1m
+          labels:
+            severity: moderate
+          annotations:
+            summary: "Instance {{ $labels.instance }} is low on disk space"
+            description: "diskspace on {{ $labels.instance }} is used over {{ $value }}% ."
+# Systemd crashed
+        - alert: HostSystemdServiceCrashed
+          expr: node_systemd_unit_state{state="failed"} == 1
+          for: 15m
+          labels:
+            severity: warning
+          annotations:
+            summary: Host systemd service crashed (instance {{ $labels.instance }})
+            description: "systemd service crashed\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Kernel version deviation
+        - alert: HostKernelVersionDeviations
+          expr: count(sum(label_replace(node_uname_info, "kernel", "$1", "release", "([0-9]+.[0-9]+.[0-9]+).*")) by (kernel)) > 1
+          for: 6h
+          labels:
+            severity: warning
+          annotations:
+            summary: Host kernel version deviations (instance {{ $labels.instance }})
+            description: "Different kernel versions are running\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# MySQL server down
+        - alert: SqlServerDown
+          expr: mssql_up == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: SQL Server down (instance {{ $labels.instance }})
+            description: "SQL server instance is down\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# MySQLD down (needs mysqld exporter)
+        - alert: MysqlDown
+          expr: node_systemd_unit_state{name="mysqld.service", state="active"} != 1
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: MySQLd down (instance {{ $labels.instance }})
+            description: "MySQLd instance is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Jira down 
+        - alert: Jira
+          expr: node_systemd_unit_state{name="jira.service", state="active"} != 1
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: Jira down (instance {{ $labels.instance }})
+            description: "Jira service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Confluence down 
+        - alert: Confluence
+          expr: node_systemd_unit_state{name="Confluence.service", state="active"} != 1
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: Confluence down (instance {{ $labels.instance }})
+            description: "Confluence service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Crowd down 
+        - alert: Crowd
+          expr: node_systemd_unit_state{name="crowd.service", state="active"} != 1
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: Crowd down (instance {{ $labels.instance }})
+            description: "Crowd service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# SSH down 
+        - alert: SSH
+          expr: node_systemd_unit_state{name="sshd.service", state="active"} != 1
+          for: 4m
+          labels:
+            severity: critical
+          annotations:
+            summary: SSHD down (instance {{ $labels.instance }})
+            description: "SSHD service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# firewalld down 
+        - alert: firewalld
+          expr: node_systemd_unit_state{name="firewalld.service", state="active"} != 1
+          for: 3m
+          labels:
+            severity: critical
+          annotations:
+            summary: firewalld down (instance {{ $labels.instance }})
+            description: "firewalld service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# 80% of mysql connections in use
+        - alert: MysqlTooManyConnections(>80%)
+          expr: avg by (instance) (rate(mysql_global_status_threads_connected[1m])) / avg by (instance) (mysql_global_variables_max_connections) * 100 > 80
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: MySQL too many connections (> 80%) (instance {{ $labels.instance }})
+            description: "More than 80% of MySQL connections are in use on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Apache down 
+        - alert: Apache
+          expr: node_systemd_unit_state{name="apache2.service", state="active"} != 1
+          for: 3m
+          labels:
+            severity: critical
+          annotations:
+            summary: Apache down (instance {{ $labels.instance }})
+            description: "Apache service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Nginx down 
+        - alert: Nginx
+          expr: node_systemd_unit_state{name="nginx.service", state="active"} != 1
+          for: 3m
+          labels:
+            severity: critical
+          annotations:
+            summary: Nginx down (instance {{ $labels.instance }})
+            description: "Nginx service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
