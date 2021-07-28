@@ -486,3 +486,12 @@ prometheus::alerts:
           annotations:
             summary: Nginx down (instance {{ $labels.instance }})
             description: "Nginx service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Jira mail queue error
+        - alert: jira mail queue error
+          expr: jira_mail_queue_error_gauge != 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: jira_mail_queue_error_gauge (instance {{ $labels.instance }})
+            description: "jira_mail_queue_error_gauge is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
