@@ -1,5 +1,4 @@
 ---
 classes:
-  - profile::default
   - profile::base_windows
     
