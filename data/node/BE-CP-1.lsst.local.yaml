@@ -1,5 +1,4 @@
 ---
 classes:
-  - profile::default
-  # - profile::monitoring_graylog
   - profile::base_windows
+  - profile::monitoring_graylog
