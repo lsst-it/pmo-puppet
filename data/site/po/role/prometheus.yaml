@@ -36,7 +36,7 @@ prometheus::alerts:
             description: "A Prometheus job has disappeared\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Windows Disk space usage
         - alert: WindowsServerDiskSpaceUsage
-          expr: 100.0 - 100 * (((windows_logical_disk_free_bytes{volume!="HarddiskVolume1"}) / 1024 / 1024 ) / ((windows_logical_disk_size_bytes{volume!="HarddiskVolume1"}) / 1024 / 1024)) > 80
+          expr: 100.0 - 100 * (((windows_logical_disk_free_bytes{volume=~"(^[A-Z]:$)"}) / 1024 / 1024 ) / ((windows_logical_disk_size_bytes{volume=~"(^[A-Z]:$)"}) / 1024 / 1024)) > 80
           for: 5m
           labels:
             severity: critical
@@ -486,3 +486,12 @@ prometheus::alerts:
           annotations:
             summary: Nginx down (instance {{ $labels.instance }})
             description: "Nginx service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Jira mail queue error
+        - alert: jira mail queue error
+          expr: jira_mail_queue_error_gauge != 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: jira_mail_queue_error_gauge (instance {{ $labels.instance }})
+            description: "jira_mail_queue_error_gauge is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
