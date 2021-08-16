@@ -20,7 +20,7 @@ prometheus::alerts:
 # Alerts for URL endpoints
         - alert: EndpointDown
           expr: probe_success == 0
-          for: 2m
+          for: 4m
           labels:
             severity: "critical"
           annotations:
@@ -72,7 +72,7 @@ prometheus::alerts:
             description: "Windows Symantec AV state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
         - alert: WindowsSymantecMasterServiceStatus
           expr: windows_service_state{name="sepwsepmasterservicescsvc", state="running"} == 0
-          for: 1m
+          for: 5m
           labels:
             severity: critical
           annotations:
@@ -207,7 +207,7 @@ prometheus::alerts:
 # MSExchangeTransport down
         - alert: MSExchangeTransport
           expr: windows_service_state{name="msexchangetransport", state="running"} == 0
-          for: 2m
+          for: 5m
           labels:
             severity: critical
           annotations:
@@ -216,7 +216,7 @@ prometheus::alerts:
 # MSExchange Information Store down
         - alert: MSExchangeIS
           expr: windows_service_state{name="msexchangeis", state="running"} == 0
-          for: 2m
+          for: 5m
           labels:
             severity: critical
           annotations:
@@ -225,7 +225,7 @@ prometheus::alerts:
 # MSExchange IMAP4 down
         - alert: MSExchangeIMAP4
           expr: windows_service_state{name="msexchangeimap4", state="running"} == 0
-          for: 2m
+          for: 5m
           labels:
             severity: critical
           annotations:
@@ -234,7 +234,7 @@ prometheus::alerts:
 # MSExchange IMAP4 Back End down
         - alert: MSExchangeIMAP4BE
           expr: windows_service_state{name="msexchangeimap4be", state="running"} == 0
-          for: 2m
+          for: 5m
           labels:
             severity: critical
           annotations:
@@ -315,7 +315,7 @@ prometheus::alerts:
 # Puppet agent down
         - alert: puppet
           expr: windows_service_state{name="puppet", state="running"} == 0
-          for: 2m
+          for: 5m
           labels:
             severity: critical
           annotations:
@@ -345,7 +345,7 @@ prometheus::alerts:
 # Clock skew detected for Linux
         - alert: HostClockSkew
           expr: (node_timex_offset_seconds > 0.05 and deriv(node_timex_offset_seconds[5m]) >= 0) or (node_timex_offset_seconds < -0.05 and deriv(node_timex_offset_seconds[5m]) <= 0)
-          for: 2m
+          for: 10m
           labels:
             severity: warning
           annotations:
@@ -372,7 +372,7 @@ prometheus::alerts:
 # Disk space free
         - alert: DiskSpace>10%Free
           expr: 100 - (100 * node_filesystem_avail_bytes / node_filesystem_size_bytes) > 90
-          for: 1m
+          for: 15m
           labels:
             severity: moderate
           annotations:
@@ -417,7 +417,7 @@ prometheus::alerts:
 # Jira down 
         - alert: Jira
           expr: node_systemd_unit_state{name="jira.service", state="active"} != 1
-          for: 1m
+          for: 5m
           labels:
             severity: critical
           annotations:
@@ -426,7 +426,7 @@ prometheus::alerts:
 # Confluence down 
         - alert: Confluence
           expr: node_systemd_unit_state{name="Confluence.service", state="active"} != 1
-          for: 1m
+          for: 5m
           labels:
             severity: critical
           annotations:
@@ -435,7 +435,7 @@ prometheus::alerts:
 # Crowd down 
         - alert: Crowd
           expr: node_systemd_unit_state{name="crowd.service", state="active"} != 1
-          for: 1m
+          for: 5m
           labels:
             severity: critical
           annotations:
@@ -453,7 +453,7 @@ prometheus::alerts:
 # firewalld down 
         - alert: firewalld
           expr: node_systemd_unit_state{name="firewalld.service", state="active"} != 1
-          for: 3m
+          for: 5m
           labels:
             severity: critical
           annotations:
@@ -462,7 +462,7 @@ prometheus::alerts:
 # 80% of mysql connections in use
         - alert: MysqlTooManyConnections(>80%)
           expr: avg by (instance) (rate(mysql_global_status_threads_connected[1m])) / avg by (instance) (mysql_global_variables_max_connections) * 100 > 80
-          for: 2m
+          for: 5m
           labels:
             severity: warning
           annotations:
@@ -471,7 +471,7 @@ prometheus::alerts:
 # Apache down 
         - alert: Apache
           expr: node_systemd_unit_state{name="apache2.service", state="active"} != 1
-          for: 3m
+          for: 5m
           labels:
             severity: critical
           annotations:
@@ -480,7 +480,7 @@ prometheus::alerts:
 # Nginx down 
         - alert: Nginx
           expr: node_systemd_unit_state{name="nginx.service", state="active"} != 1
-          for: 3m
+          for: 5m
           labels:
             severity: critical
           annotations:
@@ -489,7 +489,7 @@ prometheus::alerts:
 # Jira mail queue error
         - alert: jira mail queue error
           expr: jira_mail_queue_error_gauge != 0
-          for: 1m
+          for: 3m
           labels:
             severity: critical
           annotations:

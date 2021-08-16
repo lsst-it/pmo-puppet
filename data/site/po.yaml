@@ -43,7 +43,7 @@ accounts::user_list:
     groups:
       - 'wheel'
     sshkeys:
-      - 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDRjClJiTdbQNIUFW6zzoBUmdqDi7iGJQoW6oWQe/tk+0EaoZef2+Qz0jcwxKItbN/QPmBjCtyFghEzlAGfOcyiG57D8ZDSNBGuyMpNcHBglKrAlWCQIgLm1UIbQ5xeIco4Sg5QDikRLjGVTYMeupiZCGaFqeKqMRKvbVcNaQf1auDX9rQPrqL4Hxz3wG6JQitUSAmYONIxR1K98MBq0kfvU79FPt+Rgd3Qy8mJU3Pgn0en9WqEpmWSnQPGnpOvYLpNvbW1QDFUK/9q4SPAUK0VHGgG5jmV20zX5GelhyqbCAfkhWZYuSA6RJ7Ju4W4G122KL+eLXUsJNkAKuJIgx9D'
+      - 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDRjClJiTdbQNIUFW6zzoBUmdqDi7iGJQoW6oWQe/tk+0EaoZef2+Qz0jcwxKItbN/QPmBjCtyFghEzlAGfOcyiG57D8ZDSNBGuyMpNcHBglKrAlWCQIgLm1UIbQ5xeIco4Sg5QDikRLjGVTYMeupiZCGaFqeKqMRKvbVcNaQf1auDX9rQPrqL4Hxz3wG6JQitUSAmYONIxR1K98MBq0kfvU79FPt+Rgd3Qy8mJU3Pgn0en9WqEpmWSnQPGnpOvYLpNvbW1QDFUK/9q4SPAUK0VHGgG5jmV20zX5GelhyqbCAfkhWZYuSA6RJ7Ju4W4G122KL+eLXUsJNkAKuJIgx9D rsa@puppet'
     password: ''
     ignore_password_if_empty: true
   jcockrum_local:
@@ -57,6 +57,6 @@ accounts::user_list:
     groups:
       - 'wheel'
     sshkeys:
-      - 'ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAk9F8/3c8bHFh4JFFwCohhe4meHTcO1HfgIo8Nt6+U4JS42E2DZzS3egxdhjwMKSuvR+LpzvpHDAYD4e+AIQXQ/OsF9vgMkYjPvYt2H5GLSfypetZoxm/VzhOJvHKLJf8VbYL1b3gT6zlKGTWpVwR8m0KHgl+mmii6LnyYJLiCO1KjwYALIKJHN0NJPHlB7lzb2ee47JtndfF31C2J1BYfOnPzFwtb65XQoNTwdiRzn1LU35mi/KlfutnTDz7i4VuhjkA1oo6eUjVACDWN1tGDX6SVs5Jb2JSzalNUvhOMJ2oIHBxGJ/kfFNbaLpLaubtUbpP0LkYwvyAAMDG2fzLrw=='
+      - 'ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAk9F8/3c8bHFh4JFFwCohhe4meHTcO1HfgIo8Nt6+U4JS42E2DZzS3egxdhjwMKSuvR+LpzvpHDAYD4e+AIQXQ/OsF9vgMkYjPvYt2H5GLSfypetZoxm/VzhOJvHKLJf8VbYL1b3gT6zlKGTWpVwR8m0KHgl+mmii6LnyYJLiCO1KjwYALIKJHN0NJPHlB7lzb2ee47JtndfF31C2J1BYfOnPzFwtb65XQoNTwdiRzn1LU35mi/KlfutnTDz7i4VuhjkA1oo6eUjVACDWN1tGDX6SVs5Jb2JSzalNUvhOMJ2oIHBxGJ/kfFNbaLpLaubtUbpP0LkYwvyAAMDG2fzLrw== rsa@puppet'
     password: ''
     ignore_password_if_empty: true
