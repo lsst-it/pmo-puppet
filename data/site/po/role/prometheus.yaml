@@ -324,7 +324,7 @@ prometheus::alerts:
 # NXlog down
         - alert: nxlog
           expr: windows_service_state{name="nxlog", state="running"} == 0
-          for: 5m
+          for: 30m
           labels:
             severity: critical
           annotations:
