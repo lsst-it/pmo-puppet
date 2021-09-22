@@ -1,28 +1,35 @@
 ---
+# The content of file "/etc/ssh/sshd_config" will be replaced with the config below.
 ssh::server_options:
   Port: 22
   Protocol: 2
+  HostKey:
+    - "/etc/ssh/ssh_host_rsa_key"
+    - "/etc/ssh/ssh_host_ecdsa_key"
+    - "/etc/ssh/ssh_host_ed25519_key"
   SyslogFacility: "AUTHPRIV"
-  # LogLevel: "INFO"
   LoginGraceTime: 195
   PermitRootLogin: "no"
   PubkeyAuthentication: "yes"
-  AuthorizedKeysFile: ".ssh/authorized_keys"
   PasswordAuthentication: "no"
+  AuthorizedKeysFile: ".ssh/authorized_keys"
   ChallengeResponseAuthentication: "no"
+  KbdInteractiveAuthentication: "no"
+  UsePrivilegeSeparation: "no"
   GSSAPIAuthentication: "yes"
   GSSAPICleanupCredentials: "no"
-  UsePAM: "yes"
+  UsePAM: "no"
   AllowTcpForwarding: "yes"
   X11Forwarding: "yes"
   X11UseLocalhost: "yes"
-  UsePrivilegeSeparation: "no"
   PrintMotd: "no"
-  TCPKeepAlive: "yes"
-  KbdInteractiveAuthentication: "no"
-  # ClientAliveInterval: 0
-  # ClientAliveCountMax: 3
   Banner: "/etc/ssh/sshd_banner"
+  AcceptEnv:
+    - "LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES"
+    - "LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT"
+    - "LC_IDENTIFICATION LC_ALL LANGUAGE"
+    - "XMODIFIERS"
+  Subsystem: "sftp /usr/libexec/openssh/sftp-server"
 #################################################
 ##### Keep users created by puppet distinct #####
 # so it will not conflict with LDAP integration #
