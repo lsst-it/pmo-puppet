@@ -18,7 +18,7 @@ ssh::server_options:
   UsePrivilegeSeparation: "no"
   GSSAPIAuthentication: "yes"
   GSSAPICleanupCredentials: "no"
-  UsePAM: "no"
+  UsePAM: "yes"
   AllowTcpForwarding: "yes"
   X11Forwarding: "yes"
   X11UseLocalhost: "yes"
