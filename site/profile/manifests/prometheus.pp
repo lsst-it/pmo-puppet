@@ -8,6 +8,10 @@ $advertise_ip,
 # Firewall rules are in private repo
   include prometheus
   include prometheus::snmp_exporter
+  file { '/etc/alertmanager/notifications.tmpl':
+  ensure  => file,
+  content => epp('profile/alertmanager_custom.epp'),
+  }
   class { 'prometheus::blackbox_exporter':
     version => '0.19.0',
     modules => {
@@ -46,6 +50,9 @@ class { 'prometheus::alertmanager':
         {
           'api_url'       => unwrap($slackapi_hide),
           'channel'       => '#it_monitoring',
+          'icon_url'      => 'https://avatars3.githubusercontent.com/u/3380462',
+          'title'         => '{{ template "custom_title" . }}',
+          'text'          => '{{ template "custom_slack_message" . }}',
           'send_resolved' => true,
           'username'      => unwrap($slackuser_hide),
         },
