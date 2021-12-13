@@ -1,6 +1,7 @@
 ---
+prometheus::alertmanager::template:
+  - '/alertmanager/notifications.tmpl'
 prometheus::manage_prometheus_server: true
-
 prometheus::version: '2.27.0'
 prometheus::storage_retention: '30d'
 prometheus::alerts:
@@ -15,6 +16,7 @@ prometheus::alerts:
             severity: 'page'
           annotations:
             summary: 'Instance {{ .Labels.instance }} {{ .Value }} down'
+            identifier: '{{ $labels.instance }}'
             description: '{{ $labels.instance }} of job {{ $labels.job }} has been
               down for more than 1 minutes.'
 # Alerts for URL endpoints
@@ -25,6 +27,7 @@ prometheus::alerts:
             severity: "critical"
           annotations:
             summary: "Endpoint  down"
+            identifier: '{{ $labels.instance }}'
 # Specific to Prometheus jobs
         - alert: PrometheusJobMissing
           expr: absent(up{job="prometheus"})
@@ -33,6 +36,7 @@ prometheus::alerts:
             severity: warning
           annotations:
             summary: Prometheus job missing (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "A Prometheus job has disappeared\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Windows Disk space usage
         - alert: WindowsServerDiskSpaceUsage
@@ -42,6 +46,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: Windows Server disk Space Usage (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Disk usage is more than 80%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Windows Defender Firewall service
         - alert: WindowsFirewallServiceStatus
@@ -51,6 +56,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: Windows Firewall service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Windows firewall state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Windows Hyperv managemnt service
         - alert: WindowsHypervServiceStatus
@@ -60,6 +66,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: Windows Hyperv service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Windows Hyperv state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Symantec monitoring
         - alert: WindowsSymantecServiceStatus
@@ -69,6 +76,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: Windows Symantec Master service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Windows Symantec AV state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
         - alert: WindowsSymantecMasterServiceStatus
           expr: windows_service_state{name="sepwsepmasterservicescsvc", state="running"} == 0
@@ -77,6 +85,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: Windows Symantec service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Windows Symantec AV state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # IIS Service
         - alert: WindowsIISServiceStatus
@@ -86,6 +95,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: Windows IIS service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Windows IIS state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # SQL Server (MSSQLSERVER) service
         - alert: MSSQLSERVER
@@ -95,6 +105,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: SQL Server (MSSQLSERVER) service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "SQL Server (MSSQLSERVER) state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # SQL Server Agent (MSSQLSERVER) service
         - alert: SQLSERVERAGENT
@@ -104,6 +115,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: SQL Agen service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "SQL Agent  state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # alfrescoPostgreSQL service
         - alert: alfrescoPostgreSQL
@@ -113,6 +125,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: alfrescoPostgreSQL service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "alfrescoPostgreSQL state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # BackupExec Agent Service
         - alert: WindowsBEAgentServiceStatus
@@ -122,6 +135,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: Windows BackupExec Agent service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Windows BackupExec Agent state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # BackupExec SQL status
         - alert: Windowsmssql$bkupexecServiceStatus
@@ -131,6 +145,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: Windows BKSQL service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Windows Service state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # BackupExec BackupExecDeviceMediaService Service
         - alert: BackupExecDeviceMediaService
@@ -140,6 +155,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: BackupExecDeviceMediaService service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "BackupExecDeviceMediaService state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # BackupExec BackupExecJobEngine Service
         - alert: BackupExecJobEngine
@@ -149,6 +165,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: BackupExecJobEngine service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "BackupExecJobEngine state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # BackupExec BackupExecRPCService Service
         - alert: BackupExecRPCService
@@ -158,6 +175,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: BackupExecRPCService service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "BackupExecRPCService state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # windows_Exporter service
         - alert: windows_exporterServiceStatus
@@ -167,6 +185,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: Windows_Exporter service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Windows windows_exporter state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Terminal Server Remote Gateway service
         - alert: TSGateway
@@ -176,6 +195,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: Terminal Server Remote Gateway service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Terminal Server Remote Gateway state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Terminal Server Remote Desktop Connection Broke service
         - alert: Tssdis
@@ -185,6 +205,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: Remote Desktop Connection Broker service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Remote Desktop Connection Broke state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Remote Desktop Services service
         - alert: TermService
@@ -194,6 +215,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: Remote Desktop Services service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Remote Desktop Services state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Remote Desktop Management service
         - alert: RDMS
@@ -203,6 +225,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: Remote Desktop Management service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Remote Desktop Management state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # MSExchangeTransport down
         - alert: MSExchangeTransport
@@ -212,6 +235,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: MSExchange Transport service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "MSExchange Transport state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # MSExchange Information Store down
         - alert: MSExchangeIS
@@ -221,6 +245,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: MSExchange Information Store service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "MSExchange Information Store state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # MSExchange IMAP4 down
         - alert: MSExchangeIMAP4
@@ -230,6 +255,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: MSExchange IMAP4 service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "MSExchange IMAP4 state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # MSExchange IMAP4 Back End down
         - alert: MSExchangeIMAP4BE
@@ -239,6 +265,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: MSExchange IMAP4 Back End service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "MSExchange IMAP4 Back End state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Certificate propagation down
         - alert: CertPropSvc
@@ -248,6 +275,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: Certificate propagation service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Certificate propagation state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Network Policy Server down
         - alert: ias
@@ -257,6 +285,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: Network Policy Server Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Network Policy Server is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # DHCP Server down
         - alert: dhcpserver
@@ -266,6 +295,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: DHCP Server Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "DHCP Server is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # DNS Server down
         - alert: DNSserver
@@ -275,6 +305,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: DNS Server Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "DNS Server is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # # Remote Registry Service down
 #         - alert: RemoteRegistry
@@ -293,6 +324,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: Tomcat8 Service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Tomcat8 Service is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # alfrescoTomcat Service down
         - alert: alfrescoTomcat
@@ -302,6 +334,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: alfrescoTomcat Service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "alfrescoTomcat Service is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # PingFederate Service down
         - alert: PingFederate
@@ -311,6 +344,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: PingFederate Service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "PingFederate Service is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Puppet agent down
         - alert: puppet
@@ -320,6 +354,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: Puppet agent service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Puppet agent state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # NXlog down
         - alert: nxlog
@@ -329,6 +364,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: nxlog service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "nxlog state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Docushare7 service down
         - alert: Docushare7
@@ -338,6 +374,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: Docushare7 service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Docushare7 state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 ###########################################
 ### Below this line Linux services only ###
@@ -350,6 +387,7 @@ prometheus::alerts:
             severity: warning
           annotations:
             summary: Host clock skew (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Clock skew detected. Clock is out of sync.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Clock not sync'ing
         - alert: HostClockNotSynchronising
@@ -359,6 +397,7 @@ prometheus::alerts:
             severity: warning
           annotations:
             summary: Host clock not synchronising (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Clock not synchronising.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Hotswap filling up
         - alert: HostSwapIsFillingUp
@@ -368,6 +407,7 @@ prometheus::alerts:
             severity: warning
           annotations:
             summary: Host swap is filling up (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Swap is filling up (>80%)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Disk space free
         - alert: DiskSpace>10%Free
@@ -377,6 +417,7 @@ prometheus::alerts:
             severity: moderate
           annotations:
             summary: "Instance {{ $labels.instance }} is low on disk space"
+            identifier: '{{ $labels.instance }}'
             description: "diskspace on {{ $labels.instance }} is used over {{ $value }}% ."
 # Systemd crashed
         - alert: HostSystemdServiceCrashed
@@ -386,6 +427,7 @@ prometheus::alerts:
             severity: warning
           annotations:
             summary: Host systemd service crashed (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "systemd service crashed\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Kernel version deviation
         - alert: HostKernelVersionDeviations
@@ -395,6 +437,7 @@ prometheus::alerts:
             severity: warning
           annotations:
             summary: Host kernel version deviations (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Different kernel versions are running\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # MySQL server down
         - alert: SqlServerDown
@@ -404,6 +447,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: SQL Server down (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "SQL server instance is down\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # MySQLD down (needs mysqld exporter)
         - alert: MysqlDown
@@ -413,6 +457,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: MySQLd down (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "MySQLd instance is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Jira down 
         - alert: Jira
@@ -422,6 +467,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: Jira down (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Jira service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Confluence down 
         - alert: Confluence
@@ -431,6 +477,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: Confluence down (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Confluence service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Crowd down 
         - alert: Crowd
@@ -440,6 +487,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: Crowd down (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Crowd service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # SSH down 
         - alert: SSH
@@ -449,6 +497,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: SSHD down (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "SSHD service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # firewalld down 
         - alert: firewalld
@@ -458,6 +507,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: firewalld down (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "firewalld service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # 80% of mysql connections in use
         - alert: MysqlTooManyConnections(>80%)
@@ -467,6 +517,7 @@ prometheus::alerts:
             severity: warning
           annotations:
             summary: MySQL too many connections (> 80%) (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "More than 80% of MySQL connections are in use on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Apache down 
         - alert: Apache
@@ -476,6 +527,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: Apache down (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Apache service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Nginx down 
         - alert: Nginx
@@ -485,6 +537,7 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: Nginx down (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "Nginx service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Jira mail queue error
         - alert: jira mail queue error
@@ -494,4 +547,5 @@ prometheus::alerts:
             severity: critical
           annotations:
             summary: jira_mail_queue_error_gauge (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
             description: "jira_mail_queue_error_gauge is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
