@@ -17,6 +17,13 @@ class profile::base_linux {
   class { 'timezone':
       timezone => 'UTC',
   }
+    # Postfix
+  class { 'postfix':
+    inet_interfaces     => 'localhost',
+    inet_protocols      => 'ipv4',
+    relayhost           => 'mail.lsst.org',
+    root_mail_recipient => 'shahram@lsst.org', # for testing
+  }
   Package { [ 'git', 'tree', 'tcpdump', 'telnet', 'gcc', 'xinetd',
   'bash-completion', 'sudo', 'screen', 'vim', 'openssl', 'openssl-devel',
   'wget', 'nmap', 'iputils', 'bind-utils', 'traceroute' ]:

@@ -9,8 +9,8 @@ $advertise_ip,
   include prometheus
   include prometheus::snmp_exporter
   file { '/etc/alertmanager/notifications.tmpl':
-  ensure  => file,
-  content => epp('profile/alertmanager_custom.epp'),
+    ensure  => file,
+    content => epp('profile/alertmanager_custom.epp'),
   }
   class { 'prometheus::blackbox_exporter':
     version => '0.19.0',

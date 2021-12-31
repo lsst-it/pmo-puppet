@@ -57,3 +57,7 @@ mod 'example42-network', '3.6.0'
 # Encryption
 mod 'puppetlabs-puppet_authorization', '0.5.1'
 mod 'binford2k-node_encrypt', '0.4.1'
+mod 'puppet-postfix', '2.0.0'
+mod 'camptocamp-augeas', '1.9.0'
+mod 'puppet-alternatives', '4.0.0' # postfix dependency
+mod 'puppetlabs-mailalias_core', '1.1.0' # postfix dependency
