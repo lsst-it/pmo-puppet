@@ -22,7 +22,7 @@ class profile::base_linux {
     inet_interfaces     => 'localhost',
     inet_protocols      => 'ipv4',
     relayhost           => 'mail.lsst.org',
-    root_mail_recipient => 'shahram@lsst.org', # for testing
+    root_mail_recipient => 'alerts@lsst.org',
   }
   Package { [ 'git', 'tree', 'tcpdump', 'telnet', 'gcc', 'xinetd',
   'bash-completion', 'sudo', 'screen', 'vim', 'openssl', 'openssl-devel',
