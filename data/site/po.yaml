@@ -73,6 +73,8 @@ rsyslog::config::global_config:
     value: "/var/lib/rsyslog"
   maxMessageSize:
     value: "64k"
+rsyslog::config::modules:
+  imuxsock: {}
 rsyslog::config::actions:
   graylogAWS:
     type: "omfwd"
