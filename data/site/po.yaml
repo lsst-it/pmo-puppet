@@ -83,3 +83,10 @@ rsyslog::config::actions:
       Target: "graylog-tuc.lsst.org"
       Port: 5514
       Protocol: "udp"
+postfix::inet_protocols: "ipv4"
+postfix::manage_root_alias: true
+postfix::inet_interfaces: "localhost"
+postfix::mydestination: "$myhostname, localhost.$mydomain, localhost"
+postfix::relayhost: "140.252.32.25"
+postfix::root_mail_recipient: 'alerts@lsst.org'
+postfix::mta: true

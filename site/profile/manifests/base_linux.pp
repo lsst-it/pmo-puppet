@@ -6,6 +6,7 @@ class profile::base_linux {
   include accounts
   include rsyslog
   include rsyslog::config
+  include postfix
 # config: /etc/systemd/system/node_exporter.service
   class { 'prometheus::node_exporter':
     version       => '1.1.2',
@@ -17,13 +18,7 @@ class profile::base_linux {
   class { 'timezone':
       timezone => 'UTC',
   }
-    # Postfix
-  class { 'postfix':
-    inet_interfaces     => 'localhost',
-    inet_protocols      => 'ipv4',
-    relayhost           => 'atlantis.lsst.org',
-    root_mail_recipient => 'alerts@lsst.org',
-  }
+
   Package { [ 'git', 'tree', 'tcpdump', 'telnet', 'gcc', 'xinetd',
   'bash-completion', 'sudo', 'screen', 'vim', 'openssl', 'openssl-devel',
   'wget', 'nmap', 'iputils', 'bind-utils', 'traceroute' ]:
