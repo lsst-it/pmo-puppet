@@ -2,6 +2,7 @@
 classes:
   - profile::base_linux
   - profile::grafana
+profile::base_linux::postfix: true
 network::interfaces_hash:
   eth0:
     type: Ethernet
