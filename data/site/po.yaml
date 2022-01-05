@@ -86,7 +86,12 @@ rsyslog::config::actions:
 postfix::inet_protocols: "ipv4"
 postfix::manage_root_alias: true
 postfix::inet_interfaces: "localhost"
-postfix::mydestination: "$myhostname, localhost.$mydomain, localhost"
 postfix::relayhost: "140.252.32.25"
 postfix::root_mail_recipient: 'alerts@lsst.org'
-postfix::mta: true
+postfix::configs:
+  virtual_alias_maps: 
+    ensure: absent
+  transport_maps: 
+    ensure: absent
+  mynetworks: 
+    ensure: absent
