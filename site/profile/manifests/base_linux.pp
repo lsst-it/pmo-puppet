@@ -1,5 +1,7 @@
 # Base profile for Linux OS
-class profile::base_linux {
+class profile::base_linux (
+  Boolean $awscli = false,
+) {
   include network
   include ::firewalld
   include ssh
@@ -24,30 +26,51 @@ class profile::base_linux {
   'wget', 'nmap', 'iputils', 'bind-utils', 'traceroute' ]:
   ensure => installed,
   }
+  if $awscli {
+  Package { [ 'awscli' ]:
+  ensure => installed,
+  }
+  $awscreds = lookup('awscreds')
+    file {
+      '/root/.aws':
+        ensure => directory,
+        mode   => '0700',
+        ;
+      '/root/.aws/credentials':
+        ensure  => file,
+        mode    => '0600',
+        content => $awscreds,
+        ;
+      '/root/.aws/config':
+        ensure  => file,
+        mode    => '0600',
+        content => "[default]\n",
+    }
+  }
 # Modify these files to secure servers
-$host = lookup('host')
-file { '/etc/host.conf' :
-  ensure  => file,
-  content => $host,
-}
-$nsswitch = lookup('nsswitch')
-file { '/etc/nsswitch.conf' :
-  ensure  => file,
-  content => $nsswitch,
-}
-$sshd_banner = lookup('sshd_banner')
-file { '/etc/ssh/sshd_banner' :
-  ensure  => file,
-  content => $sshd_banner,
-}
-$denyhosts = lookup ('denyhosts')
-file { '/etc/hosts.deny' :
-  ensure  => file,
-  content => $denyhosts,
-}
-$allowhosts = lookup ('allowhosts')
-file { '/etc/hosts.allow' :
-  ensure  => file,
-  content => $allowhosts,
-}
+  $host = lookup('host')
+  file { '/etc/host.conf' :
+    ensure  => file,
+    content => $host,
+  }
+  $nsswitch = lookup('nsswitch')
+  file { '/etc/nsswitch.conf' :
+    ensure  => file,
+    content => $nsswitch,
+  }
+  $sshd_banner = lookup('sshd_banner')
+  file { '/etc/ssh/sshd_banner' :
+    ensure  => file,
+    content => $sshd_banner,
+  }
+  $denyhosts = lookup ('denyhosts')
+  file { '/etc/hosts.deny' :
+    ensure  => file,
+    content => $denyhosts,
+  }
+  $allowhosts = lookup ('allowhosts')
+  file { '/etc/hosts.allow' :
+    ensure  => file,
+    content => $allowhosts,
+  }
 }
