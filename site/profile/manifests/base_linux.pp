@@ -2,15 +2,18 @@
 class profile::base_linux (
   Boolean $awscli  = false,
   Boolean $postfix = false,
+  Boolean $graylog = false,
 ) {
   include network
   include ::firewalld
   include ssh
   include accounts
-  include rsyslog
-  include rsyslog::config
   if $postfix {
   include postfix
+  }
+  if $graylog {
+  include rsyslog
+  include rsyslog::config
   }
 # config: /etc/systemd/system/node_exporter.service
   class { 'prometheus::node_exporter':
