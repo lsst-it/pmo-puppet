@@ -54,15 +54,13 @@ class profile::base_linux (
     }
   }
 # Modify these files to secure servers
+  class { 'nsswitch':
+  hosts  => ['dns myhostname','files'],
+  }
   $host = lookup('host')
   file { '/etc/host.conf' :
     ensure  => file,
     content => $host,
-  }
-  $nsswitch = lookup('nsswitch')
-  file { '/etc/nsswitch.conf' :
-    ensure  => file,
-    content => $nsswitch,
   }
   $sshd_banner = lookup('sshd_banner')
   file { '/etc/ssh/sshd_banner' :
