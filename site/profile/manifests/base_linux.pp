@@ -8,9 +8,9 @@ class profile::base_linux (
   include ::firewalld
   include ssh
   include accounts
-  if $postfix {
-  include postfix
-  }
+  #if $postfix {
+  #include postfix
+  #}
   if $graylog {
   include rsyslog
   include rsyslog::config
