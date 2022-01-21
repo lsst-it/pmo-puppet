@@ -88,6 +88,6 @@ postfix::inet_protocols: "ipv4"
 postfix::manage_root_alias: true
 postfix::inet_interfaces: "localhost"
 postfix::mydestination: "$myhostname, localhost.$mydomain, localhost"
-postfix::relayhost: "140.252.32.25"
+postfix::relayhost: "mail.lsst.org"
 postfix::root_mail_recipient: 'alerts@lsst.org'
 postfix::configs:
