@@ -54,9 +54,6 @@ class profile::base_linux (
     }
   }
 # Modify these files to secure servers
-  class { 'nsswitch':
-  hosts  => ['dns files','myhostname'], # Per Iain change the order to "dns files myhostname"
-  }
   $host = lookup('host')
   file { '/etc/host.conf' :
     ensure  => file,
