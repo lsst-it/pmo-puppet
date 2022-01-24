@@ -287,6 +287,16 @@ prometheus::alerts:
             summary: Network Policy Server Status (instance {{ $labels.instance }})
             identifier: '{{ $labels.instance }}'
             description: "Network Policy Server is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Windows Update Server down
+        - alert: ias
+          expr: windows_service_state{name="wsusservice", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Windows Update Server Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
+            description: "Windows Update Server is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # DHCP Server down
         - alert: dhcpserver
           expr: windows_service_state{name="dhcpserver", state="running"} == 0
