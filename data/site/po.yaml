@@ -67,3 +67,27 @@ accounts::user_list:
       - 'ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAk9F8/3c8bHFh4JFFwCohhe4meHTcO1HfgIo8Nt6+U4JS42E2DZzS3egxdhjwMKSuvR+LpzvpHDAYD4e+AIQXQ/OsF9vgMkYjPvYt2H5GLSfypetZoxm/VzhOJvHKLJf8VbYL1b3gT6zlKGTWpVwR8m0KHgl+mmii6LnyYJLiCO1KjwYALIKJHN0NJPHlB7lzb2ee47JtndfF31C2J1BYfOnPzFwtb65XQoNTwdiRzn1LU35mi/KlfutnTDz7i4VuhjkA1oo6eUjVACDWN1tGDX6SVs5Jb2JSzalNUvhOMJ2oIHBxGJ/kfFNbaLpLaubtUbpP0LkYwvyAAMDG2fzLrw== rsa@puppet'
     password: ''
     ignore_password_if_empty: true
+# graylog configuration.  Changes from default /etc/rsyslog.conf to /etc/rsyslog.d/50_rsyslog.conf
+rsyslog::config::global_config:
+  workDirectory:
+    value: "/var/lib/rsyslog"
+  maxMessageSize:
+    value: "64k"
+rsyslog::config::modules:
+  imuxsock: {}
+rsyslog::config::actions:
+  graylogAWS:
+    type: "omfwd"
+    facility: "*.*"
+    config:
+      Target: "graylog-tuc.lsst.org"
+      Port: 5514
+      Protocol: "udp"
+postfix::mta: true
+postfix::inet_protocols: "ipv4"
+postfix::manage_root_alias: true
+postfix::inet_interfaces: "localhost"
+postfix::mydestination: "$myhostname, localhost.$mydomain, localhost"
+postfix::relayhost: "mail.lsst.org"
+postfix::root_mail_recipient: 'alerts@lsst.org'
+postfix::configs:

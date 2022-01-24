@@ -1,14 +1,13 @@
 ---
 classes:
   - profile::base_linux
-  - profile::grafana
-profile::base_linux::postfix: true
+# profile::base_linux::postfix: true
 network::interfaces_hash:
   eth0:
     type: Ethernet
-    ipaddress: 140.252.32.111
-    netmask: 255.255.254.0
-    gateway: 140.252.32.1
+    ipaddress: 140.252.201.23
+    netmask: 255.255.255.0
+    gateway: 140.252.201.1
     dns1: 140.252.32.125
     dns2: 140.252.32.126
     peerdns: yes
