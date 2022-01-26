@@ -31,6 +31,26 @@ $ciphers,
     roles         => ['admin-gui, manager-gui, manager-script'],
     catalina_base => $catalina_base,
   }
+tomcat::config::server::connector { 'default-https':
+    catalina_base         => $catalina_base,
+    port                  => 8443,
+    protocol              =>'org.apache.coyote.http11.Http11NioProtocol', # $http_version,
+    purge_connectors      => true,
+    additional_attributes => {
+      'redirectPort'        => absent,
+      'SSLEnabled'          => $https_enabled,
+      'maxThreads'          => 150,
+      'scheme'              => https,
+      'secure'              => true,
+      'clientAuth'          => 'false',
+      'sslProtocol'         => 'TLS',
+      'sslEnabledProtocols' => 'TLSv1.2',
+      'ciphers'             => $ciphers,
+
+      'keystorePass'        => $keystorepass_hide.unwrap,
+      'keystoreFile'        => '/etc/pki/keystore',
+    },
+  }
 # Getting tomcat::service to work was too painful
   $tomcat_service = @("EOT")
     [Unit]
