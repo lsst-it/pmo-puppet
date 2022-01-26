@@ -20,7 +20,7 @@ class profile::base_linux (
     version       => '1.1.2',
     extra_options => '--collector.systemd \--collector.processes \--collector.meminfo_numa',
   }
-  class { 'ntp':
+  class { 'chrony':
     servers => [ '140.252.1.140', '140.252.1.141', '0.pool.ntp.arizona.edu' ],
   }
   class { 'timezone':

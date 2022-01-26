@@ -1,7 +1,6 @@
 ---
 classes:
-  - profile::default
-  # - profile::base_linux
+  - profile::base_linux
 # profile::base_linux::postfix: true
 network::interfaces_hash:
   eth0:
