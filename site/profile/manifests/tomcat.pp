@@ -46,7 +46,6 @@ tomcat::config::server::connector { 'default-https':
       'sslProtocol'         => 'TLS',
       'sslEnabledProtocols' => 'TLSv1.2',
       'ciphers'             => $ciphers,
-
       'keystorePass'        => $keystorepass_hide.unwrap,
       'keystoreFile'        => '/etc/pki/keystore',
     },
