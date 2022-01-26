@@ -18,4 +18,18 @@ $ciphers,
     catalina_home => $catalina_home,
     catalina_base => $catalina_base,
   }
+    file { '/opt/tomcat/webapps/manager/META-INF/context.xml':
+    ensure => file,
+    }
+    -> file_line{ 'remove org.apache.catalina.valves.RemoteAddrValve':
+        match => 'org.apache.catalina.valves.RemoteAddrValve',
+        line  => ' ',
+        path  => '/opt/tomcat/webapps/manager/META-INF/context.xml',
+        }
+  tomcat::config::server::tomcat_users { unwrap($tomcat_user_hide):
+    password      => $tomcat_pass_hide.unwrap,
+    roles         => ['admin-gui, manager-gui, manager-script'],
+    catalina_base => $catalina_base,
+  }
+
 }
