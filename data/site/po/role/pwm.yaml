@@ -9,3 +9,12 @@ profile::java::version_major: '8u202'
 profile::java::version_minor: 'b08'
 profile::java::java_path: '/usr/java/jdk-11.0.2+9-jre/bin:$PATH'
 profile::java::mem: '-Xmx1g'
+# Tomcat config
+profile::tomcat::tomcat_user_hide: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAS2Pe+4ZYPgneYG7+sEFTviidvxQ9SYhy2YtlGBmOVjsOb8XOo02pKdH2p25uWvIWUoRwxYsT1xnwielFHUx0ihjU6ps9K3o880HGHVzq85pkDsTIpPvsYK6Nk/nywk3SDqsS2It5nmUOcsCHtY/s2q/b+ieQX0uDuAOUzHO0x0RVp8Sb6dDn+7fBG8tptb+mITTHPvNmmqHPtjJiZ0gBOMOLHuk0mKj1D5Q8CPCJoT9U9HkBo44Qwy49hKhxCIn/Gt2uQFQR/k7519WtAuxL0Xg2vkT2yMeGUTMyyVzTDMKYRnh4KEIscL3Oa++y75eyUmLolbWbWAnK1SbTUu2I7DA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBCSLJ+t/f8IgA8v5XE2awyTgBCfwMUSL36nl5e670hUQyTG]
+profile::tomcat::tomcat_pass_hide: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEASTlh4Dr0MBaO596G+orFr6B/j57Fh2WrKb3lsgLAIpiiAUzkBOzODVCcziMmYEnX/5/r4XAScBKAcVmsEgCqnEAkhRC6XTFlqC3VN3EKMAhS7m85Q1+ZCkOENVWmlCJNF1KHHBY9cHmBUKdG8gTbFGwVvXm/nlkeBeE6iz6NNqMt82OL6PBS1e6MLA4TvG4T/n90k5JPB3eNZGdBn0OCxIbdlzw2rmYzuRpI0q3uNvB74aF3u/YYCS1a9FHEPtHPoYEzkMoMwhXDrMPhx6cjVR/Zqc7QhVbtDsk2e2+wX38XynDhgIXRPfaWIjbOpjcmgVQmMZZAL6bVXeLS0/RtRjA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBC2h9ixFn/scqAeZkP2NU6JgBCBfTVbZyD2KaHuK3e8zUOq]
+profile::tomcat::catalina_home: '/opt/tomcat'
+profile::tomcat::catalina_base: '/opt/tomcat'
+profile::tomcat::version: 'tomcat-9/v9.0.58/bin/apache-tomcat-9.0.58'
+profile::tomcat::java_home: '/usr/java/jdk-11.0.2+9-jre' #'/usr/java/jdk-11.0.2+9'
+profile::tomcat::https_enabled: 'true'
+profile::tomcat::keystorepass_hide: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAnlEKcY7Uu8csd/lA6f9TKaYFyoYhF4nOZUZKexwBeug8l/VAKUOfFAWsiLNL+xtahjczN28cndjKYH1fOvohLwkQMWlmVueNfTt4mZTGnnIwHiJk2F8YSu8A9+/x96/mIAtwWx6WNsF4I+wQtwlnZQ0/xG868vExIGSxZIN0Q2k8uOk/gNutzkmmcHLUz5ECRUiXRncs9JriuxqAWjFFqP5o1seX9WZGpKCz4mxIaFJ5XOvXPiYKwrVGrF5GaX259/a4ZXrQTXsJhw3h7RVb6DGfF/N6icCF6F/NslQ1GOsMxmHfXR+P+8sSik9V8nT8nYNR+Z/ZTTSrcjkJh918EjA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBANLnFlJdPjuwEejpw/f48UgBDRrnR2AaNDlcwqsTSJvqvK]
