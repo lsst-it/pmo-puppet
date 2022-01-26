@@ -1,6 +1,8 @@
 ---
 classes:
   - profile::base_linux
+  - profile::java
+  - profile::tomcat
 # profile::base_linux::postfix: true
 network::interfaces_hash:
   eth0:
