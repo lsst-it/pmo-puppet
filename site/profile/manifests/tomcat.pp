@@ -18,3 +18,4 @@ $ciphers,
     catalina_home => $catalina_home,
     catalina_base => $catalina_base,
   }
+}
