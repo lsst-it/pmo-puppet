@@ -28,7 +28,7 @@ class profile::base_linux (
   }
 
   Package { [ 'git', 'tree', 'tcpdump', 'telnet', 'gcc', 'xinetd',
-  'bash-completion', 'sudo', 'screen', 'vim', 'openssl', 'openssl-devel',
+  'bash-completion', 'sudo', 'vim', 'openssl', 'openssl-devel',
   'wget', 'nmap', 'iputils', 'bind-utils', 'traceroute' ]:
   ensure => installed,
   }
