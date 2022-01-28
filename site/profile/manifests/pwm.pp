@@ -7,4 +7,19 @@ class profile::pwm {
     provider => 'wget',
     cleanup  => false,
   }
+  # using archive directly to destination breaks tomcat installation
+  # So it must first go to the tmp folder then compied over to destination.
+  $pwmconfig_dest = lookup('pwmconfig_dest')
+  $pwmconfig_source = lookup('pwmconfig_source')
+  archive { '/tmp/PwmConfiguration.xml' :
+    ensure  => present,
+    source  => $pwmconfig_source,
+    cleanup => false,
+  }
+  $pwmkeystore = lookup('pwmkeystore')
+  archive { '/etc/pki/keystore' :
+    ensure  => present,
+    source  => $pwmkeystore,
+    cleanup => false,
+  }
 }
