@@ -26,4 +26,18 @@ class profile::pwm {
     source  => $pwmkeystore,
     cleanup => false,
   }
+  file { $pwmconfig_dest:
+    ensure => present,
+    source => '/tmp/PwmConfiguration.xml',
+  }
+$applicationpath = lookup('application_path')
+  $webpath = lookup('web_path')
+  file { '/opt/tomcat/webapps/pwm/WEB-INF/web.xml':
+    ensure => present,
+  }
+  -> file_line { 'Append line to pwm/WEB-INF/web.xml':
+      path  => $webpath,
+      line  => "<param-value>${applicationpath}</param-value>",
+      match => '<param-value>unspecified</param-value>', # "^unspecified.*$" can be used for string
+    }
 }
