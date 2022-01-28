@@ -16,6 +16,10 @@ class profile::pwm {
     source  => $pwmconfig_source,
     cleanup => false,
   }
+  file { '/opt/tomcat/webapps/pwm.war':
+    ensure => present,
+    source => '/tmp/pwm-1.9.2.war',
+  }
   $pwmkeystore = lookup('pwmkeystore')
   archive { '/etc/pki/keystore' :
     ensure  => present,
