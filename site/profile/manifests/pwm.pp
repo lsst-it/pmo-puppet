@@ -38,6 +38,6 @@ $applicationpath = lookup('application_path')
   -> file_line { 'Append line to pwm/WEB-INF/web.xml':
       path  => $webpath,
       line  => "<param-value>${applicationpath}</param-value>",
-      match => '<param-value>unspecified</param-value>', # "^unspecified.*$" can be used for string
+      match => '<param-value>unspecified</param-value>',
     }
 }
