@@ -40,4 +40,15 @@ $applicationpath = lookup('application_path')
       line  => "<param-value>${applicationpath}</param-value>",
       match => '<param-value>unspecified</param-value>',
     }
+    $lsst_theme = lookup('lsst_theme')
+    file {
+      '/opt/tomcat/webapps/pwm/public/resources/themes/lsst':
+        ensure => directory,
+    }
+    archive { '/tmp/lsst.zip' :
+      source       => $lsst_theme,
+      cleanup      => false,
+      extract      => true,
+      extract_path => '/opt/tomcat/webapps/pwm/public/resources/themes/lsst',
+    }
 }
