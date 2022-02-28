@@ -51,4 +51,9 @@ $applicationpath = lookup('application_path')
       extract      => true,
       extract_path => '/opt/tomcat/webapps/pwm/public/resources/themes/lsst',
     }
+  $favicon = lookup('favicon')
+  file { '/opt/tomcat/webapps/pwm/public/resources/favicon.png':
+    ensure => present,
+    source => $favicon,
+  }
 }

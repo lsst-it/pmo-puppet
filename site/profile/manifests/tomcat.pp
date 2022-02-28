@@ -37,7 +37,7 @@ tomcat::config::server::connector { 'default-https':
     protocol              =>'org.apache.coyote.http11.Http11NioProtocol', # $http_version,
     purge_connectors      => true,
     additional_attributes => {
-      'redirectPort'        => absent,
+      'redirectPort'        => '443',
       'SSLEnabled'          => $https_enabled,
       'maxThreads'          => 150,
       'scheme'              => https,
