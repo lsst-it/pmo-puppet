@@ -32,27 +32,27 @@ class profile::pwm {
   }
 $applicationpath = lookup('application_path')
   $webpath = lookup('web_path')
-  file { '/opt/tomcat/webapps/pwm/WEB-INF/web.xml':
+  file { '/opt/tomcat/webapps/ROOT/WEB-INF/web.xml':
     ensure => present,
   }
-  -> file_line { 'Append line to pwm/WEB-INF/web.xml':
+  -> file_line { 'Append line to ROOT/WEB-INF/web.xml':
       path  => $webpath,
       line  => "<param-value>${applicationpath}</param-value>",
       match => '<param-value>unspecified</param-value>',
     }
     $lsst_theme = lookup('lsst_theme')
     file {
-      '/opt/tomcat/webapps/pwm/public/resources/themes/lsst':
+      '/opt/tomcat/webapps/ROOT/public/resources/themes/lsst':
         ensure => directory,
     }
     archive { '/tmp/lsst.zip' :
       source       => $lsst_theme,
       cleanup      => false,
       extract      => true,
-      extract_path => '/opt/tomcat/webapps/pwm/public/resources/themes/lsst',
+      extract_path => '/opt/tomcat/webapps/ROOT/public/resources/themes/lsst',
     }
   $favicon = lookup('favicon')
-  file { '/opt/tomcat/webapps/pwm/public/resources/favicon.png':
+  file { '/opt/tomcat/webapps/ROOT/public/resources/favicon.png':
     ensure => present,
     source => $favicon,
   }
