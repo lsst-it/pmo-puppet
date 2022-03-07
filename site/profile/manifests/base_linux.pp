@@ -7,6 +7,7 @@ class profile::base_linux (
   include network
   include ::firewalld
   include ssh
+  include cron
   include accounts
   if $postfix {
   include postfix
