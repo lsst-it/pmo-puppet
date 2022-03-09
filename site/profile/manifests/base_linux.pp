@@ -7,6 +7,7 @@ class profile::base_linux (
   include network
   include ::firewalld
   include ssh
+  include cron
   include accounts
   if $postfix {
   include postfix
@@ -20,7 +21,7 @@ class profile::base_linux (
     version       => '1.1.2',
     extra_options => '--collector.systemd \--collector.processes \--collector.meminfo_numa',
   }
-  class { 'ntp':
+  class { 'chrony':
     servers => [ '140.252.1.140', '140.252.1.141', '0.pool.ntp.arizona.edu' ],
   }
   class { 'timezone':
@@ -28,13 +29,13 @@ class profile::base_linux (
   }
 
   Package { [ 'git', 'tree', 'tcpdump', 'telnet', 'gcc', 'xinetd',
-  'bash-completion', 'sudo', 'screen', 'vim', 'openssl', 'openssl-devel',
-  'wget', 'nmap', 'iputils', 'bind-utils', 'traceroute' ]:
-  ensure => installed,
+  'bash-completion', 'sudo', 'vim', 'openssl', 'openssl-devel',
+  'wget', 'nmap', 'iputils', 'bind-utils', 'traceroute', 'unzip', 'net-tools' ]:
+    ensure => installed,
   }
   if $awscli {
   Package { [ 'awscli' ]:
-  ensure => installed,
+    ensure => installed,
   }
   $awscreds = lookup('awscreds')
     file {
