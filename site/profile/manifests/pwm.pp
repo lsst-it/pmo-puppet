@@ -38,11 +38,18 @@ class profile::pwm {
     source  => $domaincert2,
     cleanup => false,
   }
+  $chain = lookup('chain')
+  archive { '/tmp/lsstcertlatestintermediate.pem' :
+    ensure  => present,
+    source  => $chain,
+    cleanup => false,
+  }
   $keystorepwd = lookup('keystorepwd')
   java_ks { 'lsst.org:/etc/pki/keystore':
     ensure              => latest,
     certificate         => '/tmp/lsstcertlatest.crt',
     private_key         => '/tmp/lsstcertlatest.key',
+    chain               => '/tmp/lsstcertlatestintermediate.pem',
     password            => $keystorepwd,
     password_fail_reset => true,
   }
