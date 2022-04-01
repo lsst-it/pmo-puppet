@@ -26,6 +26,18 @@ class profile::pwm {
     source  => $pwmkeystore,
     cleanup => false,
   }
+  $dc2cert = lookup('dc2cert')
+  archive { '/tmp/DC2Cert.cer' :
+    ensure  => present,
+    source  => $dc2cert,
+    cleanup => false,
+  }
+  $dc3cert = lookup('dc3cert')
+  archive { '/tmp/DC3Cert.cer' :
+    ensure  => present,
+    source  => $dc3cert,
+    cleanup => false,
+  }
   $domaincert = lookup('domaincert')
   archive { '/tmp/lsstcertlatest.crt' :
     ensure  => present,
