@@ -15,7 +15,7 @@ $mem,
     version      => $version,
     java_home    => $java_home,
   }
-  java::adopt { 'AdoptOpenJDK java jre 11 11.0.2 9' :
+  java::adopt { $distribution :
     ensure  => 'present',
     version => $jre_version,
     java    => $distribution,
