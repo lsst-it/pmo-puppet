@@ -16,8 +16,10 @@ $mem,
     java_home    => $java_home,
   }
   java::adopt { $distribution :
-    ensure  => 'present',
-    version => $jre_version,
-    java    => $distribution,
+    ensure        => 'present',
+    version       => $jre_version,
+    version_major => $version_major,
+    version_minor => $version_minor,
+    java          => $distribution,
   }
 }
