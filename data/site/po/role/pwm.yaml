@@ -1,4 +1,10 @@
 ---
+classes:
+  - profile::base_linux
+  - profile::java
+  - profile::tomcat
+  - profile::pwm
+profile::base_linux::postfix: true
 profile::base_linux::awscli: true
 profile::java::version: 'latest'
 profile::java::distribution: 'jre'
