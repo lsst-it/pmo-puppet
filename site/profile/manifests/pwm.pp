@@ -11,11 +11,6 @@ class profile::pwm {
   # So it must first go to the tmp folder then compied over to destination.
   $pwmconfig_dest = lookup('pwmconfig_dest')
   $pwmconfig_source = lookup('pwmconfig_source')
-  archive { '/tmp/PwmConfiguration.xml' :
-    ensure  => present,
-    source  => $pwmconfig_source,
-    cleanup => false,
-  }
   file { '/opt/tomcat/webapps/ROOT.war':
     ensure => present,
     source => '/tmp/pwm-1.9.2.war',
@@ -95,6 +90,11 @@ $applicationpath = lookup('application_path')
   file { '/opt/tomcat/webapps/ROOT/public/resources/favicon.png':
     ensure => present,
     source => $favicon,
+  }
+  archive { '/tmp/PwmConfiguration.xml' :
+    ensure  => present,
+    source  => $pwmconfig_source,
+    cleanup => false,
   }
   # # Manage AD certs 
   java_ks { 'dc2.lsst.local:/usr/java/jdk-11.0.2+9-jre/lib/security/cacerts':
