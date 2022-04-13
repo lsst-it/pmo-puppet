@@ -34,8 +34,12 @@ class profile::base_linux (
     ensure => installed,
   }
   if $awscli {
-  Package { [ 'awscli' ]:
+  Package { [ 'python3-pip', 'python3-devel' ]:
     ensure => installed,
+  }
+  exec { 'Install awscli':
+    path    => [ '/usr/bin', '/bin', '/usr/sbin' ],
+    command => 'sudo pip3 install awscli',
   }
   $awscreds = lookup('awscreds')
     file {
