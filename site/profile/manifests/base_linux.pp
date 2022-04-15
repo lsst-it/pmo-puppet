@@ -5,7 +5,7 @@ class profile::base_linux (
   Boolean $graylog = false,
 ) {
   include network
-  include firewalld
+  include ::firewalld
   include ssh
   include cron
   include accounts
@@ -34,8 +34,8 @@ class profile::base_linux (
     ensure => installed,
   }
   if $awscli {
-  Package { [ 'python3-pip', 'python3-devel' ]:
-    ensure => installed,
+    Package { [ 'python3-pip', 'python3-devel' ]:
+      ensure => installed,
   }
   exec { 'Install awscli':
     path    => [ '/usr/bin', '/bin', '/usr/sbin' ],
