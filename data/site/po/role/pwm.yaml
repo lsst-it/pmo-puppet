@@ -1,12 +1,18 @@
 ---
+classes:
+  - profile::base_linux
+  - profile::java
+  - profile::tomcat
+  - profile::pwm
+profile::base_linux::postfix: true
 profile::base_linux::awscli: true
 profile::java::version: 'latest'
 profile::java::distribution: 'jre'
 profile::java::java_home: '/usr/java/jdk-11.0.2+9-jre' #'/usr/java/jdk-11.0.2+9'
 profile::java::jre_version: '11'
 profile::java::jdk_version: '8'
-profile::java::version_major: '8u202'
-profile::java::version_minor: 'b08'
+profile::java::version_major: '11.0.2'
+profile::java::version_minor: '9'
 profile::java::java_path: '/usr/java/jdk-11.0.2+9-jre/bin:$PATH'
 profile::java::mem: '-Xmx1g'
 # Tomcat config
@@ -61,8 +67,8 @@ profile::tomcat::ciphers: |
   TLS_EMPTY_RENEGOTIATION_INFO_SCSVF
 cron::job:
   'pwmbackup':
-    command: "aws s3 cp %{lookup('pwmconfig_dest')} s3://pwm/%{facts.fqdn}-PwmConfiguration ;
-              aws s3 cp /etc/pki/keystore s3://pwm/%{facts.fqdn}.keystore"
+    command: "aws s3 cp %{lookup('pwmconfig_dest')} s3://pwm/%{facts.fqdn}-PwmConfiguration_bak ;
+              aws s3 cp /etc/pki/keystore s3://pwm/%{facts.fqdn}.keystore_bak"
     minute: 5
     hour: 20
     date: '*'
