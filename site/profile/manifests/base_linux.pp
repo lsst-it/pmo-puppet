@@ -10,11 +10,11 @@ class profile::base_linux (
   include cron
   include accounts
   if $postfix {
-  include postfix
+    include postfix
   }
   if $graylog {
-  include rsyslog
-  include rsyslog::config
+    include rsyslog
+    include rsyslog::config
   }
 # config: /etc/systemd/system/node_exporter.service
   class { 'prometheus::node_exporter':
