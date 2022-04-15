@@ -5,7 +5,7 @@ class profile::base_linux (
   Boolean $graylog = false,
 ) {
   include network
-  include ::firewalld
+  include firewalld
   include ssh
   include cron
   include accounts
