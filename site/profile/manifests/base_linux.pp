@@ -40,6 +40,7 @@ class profile::base_linux (
   exec { 'Install awscli':
     path    => [ '/usr/bin', '/bin', '/usr/sbin' ],
     command => 'sudo pip3 install awscli',
+    onlyif  => '/usr/bin/test ! -x /usr/local/bin/aws'
   }
   $awscreds = lookup('awscreds')
     file {
