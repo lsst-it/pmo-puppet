@@ -1,0 +1,5 @@
+---
+classes:
+  - profile::base_linux
+  - profile::java
+  - profile::sso
