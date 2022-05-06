@@ -3,3 +3,17 @@ classes:
   - profile::base_linux
   - profile::java
   - profile::sso
+profile::sso::pf_user: pfuser
+profile::sso::pf_version: '11.0.2'
+profile::sso::java_home: '/usr/java/jdk-11.0.2+9-jre' #'/usr/java/jdk-11.0.2+9'
+profile::sso::pf_home: '/opt/pingfederate-11.0.2/pingfederate' #'/usr/java/jdk-11.0.2+9'
+profile::java::version: 'latest'
+profile::java::distribution: 'jre'
+profile::java::java_home: '/usr/java/jdk-11.0.2+9-jre' #'/usr/java/jdk-11.0.2+9'
+profile::java::j_version: '11'
+profile::java::jre_version: '11'
+profile::java::jdk_version: '8'
+profile::java::version_major: '11.0.2'
+profile::java::version_minor: '9'
+profile::java::java_path: '/usr/java/jdk-11.0.2+9-jre/bin:$PATH'
+profile::java::mem: '-Xmx1g'
