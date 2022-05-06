@@ -1,5 +1,5 @@
 class profile::sso ( Sensitive[String]
-$pf_user,
+$pf_user_hide,
 $java_home,
 $pf_home,
 $pf_version,
@@ -22,7 +22,7 @@ include 'archive'
 
     [Service]
     Type=simple
-    User=${pf_user}
+    User=${pf_user.unwrap}
     WorkingDirectory=${pf_home}
     Environment='JAVA_HOME=${java_home}'
     ExecStart=${pf_home}/bin/run.sh
@@ -40,7 +40,7 @@ include 'archive'
   recursive_file_permissions { '/opt/pingfederate-11.0.2/pingfederate/':
     file_mode => '0775',
     dir_mode  => '0775',
-    owner     => $pf_user,
-    group     => $pf_user,
+    owner     => $pf_user.unwrap,
+    group     => $pf_user.unwrap,
   }
 }
