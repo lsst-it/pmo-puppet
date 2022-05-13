@@ -546,9 +546,9 @@ prometheus::alerts:
           labels:
             severity: critical
           annotations:
-            summary: confluence_mail_queue_errors_gauge (instance {{ $labels.instance }})
+            summary: jira_mail_queue_error_gauge (instance {{ $labels.instance }})
             identifier: '{{ $labels.instance }}'
-            description: "confluence_mail_queue_errors_gauge is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+            description: "jira_mail_queue_error_gauge is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Confluence mail queue error
         - alert: Confluence mail queue error
           expr: confluence_mail_queue_errors_gauge != 0
