@@ -326,16 +326,6 @@ prometheus::alerts:
 #           annotations:
 #             summary: RemoteRegistry Service Status (instance {{ $labels.instance }})
 #             description: "RemoteRegistry Service is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
-# Tomcat8 Service down
-        - alert: Tomcat8
-          expr: windows_service_state{name="tomcat8", state="running"} == 0
-          for: 5m
-          labels:
-            severity: critical
-          annotations:
-            summary: Tomcat8 Service Status (instance {{ $labels.instance }})
-            identifier: '{{ $labels.instance }}'
-            description: "Tomcat8 Service is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # alfrescoTomcat Service down
         - alert: alfrescoTomcat
           expr: windows_service_state{name="alfrescotomcat", state="running"} == 0
