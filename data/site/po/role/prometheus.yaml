@@ -326,16 +326,6 @@ prometheus::alerts:
 #           annotations:
 #             summary: RemoteRegistry Service Status (instance {{ $labels.instance }})
 #             description: "RemoteRegistry Service is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
-# Tomcat8 Service down
-        - alert: Tomcat8
-          expr: windows_service_state{name="tomcat8", state="running"} == 0
-          for: 5m
-          labels:
-            severity: critical
-          annotations:
-            summary: Tomcat8 Service Status (instance {{ $labels.instance }})
-            identifier: '{{ $labels.instance }}'
-            description: "Tomcat8 Service is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # alfrescoTomcat Service down
         - alert: alfrescoTomcat
           expr: windows_service_state{name="alfrescotomcat", state="running"} == 0
@@ -559,3 +549,13 @@ prometheus::alerts:
             summary: jira_mail_queue_error_gauge (instance {{ $labels.instance }})
             identifier: '{{ $labels.instance }}'
             description: "jira_mail_queue_error_gauge is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Confluence mail queue error
+        - alert: Confluence mail queue error
+          expr: confluence_mail_queue_errors_gauge != 0
+          for: 3m
+          labels:
+            severity: critical
+          annotations:
+            summary: confluence_mail_queue_errors_gauge (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
+            description: "confluence_mail_queue_errors_gauge is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
