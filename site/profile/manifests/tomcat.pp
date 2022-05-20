@@ -12,7 +12,7 @@ $ciphers,
 ){
 
   tomcat::install { $catalina_home:
-  source_url     => "https://dlcdn.apache.org/tomcat/${version}.tar.gz",
+  source_url     => "https://archive.apache.org/dist/tomcat/${version}.tar.gz",
   }
   tomcat::instance { 'default':
     catalina_home => $catalina_home,

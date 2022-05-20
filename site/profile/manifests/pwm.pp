@@ -11,11 +11,6 @@ class profile::pwm {
   # So it must first go to the tmp folder then compied over to destination.
   $pwmconfig_dest = lookup('pwmconfig_dest')
   $pwmconfig_source = lookup('pwmconfig_source')
-  archive { '/tmp/PwmConfiguration.xml' :
-    ensure  => present,
-    source  => $pwmconfig_source,
-    cleanup => false,
-  }
   file { '/opt/tomcat/webapps/ROOT.war':
     ensure => present,
     source => '/tmp/pwm-1.9.2.war',
@@ -26,9 +21,49 @@ class profile::pwm {
     source  => $pwmkeystore,
     cleanup => false,
   }
+  $dc2cert = lookup('dc2cert')
+  archive { '/tmp/DC2Cert.cer' :
+    ensure  => present,
+    source  => $dc2cert,
+    cleanup => false,
+  }
+  $dc3cert = lookup('dc3cert')
+  archive { '/tmp/DC3Cert.cer' :
+    ensure  => present,
+    source  => $dc3cert,
+    cleanup => false,
+  }
+  $domaincert = lookup('domaincert')
+  archive { '/tmp/lsstcertlatest.crt' :
+    ensure  => present,
+    source  => $domaincert,
+    cleanup => false,
+  }
+  $domaincert2 = lookup('domaincert2')
+  archive { '/tmp/lsstcertlatest.key' :
+    ensure  => present,
+    source  => $domaincert2,
+    cleanup => false,
+  }
+  $chain = lookup('chain')
+  archive { '/tmp/lsstcertlatestintermediate.pem' :
+    ensure  => present,
+    source  => $chain,
+    cleanup => false,
+  }
+  $keystorepwd = lookup('keystorepwd')
+  java_ks { 'lsst.org:/etc/pki/keystore':
+    ensure              => latest,
+    certificate         => '/tmp/lsstcertlatest.crt',
+    private_key         => '/tmp/lsstcertlatest.key',
+    chain               => '/tmp/lsstcertlatestintermediate.pem',
+    password            => $keystorepwd,
+    password_fail_reset => true,
+  }
   file { $pwmconfig_dest:
-    ensure => present,
-    source => '/tmp/PwmConfiguration.xml',
+    ensure  => present,
+    source  => '/tmp/PwmConfiguration.xml',
+    replace => 'no',
   }
 $applicationpath = lookup('application_path')
   $webpath = lookup('web_path')
@@ -55,5 +90,23 @@ $applicationpath = lookup('application_path')
   file { '/opt/tomcat/webapps/ROOT/public/resources/favicon.png':
     ensure => present,
     source => $favicon,
+  }
+  archive { '/tmp/PwmConfiguration.xml' :
+    ensure  => present,
+    source  => $pwmconfig_source,
+    cleanup => false,
+  }
+  # # Manage AD certs 
+  java_ks { 'dc2.lsst.local:/usr/java/jdk-11.0.2+9-jre/lib/security/cacerts':
+    ensure       => latest,
+    certificate  => '/tmp/DC2Cert.cer',
+    password     => $keystorepwd, # Must be at least 6 characters
+    trustcacerts => true,
+  }
+  java_ks { 'dc3.lsst.local:/usr/java/jdk-11.0.2+9-jre/lib/security/cacerts':
+    ensure       => latest,
+    certificate  => '/tmp/DC3Cert.cer',
+    password     => $keystorepwd, # Must be at least 6 characters
+    trustcacerts => true,
   }
 }

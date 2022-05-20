@@ -10,11 +10,11 @@ class profile::base_linux (
   include cron
   include accounts
   if $postfix {
-  include postfix
+    include postfix
   }
   if $graylog {
-  include rsyslog
-  include rsyslog::config
+    include rsyslog
+    include rsyslog::config
   }
 # config: /etc/systemd/system/node_exporter.service
   class { 'prometheus::node_exporter':
@@ -34,8 +34,13 @@ class profile::base_linux (
     ensure => installed,
   }
   if $awscli {
-  Package { [ 'awscli' ]:
-    ensure => installed,
+    Package { [ 'python3-pip', 'python3-devel' ]:
+      ensure => installed,
+  }
+  exec { 'Install awscli':
+    path    => [ '/usr/bin', '/bin', '/usr/sbin' ],
+    command => 'sudo pip3 install awscli',
+    onlyif  => '/usr/bin/test ! -x /usr/local/bin/aws'
   }
   $awscreds = lookup('awscreds')
     file {
