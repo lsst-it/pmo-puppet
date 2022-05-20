@@ -77,5 +77,5 @@ cron::job:
     user: root
     environment:
       - 'MAILTO=root'
-      - 'PATH="/usr/bin:/bin"'
+      - 'PATH="/usr/local/bin/:/usr/bin:/bin"'
     description: 'pwm backup'
