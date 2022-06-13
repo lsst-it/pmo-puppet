@@ -22,7 +22,7 @@ include 'archive'
 
     [Service]
     Type=simple
-    User=${pf_user.unwrap}
+    User=${pf_user_hide.unwrap}
     WorkingDirectory=${pf_home}
     Environment='JAVA_HOME=${java_home}'
     ExecStart=${pf_home}/bin/run.sh
