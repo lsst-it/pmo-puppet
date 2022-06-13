@@ -40,7 +40,7 @@ include 'archive'
   recursive_file_permissions { '/opt/pingfederate-11.0.2/pingfederate/':
     file_mode => '0775',
     dir_mode  => '0775',
-    owner     => $pf_user.unwrap,
-    group     => $pf_user.unwrap,
+    owner     => $pf_user_hide.unwrap,
+    group     => $pf_user_hide.unwrap,
   }
 }
