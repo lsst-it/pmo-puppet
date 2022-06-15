@@ -559,3 +559,12 @@ prometheus::alerts:
             summary: confluence_mail_queue_errors_gauge (instance {{ $labels.instance }})
             identifier: '{{ $labels.instance }}'
             description: "confluence_mail_queue_errors_gauge is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# PingFederate service down 
+        - alert: PingFederate
+          expr: node_systemd_unit_state{name="pingfederate.service", state="active"} != 1
+          for: 3m
+          labels:
+            severity: critical
+          annotations:
+            summary: pingfederate.service down (instance {{ $labels.instance }})
+            description: "pingfederate.service service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
