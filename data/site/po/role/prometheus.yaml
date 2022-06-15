@@ -562,7 +562,7 @@ prometheus::alerts:
 # PingFederate service down 
         - alert: PingFederate
           expr: node_systemd_unit_state{name="pingfederate.service", state="active"} != 1
-          for: 3m
+          for: 6m
           labels:
             severity: critical
           annotations:
