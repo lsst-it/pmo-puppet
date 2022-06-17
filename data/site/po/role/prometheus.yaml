@@ -336,16 +336,6 @@ prometheus::alerts:
             summary: alfrescoTomcat Service Status (instance {{ $labels.instance }})
             identifier: '{{ $labels.instance }}'
             description: "alfrescoTomcat Service is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
-# PingFederate Service down
-        - alert: PingFederate
-          expr: windows_service_state{name="pingfederate", state="running"} == 0
-          for: 5m
-          labels:
-            severity: critical
-          annotations:
-            summary: PingFederate Service Status (instance {{ $labels.instance }})
-            identifier: '{{ $labels.instance }}'
-            description: "PingFederate Service is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Puppet agent down
         - alert: puppet
           expr: windows_service_state{name="puppet", state="running"} == 0
@@ -559,3 +549,12 @@ prometheus::alerts:
             summary: confluence_mail_queue_errors_gauge (instance {{ $labels.instance }})
             identifier: '{{ $labels.instance }}'
             description: "confluence_mail_queue_errors_gauge is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# PingFederate service down 
+        - alert: PingFederate
+          expr: node_systemd_unit_state{name="pingfederate.service", state="active"} != 1
+          for: 6m
+          labels:
+            severity: critical
+          annotations:
+            summary: pingfederate.service down (instance {{ $labels.instance }})
+            description: "pingfederate.service service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
