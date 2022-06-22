@@ -91,3 +91,7 @@ postfix::mydestination: "$myhostname, localhost.$mydomain, localhost"
 postfix::relayhost: "mail.lsst.org"
 postfix::root_mail_recipient: 'alerts@lsst.org'
 postfix::configs:
+# Shows changes in logs
+puppet_agent::config:
+  - {section: 'agent', setting: 'show_diff', value: 'true'}
+puppet::report: true

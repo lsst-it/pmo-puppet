@@ -23,7 +23,7 @@ mod 'jdowning-awscli', '2.2.0'
 mod 'puppetlabs/ntp'
 # required for grafana ldap
 mod 'puppetlabs-puppetserver_gem', '1.1.1'
-mod 'puppet-grafana', '8.0.0'
+mod 'puppet-grafana', '10.0.1'
 mod 'puppet-prometheus', '11.0.0'
 mod 'saz/timezone', '6.1.0'
 mod 'puppet-rsyslog', '5.2.0'
