@@ -40,8 +40,8 @@ prometheus::alerts:
             description: "A Prometheus job has disappeared\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Windows Disk space usage
         - alert: WindowsServerDiskSpaceUsage
-          expr: 100.0 - 100 * (((windows_logical_disk_free_bytes{volume=~"(^[A-Z]:$)"}) / 1024 / 1024 ) / ((windows_logical_disk_size_bytes{volume=~"(^[A-Z]:$)"}) / 1024 / 1024)) > 80
-          for: 5m
+          expr: 100.0 - 100 * (((windows_logical_disk_free_bytes{volume=~"(^[A-Z]:$)"}) / 1024 / 1024 ) / ((windows_logical_disk_size_bytes{volume=~"(^[A-Z]:$)"}) / 1024 / 1024)) > 85
+          for: 25m
           labels:
             severity: critical
           annotations:
