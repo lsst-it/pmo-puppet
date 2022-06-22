@@ -2,7 +2,7 @@
 class profile::grafana {
 
   class { 'grafana':
-    version                  => '7.5.3',
+    version                  => '9.0.1',
     provisioning_datasources => {
     apiVersion  => 1,
     datasources => [
