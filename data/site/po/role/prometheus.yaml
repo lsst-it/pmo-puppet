@@ -47,7 +47,7 @@ prometheus::alerts:
           annotations:
             summary: Windows Server disk Space Usage (instance {{ $labels.instance }})
             identifier: '{{ $labels.instance }}'
-            description: "Disk usage is more than 80%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+            description: "Disk usage is more than 85%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Windows Defender Firewall service
         - alert: WindowsFirewallServiceStatus
           expr: windows_service_state{name="mpssvc", state="running"} == 0
