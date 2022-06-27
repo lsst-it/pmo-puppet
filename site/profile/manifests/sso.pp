@@ -12,6 +12,14 @@ include 'archive'
     extract      => true,
     extract_path => '/opt',
   }
+  # Required for Atlassian connector
+    archive { '/tmp/atlassianpingfed.zip':
+    source       => 'https://project.lsst.org/zpuppet/pingfederate/pf-atlassian-cloud-connector-1.0.zip',
+    cleanup      => true,
+    extract      => true,
+    extract_path => '/tmp/',
+  }
+
   $pingfederate_service = @("EOT")
     [Unit]
     Description=PingFederate ${pf_version}
