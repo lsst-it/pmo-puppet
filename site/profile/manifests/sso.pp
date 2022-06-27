@@ -19,6 +19,16 @@ include 'archive'
     extract      => true,
     extract_path => '/tmp/',
   }
+  # Copy file needed for Atlassian connector & modify run.properties
+  file { '/opt/pingfederate-11.0.2/pingfederate/bin/run.properties':
+    ensure => file,
+  }
+  -> file_line{ 'change pf.provisioner.mode to STANDALONE':
+      match => 'pf.provisioner.mode=OFF',
+      line  => 'pf.provisioner.mode=STANDALONE',
+      path  => '/opt/pingfederate-11.0.2/pingfederate/bin/run.properties',
+    }
+  # Pingfederate service
 
   $pingfederate_service = @("EOT")
     [Unit]
