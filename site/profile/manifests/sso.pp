@@ -12,6 +12,29 @@ include 'archive'
     extract      => true,
     extract_path => '/opt',
   }
+  # Required for Atlassian connector
+    archive { '/tmp/atlassianpingfed.zip':
+    source       => 'https://project.lsst.org/zpuppet/pingfederate/pf-atlassian-cloud-connector-1.0.zip',
+    cleanup      => true,
+    extract      => true,
+    extract_path => '/tmp/',
+  }
+  # Copy file needed for Atlassian connector... 
+  file { '/opt/pingfederate-11.0.2/pingfederate/server/default/deploy/pf-atlassian-cloud-quickconnection-1.0.jar':
+    ensure => present,
+    source => '/tmp/pf-atlassian-cloud-connector/dist/pf-atlassian-cloud-quickconnection-1.0.jar',
+  }
+  # ... & modify run.properties
+  file { '/opt/pingfederate-11.0.2/pingfederate/bin/run.properties':
+    ensure => file,
+  }
+  -> file_line{ 'change pf.provisioner.mode to STANDALONE':
+      match => 'pf.provisioner.mode=OFF',
+      line  => 'pf.provisioner.mode=STANDALONE',
+      path  => '/opt/pingfederate-11.0.2/pingfederate/bin/run.properties',
+    }
+  # Pingfederate service
+
   $pingfederate_service = @("EOT")
     [Unit]
     Description=PingFederate ${pf_version}
