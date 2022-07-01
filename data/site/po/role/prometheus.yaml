@@ -11,18 +11,18 @@ prometheus::alerts:
 # Applies to all devices
         - alert: 'InstanceDown'
           expr: 'up == 0'
-          for: '4m'
+          for: '5m'
           labels:
             severity: 'page'
           annotations:
             summary: 'Instance {{ .Labels.instance }} {{ .Value }} down'
             identifier: '{{ $labels.instance }}'
             description: '{{ $labels.instance }} of job {{ $labels.job }} has been
-              down for more than 1 minutes.'
+              down for more than 5 minutes.'
 # Alerts for URL endpoints
         - alert: EndpointDown
           expr: probe_success == 0
-          for: 4m
+          for: 5m
           labels:
             severity: "critical"
           annotations:
@@ -317,15 +317,6 @@ prometheus::alerts:
             summary: DNS Server Status (instance {{ $labels.instance }})
             identifier: '{{ $labels.instance }}'
             description: "DNS Server is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
-# # Remote Registry Service down
-#         - alert: RemoteRegistry
-#           expr: windows_service_state{name="remoteregistry", state="running"} == 0
-#           for: 5m
-#           labels:
-#             severity: critical
-#           annotations:
-#             summary: RemoteRegistry Service Status (instance {{ $labels.instance }})
-#             description: "RemoteRegistry Service is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # alfrescoTomcat Service down
         - alert: alfrescoTomcat
           expr: windows_service_state{name="alfrescotomcat", state="running"} == 0

@@ -26,3 +26,17 @@ profile::java::version_major: '11.0.2'
 profile::java::version_minor: '9'
 profile::java::java_path: '/usr/java/jdk-11.0.2+9-jre/bin:$PATH'
 profile::java::mem: '-Xmx1g'
+# Backup log files
+cron::job:
+  'ssobackup':
+    command: "aws s3 cp --recursive /opt/pingfederate-11.0.2/pingfederate/log/ s3://pingfe/pf-logs"
+    minute: 58
+    hour: 19
+    date: '*'
+    month: '*'
+    weekday: '*'
+    user: root
+    environment:
+      - 'MAILTO=root'
+      - 'PATH="/usr/local/bin/:/usr/bin:/bin"'
+    description: 'sso backup'
