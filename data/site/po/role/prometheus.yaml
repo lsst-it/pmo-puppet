@@ -75,18 +75,27 @@ prometheus::alerts:
           labels:
             severity: critical
           annotations:
-            summary: Windows Symantec Master service Status (instance {{ $labels.instance }})
+            summary: Windows Symantec WSC Status (instance {{ $labels.instance }})
             identifier: '{{ $labels.instance }}'
-            description: "Windows Symantec AV state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+            description: "Windows Symantec WSC state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
         - alert: WindowsSymantecMasterServiceStatus
-          expr: windows_service_state{name="sepwsepmasterservicescsvc", state="running"} == 0
+          expr: windows_service_state{name="sepmasterservice", state="running"} == 0
           for: 5m
           labels:
             severity: critical
           annotations:
-            summary: Windows Symantec service Status (instance {{ $labels.instance }})
+            summary: Windows Symantec Master service Status (instance {{ $labels.instance }})
             identifier: '{{ $labels.instance }}'
-            description: "Windows Symantec AV state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+            description: "Windows Symantec Master Service state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+        - alert: WindowsSymantecScanServiceStatus
+          expr: windows_service_state{name="sepscanservice", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Windows Symantec Scan service Status (instance {{ $labels.instance }})
+            identifier: '{{ $labels.instance }}'
+            description: "Windows Symantec Scan state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # IIS Service
         - alert: WindowsIISServiceStatus
           expr: windows_service_state{name="w3svc", state="running"} == 0
