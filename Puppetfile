@@ -24,7 +24,7 @@ mod 'puppetlabs/ntp'
 # required for grafana ldap
 mod 'puppetlabs-puppetserver_gem', '1.1.1'
 mod 'puppet-grafana', '10.0.1'
-mod 'puppet-prometheus', '11.0.0'
+mod 'puppet-prometheus', '12.4.0'
 mod 'saz/timezone', '6.1.0'
 mod 'puppet-rsyslog', '6.0.0'
 mod 'saz/ssh', '6.0.0'
