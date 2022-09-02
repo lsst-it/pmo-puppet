@@ -66,4 +66,17 @@ include 'archive'
     owner     => $pf_user_hide.unwrap,
     group     => $pf_user_hide.unwrap,
   }
+  # Log4j config for rsyslog
+   $log4j = lookup('log4j')
+   archive { '/tmp/log4j2.xml' :
+    ensure  => present,
+    source  => $log4j,
+    cleanup => false,
+  }
+  file { '/opt/pingfederate-11.0.2/pingfederate/server/default/conf/log4j2.xml':
+  ensure  => present,
+  source  => '/tmp/log4j2.xml',
+  replace => 'yes',
+  }
+
 }
