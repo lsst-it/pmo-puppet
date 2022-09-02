@@ -2,7 +2,7 @@
 prometheus::alertmanager::template:
   - '/alertmanager/notifications.tmpl'
 prometheus::manage_prometheus_server: true
-prometheus::version: '2.27.0'
+prometheus::version: '2.38.0'
 prometheus::storage_retention: '30d'
 prometheus::alerts:
   groups:
