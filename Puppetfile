@@ -20,7 +20,7 @@ mod 'puppet-download_file', '4.0.0'
 mod 'puppetlabs-aws', '2.1.0'
 mod 'jdowning-awscli', '2.2.0'
 # Linux
-mod 'puppetlabs/ntp'
+mod 'puppetlabs-ntp', '9.2.0'
 # required for grafana ldap
 mod 'puppetlabs-puppetserver_gem', '1.1.1'
 mod 'puppet-grafana', '10.0.1'
