@@ -7,31 +7,31 @@ $pf_version,
 include 'archive'
 
   archive { '/tmp/pingfed.zip':
-    source       => 'https://project.lsst.org/zpuppet/pingfederate/pingfederate-11.0.2.zip',
+    source       => "http://wsus.lsst.org/puppetfiles/pingfederate/pingfederate-${pf_version}.zip",
     cleanup      => true,
     extract      => true,
     extract_path => '/opt',
   }
   # Required for Atlassian connector
     archive { '/tmp/atlassianpingfed.zip':
-    source       => 'https://project.lsst.org/zpuppet/pingfederate/pf-atlassian-cloud-connector-1.0.zip',
+    source       => 'http://wsus.lsst.org/puppetfiles/pingfederate/pf-atlassian-cloud-connector-1.0.zip',
     cleanup      => true,
     extract      => true,
     extract_path => '/tmp/',
   }
   # Copy file needed for Atlassian connector... 
-  file { '/opt/pingfederate-11.0.2/pingfederate/server/default/deploy/pf-atlassian-cloud-quickconnection-1.0.jar':
+  file { "/opt/pingfederate-${pf_version}/pingfederate/server/default/deploy/pf-atlassian-cloud-quickconnection-1.0.jar":
     ensure => present,
     source => '/tmp/pf-atlassian-cloud-connector/dist/pf-atlassian-cloud-quickconnection-1.0.jar',
   }
   # ... & modify run.properties
-  file { '/opt/pingfederate-11.0.2/pingfederate/bin/run.properties':
+  file { "/opt/pingfederate-${pf_version}/pingfederate/bin/run.properties":
     ensure => file,
   }
   -> file_line{ 'change pf.provisioner.mode to STANDALONE':
       match => 'pf.provisioner.mode=OFF',
       line  => 'pf.provisioner.mode=STANDALONE',
-      path  => '/opt/pingfederate-11.0.2/pingfederate/bin/run.properties',
+      path  => "/opt/pingfederate-${pf_version}/pingfederate/bin/run.properties",
     }
   # Pingfederate service
 
@@ -60,7 +60,7 @@ include 'archive'
       ensure    => 'running',
       enable    => true,
     }
-  recursive_file_permissions { '/opt/pingfederate-11.0.2/pingfederate/':
+  recursive_file_permissions { "/opt/pingfederate-${pf_version}/pingfederate/":
     file_mode => '0775',
     dir_mode  => '0775',
     owner     => $pf_user_hide.unwrap,
@@ -73,7 +73,7 @@ include 'archive'
     source  => $log4j,
     cleanup => false,
   }
-  file { '/opt/pingfederate-11.0.2/pingfederate/server/default/conf/log4j2.xml':
+  file { "/opt/pingfederate-${pf_version}/pingfederate/server/default/conf/log4j2.xml":
   ensure  => present,
   source  => '/tmp/log4j2.xml',
   replace => 'yes',
