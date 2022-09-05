@@ -1,7 +1,8 @@
 forge 'https://forgeapi.puppetlabs.com'
 # Windows
 mod 'puppetlabs-chocolatey', '6.2.0'
-mod 'puppetlabs-registry', '4.0.0'
+mod 'puppetlabs-ruby_task_helper', '0.6.1' # Chocolately dependency
+mod 'puppetlabs-registry', '4.1.0'
 mod 'AlexCline-dirtree', '0.2.1'
 mod 'jriviere-windows_ad', '0.3.2'
 mod 'admin36-winfeature', '0.0.3'
@@ -14,7 +15,7 @@ mod 'puppetlabs-scheduled_task', '3.0.0'
 mod 'dylanratcliffe-windows_disk_facts', '0.2.7'
 mod 'puppet-nsclient', '2.1.0'
 mod 'puppetlabs-pwshlib', '0.8.0'
-mod 'puppetlabs-powershell', '5.0.0'
+mod 'puppetlabs-powershell', '5.1.0'
 mod 'puppet-download_file', '4.0.0'
 # AWS
 mod 'puppetlabs-aws', '2.1.0'
@@ -50,7 +51,7 @@ mod 'puppetlabs/concat', '6.0.0'
 mod 'puppetlabs-inifile', '5.0.1'
 mod 'puppetlabs-java', '7.3.0'
 mod 'puppetlabs-java_ks', '4.2.0'
-mod 'puppetlabs-stdlib', '7.1.0'
+mod 'puppetlabs-stdlib', '8.4.0'
 mod 'puppetlabs/vcsrepo', '3.0.0'
 mod 'puppet/ssh_keygen', '4.0.0'
 mod 'puppetlabs-hocon', '1.1.0'  # dependency
