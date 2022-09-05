@@ -1,6 +1,6 @@
 forge 'https://forgeapi.puppetlabs.com'
 # Windows
-mod 'puppetlabs-chocolatey', '6.0.0'
+mod 'puppetlabs-chocolatey', '6.2.0'
 mod 'puppetlabs-registry', '4.0.0'
 mod 'AlexCline-dirtree', '0.2.1'
 mod 'jriviere-windows_ad', '0.3.2'
