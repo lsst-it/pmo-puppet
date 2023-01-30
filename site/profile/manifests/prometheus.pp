@@ -34,7 +34,7 @@ $advertise_ip,
   }
 # Alertmanager config
 class { 'prometheus::alertmanager':
-  version       => '0.24.0',
+  version       => '0.25.0',
   extra_options => "--cluster.advertise-address=${advertise_ip} \--cluster.listen-address=:9797 \--cluster.peer=${unwrap($cluster_hide)}",
   route         => {
     'group_by'        => ['job'],
