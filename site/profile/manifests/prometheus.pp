@@ -13,7 +13,7 @@ $advertise_ip,
     content => epp('profile/alertmanager_custom.epp'),
   }
   class { 'prometheus::blackbox_exporter':
-    version => '0.22.0',
+    version => '0.23.0',
     modules => {
       'http_2xx'    => {
         'prober'  => 'http',
@@ -34,7 +34,7 @@ $advertise_ip,
   }
 # Alertmanager config
 class { 'prometheus::alertmanager':
-  version       => '0.24.0',
+  version       => '0.25.0',
   extra_options => "--cluster.advertise-address=${advertise_ip} \--cluster.listen-address=:9797 \--cluster.peer=${unwrap($cluster_hide)}",
   route         => {
     'group_by'        => ['job'],
