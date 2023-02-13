@@ -21,7 +21,7 @@ $advertise_ip,
         'http'    => {
           'valid_status_codes'    => [],
           'method'                => 'GET',
-          'preferred_ip_protocol' => 'ipv4',
+          'preferred_ip_protocol' => 'ip4',
         }
       },
       'tcp_connect' => {
