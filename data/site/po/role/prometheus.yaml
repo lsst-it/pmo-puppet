@@ -30,8 +30,8 @@ prometheus::alerts:
             identifier: '{{ $labels.instance }}'
 # Alerts for URL endpoints in "isonline group" up
         - alert: EndpointUp
-          expr: probe_success{group="isonline"} == 1
-          for: 10m
+          expr: probe_success{group="isonline"} == 1 #Ensures only the said group is reported
+          for: 1m
           labels:
             severity: warning
           annotations:
