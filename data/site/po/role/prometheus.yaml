@@ -21,7 +21,7 @@ prometheus::alerts:
               down for more than 5 minutes.'
 # Alerts for URL endpoints down
         - alert: EndpointDown
-          expr: probe_success == 0
+          expr: probe_success{group!="isonline"} == 0
           for: 5m
           labels:
             severity: "critical"
