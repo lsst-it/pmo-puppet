@@ -35,7 +35,9 @@ prometheus::alerts:
           labels:
             severity: warning
           annotations:
-            summary: "Why is this device is online?"
+            summary: 'Why is {{ .Labels.instance }} {{ .Value }} up?'
+            description: "{{ $labels.instance }} of job {{ $labels.job }} has been
+              up for more than VALUE = {{ $value }}\n minutes."
 # Specific to Prometheus jobs
         - alert: PrometheusJobMissing
           expr: absent(up{job="prometheus"})
