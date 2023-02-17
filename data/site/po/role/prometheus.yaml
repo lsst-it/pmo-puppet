@@ -19,15 +19,25 @@ prometheus::alerts:
             identifier: '{{ $labels.instance }}'
             description: '{{ $labels.instance }} of job {{ $labels.job }} has been
               down for more than 5 minutes.'
-# Alerts for URL endpoints
+# Alerts for URL endpoints down
         - alert: EndpointDown
-          expr: probe_success == 0
+          expr: probe_success{group!="isonline"} == 0
           for: 5m
           labels:
             severity: "critical"
           annotations:
             summary: "Endpoint  down"
             identifier: '{{ $labels.instance }}'
+# Alerts for URL endpoints in "isonline group" up
+        - alert: EndpointUp
+          expr: probe_success{group="isonline"} == 1 #Ensures only the said group is reported
+          for: 1m
+          labels:
+            severity: warning
+          annotations:
+            summary: 'Why is {{ .Labels.instance }} up?'
+            description: "{{ $labels.instance }} of job {{ $labels.job }} has been
+              up for more than VALUE = {{ $value }}\n minutes.  Ordinarily, this device should not be online"
 # Specific to Prometheus jobs
         - alert: PrometheusJobMissing
           expr: absent(up{job="prometheus"})
