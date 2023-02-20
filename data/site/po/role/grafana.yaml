@@ -1,0 +1,6 @@
+classes:
+  - profile::base_linux
+  - profile::grafana
+profile::base_linux::postfix: true
+profile::base_linux::graylog: true
+profile::base_linux::awscli: true
