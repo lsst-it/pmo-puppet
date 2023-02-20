@@ -27,6 +27,24 @@ class profile::grafana {
       enabled     => true,
       config_file => '/etc/grafana/ldap.toml',
     },
+    server      => {
+      http_port => 3000,
+      cert_key  => '/etc/grafana/grafana.key',
+      cert_file => '/etc/grafana/grafana.crt',
+      protocol  => 'https',
+    },
   }
-}
+  }
+  $domaincert = lookup('domaincert')
+  archive { '/etc/grafana/grafana.crt' :
+    ensure  => present,
+    source  => $domaincert,
+    cleanup => false,
+  }
+  $domaincert2 = lookup('domaincert2')
+  archive { '/etc/grafana/grafana.key' :
+    ensure  => present,
+    source  => $domaincert2,
+    cleanup => false,
+  }
 }
