@@ -21,19 +21,19 @@ class profile::grafana {
         isDefault => false,
       },
     ],
-  },
+    },
     cfg                      => {
-    'auth.ldap' => {
-      enabled     => true,
-      config_file => '/etc/grafana/ldap.toml',
-    },
-    server      => {
-      http_port => 3000,
-      cert_key  => '/etc/grafana/grafana.key',
-      cert_file => '/etc/grafana/grafana.crt',
-      protocol  => 'https',
-    },
-  }
+      'auth.ldap' => {
+        enabled     => true,
+        config_file => '/etc/grafana/ldap.toml',
+      },
+      server      => {
+        http_port => 3000,
+        cert_key  => '/etc/grafana/grafana.key',
+        cert_file => '/etc/grafana/grafana.crt',
+        protocol  => 'https',
+      },
+    }
   }
   $domaincert = lookup('domaincert')
   archive { '/etc/grafana/grafana.crt' :
