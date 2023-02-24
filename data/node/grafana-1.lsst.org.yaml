@@ -1,4 +1,6 @@
 ---
+profile::grafana::pname: 'mr-tuc-1'
+profile::grafana::url: 'http://mr-tuc-1.lsst.org:9090/'
 network::interfaces_hash:
   eth0:
     type: Ethernet
