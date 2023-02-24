@@ -1,6 +1,6 @@
 # Grafana url: http://grafana-x.lsst.org:3000
 class profile::grafana {
-
+  $grafana_pwd = lookup('grafana_pwd')
   class { 'grafana':
     version                  => '9.3.6',
     provisioning_datasources => {
@@ -32,6 +32,10 @@ class profile::grafana {
         cert_key  => '/etc/grafana/grafana.key',
         cert_file => '/etc/grafana/grafana.crt',
         protocol  => 'https',
+      },
+      security    => {
+        admin_user     => 'admin',
+        admin_password => $grafana_pwd,
       },
     }
   }
