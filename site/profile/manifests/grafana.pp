@@ -1,7 +1,9 @@
 # Grafana url: http://grafana-x.lsst.org:3000
 class profile::grafana ( String
-$pname,
-$url,
+$pname1,
+$url1,
+$pname2,
+$url2,
 ) {
   $grafana_pwd = lookup('grafana_pwd')
   class { 'grafana':
@@ -10,17 +12,17 @@ $url,
     apiVersion  => 1,
     datasources => [
       {
-        name      => $pname,
+        name      => $pname1,
         type      => 'prometheus',
         access    => 'proxy',
-        url       => $url,
+        url       => $url1,
         isDefault => true,
       },
       {
-        name      => 'mr-tuc-2',
+        name      => $pname2,
         type      => 'prometheus',
         access    => 'proxy',
-        url       => 'http://mr-tuc-2.lsst.org:9090/',
+        url       => $url2,
         isDefault => false,
       },
     ],
