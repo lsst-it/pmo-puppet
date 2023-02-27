@@ -402,7 +402,7 @@ prometheus::alerts:
 # Hotswap filling up
         - alert: HostSwapIsFillingUp
           expr: (1 - (node_memory_SwapFree_bytes / node_memory_SwapTotal_bytes)) * 100 > 80
-          for: 10m
+          for: 2h
           labels:
             severity: warning
           annotations:
@@ -422,7 +422,7 @@ prometheus::alerts:
 # Systemd crashed
         - alert: HostSystemdServiceCrashed
           expr: node_systemd_unit_state{state="failed"} == 1
-          for: 15m
+          for: 2h
           labels:
             severity: warning
           annotations:
