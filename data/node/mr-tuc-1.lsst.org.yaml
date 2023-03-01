@@ -6,8 +6,19 @@ profile::prometheus::slackuser_hide: ENC[PKCS7,MIIBiQYJKoZIhvcNAQcDoIIBejCCAXYCA
 profile::prometheus::slackapi_hide: ENC[PKCS7,MIIBuQYJKoZIhvcNAQcDoIIBqjCCAaYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAVeRiDIioUKNOrDQuzoi3JPDTs0xLE3cvivudtlZd9Ksfh/hJFKOQ89a5a8aB9priDEXtHV36G9X/6FJ/FLvhM/xvtvyeBrVMJ7b3uTJRNvCnBTlexkKUX36yDFJBqiyQAebeaLNrTrURUDum0PK8vi5V3a6+vLkCHz4cxWisDFbkdxYDI4NTJ1HFg3eHED5RyFLTd2lf1y3jFSAhu1vn6Nmq85Pqy0SXzSHehDls+SLkimaUwfWn4oujVfm7TU29xIinAQ7bgmAk+UuuKtxGYsmNvdsNRy0LX+H9Mm23UgfpcyuRJZaqyWEuHdtZ035aOnYBqTvWUYgcmv1d1LNZpjB8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBBoP2c/stbffP1wOOZV9mfNgFDEviEzDQoK35MZhA9NCYoZY7m9sZ73fzDnnk9PraNNnZaW5J0lfiyMAzDeFyZQEqkQ/R9da5Ow1zR7+oiDLaTm0Pgmxc4nEWVatOhHKZE0RQ==]
 profile::prometheus::cluster_hide: ENC[PKCS7,MIIBiQYJKoZIhvcNAQcDoIIBejCCAXYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAGzQnF2ZbDmEDg5xwlMxs4XW8s1YhqSRpFQ0I18SUQQ63umULQBNUb+BwVxYBiQ96fhw44At9oup9GgSZ3MnDShP2ALNHydWMpwsddMId54/J9rkXMGeEAaq9dd7A0Xb2q+pVXZYQWQ+map7pKL00TxiSiOo3KXrGYe1972dXjssYyS5JvCokvHodm1aBzcezZyi1oD6QUjeAWiQd139Ul5yQH22PNx+MfE3qp8uWw4ueLu005j2+k4zE1eOz87Gxf+0NTEJkeWvVmrwdIGJb4uzXOObEMDGrz2itRYCMYZwFsJfA9Rry4rirRbVjg3e5mPxMk7SYdvZWJVVMvVPGgjBMBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBBsrTaPdZGuo0p2ZKvDmDa1gCBWITTDyO8Gr/tFlkmrJcFIBIdjfVGui26qS0BYtC6PkA==]
 profile::prometheus::advertise_ip: 192.168.50.11:9093
-# Network config for cluster
+# Network config 
 network::interfaces_hash:
+  eth0:
+    type: Ethernet
+    ipaddress: 140.252.32.21
+    netmask: 255.255.254.0
+    gateway: 140.252.32.1
+    dns1: 140.252.32.125
+    dns2: 140.252.32.126
+    peerdns: yes
+    bootproto: none
+    onboot: yes
+# Network config for cluster
   eth1:
     ipaddress: '192.168.50.11'
     netmask: '255.255.255.0'

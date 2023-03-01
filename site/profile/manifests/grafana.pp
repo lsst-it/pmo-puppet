@@ -1,23 +1,28 @@
 # Grafana url: http://grafana-x.lsst.org:3000
-class profile::grafana {
-
+class profile::grafana ( String
+$pname1,
+$url1,
+$pname2,
+$url2,
+) {
+  $grafana_pwd = lookup('grafana_pwd')
   class { 'grafana':
     version                  => '9.3.6',
     provisioning_datasources => {
     apiVersion  => 1,
     datasources => [
       {
-        name      => 'mr-tuc-1',
+        name      => $pname1,
         type      => 'prometheus',
         access    => 'proxy',
-        url       => 'http://mr-tuc-1.lsst.org:9090/',
+        url       => $url1,
         isDefault => true,
       },
       {
-        name      => 'mr-tuc-2',
+        name      => $pname2,
         type      => 'prometheus',
         access    => 'proxy',
-        url       => 'http://mr-tuc-2.lsst.org:9090/',
+        url       => $url2,
         isDefault => false,
       },
     ],
@@ -32,6 +37,10 @@ class profile::grafana {
         cert_key  => '/etc/grafana/grafana.key',
         cert_file => '/etc/grafana/grafana.crt',
         protocol  => 'https',
+      },
+      security    => {
+        admin_user     => 'admin',
+        admin_password => $grafana_pwd,
       },
     }
   }
