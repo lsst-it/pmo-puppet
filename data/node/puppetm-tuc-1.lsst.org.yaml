@@ -2,3 +2,4 @@
 classes:
   - profile::base_linux
   - profile::puppet_master
+profile::base_linux::graylog: true
