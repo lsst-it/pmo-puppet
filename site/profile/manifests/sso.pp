@@ -22,7 +22,7 @@ include 'archive'
     }
   }
   # Required for Atlassian connector
-    archive { '/tmp/atlassianpingfed.zip':
+  archive { '/tmp/atlassianpingfed.zip':
     source       => 'http://wsus.lsst.org/puppetfiles/pingfederate/pf-atlassian-cloud-connector-1.0.zip',
     cleanup      => true,
     extract      => true,
@@ -42,6 +42,18 @@ include 'archive'
       line  => 'pf.provisioner.mode=STANDALONE',
       path  => "/opt/pingfederate-${pf_version}/pingfederate/bin/run.properties",
     }
+  # Log4j config for rsyslog
+  $log4j = lookup('log4j')
+  archive { '/tmp/log4j2.xml' :
+    ensure  => present,
+    source  => $log4j,
+    cleanup => false,
+  }
+  file { "/opt/pingfederate-${pf_version}/pingfederate/server/default/conf/log4j2.xml":
+    ensure  => present,
+    source  => '/tmp/log4j2.xml',
+    replace => 'yes',
+  }
   # Pingfederate service
   $pingfederate_service = @("EOT")
     [Unit]
@@ -68,18 +80,4 @@ include 'archive'
       ensure    => 'running',
       enable    => true,
     }
-
-  # Log4j config for rsyslog
-   $log4j = lookup('log4j')
-   archive { '/tmp/log4j2.xml' :
-    ensure  => present,
-    source  => $log4j,
-    cleanup => false,
-  }
-  file { "/opt/pingfederate-${pf_version}/pingfederate/server/default/conf/log4j2.xml":
-  ensure  => present,
-  source  => '/tmp/log4j2.xml',
-  replace => 'yes',
-  }
-
 }
