@@ -55,6 +55,7 @@ include 'archive'
     replace => 'yes',
   }
   # Download Pingfederate lic.
+  $pf_lic = lookup('pf_lic')
   archive { "/opt/pingfederate-${pf_version}/pingfederate/server/default/conf/pingfederate.lic" :
     ensure  => present,
     source  => $pf_lic,
