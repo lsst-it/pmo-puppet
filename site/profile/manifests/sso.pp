@@ -54,6 +54,12 @@ include 'archive'
     source  => '/tmp/log4j2.xml',
     replace => 'yes',
   }
+  # Download Pingfederate lic.
+  archive { "/opt/pingfederate-${pf_version}/pingfederate/server/default/conf/pingfederate.lic" :
+    ensure  => present,
+    source  => $pf_lic,
+    cleanup => false,
+  }
   # Pingfederate service
   $pingfederate_service = @("EOT")
     [Unit]
