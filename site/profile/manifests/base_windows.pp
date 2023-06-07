@@ -11,11 +11,7 @@ class profile::base_windows (
   service { 'windows_exporter':
     ensure => running,
   }
-  package { 'Notepad++ (64-bit x64)':
-      ensure          => installed,
-      source          => 'http://wsus.lsst.org/puppetfiles/notepad/Notepad7.9.1.msi',
-      install_options => '/quiet',
-  }
+# Graylog config
   if $graylog {
     package { 'NXLog-CE':
         ensure => '2.10.2150',
