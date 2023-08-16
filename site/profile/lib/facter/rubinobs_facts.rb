@@ -14,3 +14,8 @@ Facter.add(:yourls_config) do
     File.exists?('/etc/nginx/YOURLS/user/config.php')
   end
 end
+Facter.add(:nginx_pid) do
+  setcode do
+    File.exists?('/etc/systemd/system/nginx.service.d/override.conf')
+  end
+end
