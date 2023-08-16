@@ -1,0 +1,8 @@
+---
+classes:
+  - profile::base_linux
+  - profile::yourls
+profile::base_linux::postfix: true
+profile::base_linux::awscli: true
+profile::yourls::yourls_version: '1.9.3' # If you change this version, ensure to update file rubinobs_facts.rb
+profile::yourls::nginx_version: '1.22.1'

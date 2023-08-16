@@ -1,7 +1,4 @@
 ---
-classes:
-  - profile::base_linux
-profile::base_linux::postfix: true
 # Network config 
 network::interfaces_hash:
   eth0:
