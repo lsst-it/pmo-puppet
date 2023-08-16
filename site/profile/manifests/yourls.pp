@@ -57,9 +57,9 @@ file { '/etc/nginx/YOURLS':
     cleanup => false,
   }
   archive { '/tmp/yourls_config.zip' :
-    ensure  => present,
-    source  => 's3://yourls-data/yourls_config.zip',
-    cleanup => false,
+    ensure       => present,
+    source       => 's3://yourls-data/yourls_config.zip',
+    cleanup      => false,
     extract      => true,
     extract_path => '/tmp',
   }
