@@ -33,7 +33,7 @@ include mysql::server
     source  => 's3://yourls-data/yourls/20230816030002-yourls-php-info.tgz',
     cleanup => false,
   }
-  mysql::db { $yourls_db_name_hide:
+  mysql::db { $yourls_db_name_hide.unwrap:
     user           => $yourls_db_user_hide.unwrap,
     password       => $yourls_db_pass_hide.unwrap,
     host           => 'localhost',
