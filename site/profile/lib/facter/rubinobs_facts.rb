@@ -9,3 +9,8 @@ Facter.add(:nginx_source) do
     File.exists?('/usr/src/nginx-1.22.1/configure')
   end
 end
+Facter.add(:yourls_config) do
+  setcode do
+    File.exists?('/etc/nginx/YOURLS/user/config.php')
+  end
+end
