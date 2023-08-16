@@ -29,7 +29,7 @@ include mysql::server
   }
   archive { '/tmp/mysql-db-yourls.gz' :
     ensure  => present,
-    source  => 's3://yourls-data/yourls/20230816030002-yourls-php-info.tgz',
+    source  => 's3://yourls-data/yourls/20230816030002-mysql-db-yourls.gz',
     cleanup => false,
   }
 $yourls_db_name = lookup('yourls_db_name')
