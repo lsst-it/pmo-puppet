@@ -6,27 +6,27 @@ $pf_version,
 ){
 include 'archive'
 
-  archive { '/tmp/pingfed.zip':
-    source       => "http://wsus.lsst.org/puppetfiles/pingfederate/pingfederate-${pf_version}.zip",
-    cleanup      => true,
-    extract      => true,
-    extract_path => '/opt',
-  }
 # Ensures recursive perm change will run only initially
   unless $::pf_svc  {
+    archive { '/tmp/pingfed.zip':
+      source       => "http://wsus.lsst.org/puppetfiles/pingfederate/pingfederate-${pf_version}.zip",
+      cleanup      => true,
+      extract      => true,
+      extract_path => '/opt',
+    }
+    # Required for Atlassian connector
+    archive { '/tmp/atlassianpingfed.zip':
+      source       => 'http://wsus.lsst.org/puppetfiles/pingfederate/pf-atlassian-cloud-connector-1.0.zip',
+      cleanup      => true,
+      extract      => true,
+      extract_path => '/tmp/',
+    }
     recursive_file_permissions { "/opt/pingfederate-${pf_version}/pingfederate/":
       file_mode => '0775',
       dir_mode  => '0775',
       owner     => $pf_user_hide.unwrap,
       group     => $pf_user_hide.unwrap,
     }
-  }
-  # Required for Atlassian connector
-  archive { '/tmp/atlassianpingfed.zip':
-    source       => 'http://wsus.lsst.org/puppetfiles/pingfederate/pf-atlassian-cloud-connector-1.0.zip',
-    cleanup      => true,
-    extract      => true,
-    extract_path => '/tmp/',
   }
   # Copy file needed for Atlassian connector... 
   file { "/opt/pingfederate-${pf_version}/pingfederate/server/default/deploy/pf-atlassian-cloud-quickconnection-1.0.jar":
@@ -53,6 +53,13 @@ include 'archive'
     ensure  => present,
     source  => '/tmp/log4j2.xml',
     replace => 'yes',
+  }
+  # Download Pingfederate lic.
+  $pf_lic = lookup('pf_lic')
+  archive { "/opt/pingfederate-${pf_version}/pingfederate/server/default/conf/pingfederate.lic" :
+    ensure  => present,
+    source  => $pf_lic,
+    cleanup => false,
   }
   # Pingfederate service
   $pingfederate_service = @("EOT")
