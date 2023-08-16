@@ -1,7 +1,7 @@
 class profile::yourls (Sensitive[String]
-
+$yourls_db_pass_hide,
 $yourls_version,
-$nginx_version
+$nginx_version,
 
 ){
 include mysql::server

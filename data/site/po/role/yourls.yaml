@@ -4,6 +4,7 @@ classes:
   - profile::yourls
 profile::base_linux::postfix: true
 profile::base_linux::awscli: true
+profile::yourls::yourls_db_pass_hide: ENC[PKCS7,MIIBmQYJKoZIhvcNAQcDoIIBijCCAYYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEASynjN9IjfbsQIwyes3kZr+vhadn4e8ICnPtAPfROR9ipm+cYusa8IsYkkdAAz/bvkhgbPHvf+joabhfvIL4ZWjCOfatel4FWgMH95nyjfvdax5C4aBH70uyw2RmRTC9QPCO91yiCJBQ26OMnxFag0iM0PW7M5sqA79Lz6SU6JaerMcKvRq21baJVGPCm/jxiZ9TdgS4daSwjsQ3EfZZrWzbT+oeASU/NTCfwfg9xpFntqQN+ZNb4ovlrRUWNZzsmJeQFo+f4HyCChY1W5X9aVPuJqyZrCsJvU6F9vE5BVdIU9kkByvFKll4suLWBmiWJIsgs7P93AbHV/xkhqL/d1TBcBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBCo/ep2tV2Q1a0xSxmgOyKqgDBq0hE/WREM3zVlXOe8yHmSe47FnDa8Zkmo68+6G/M4VHmvKyWJUYrYY731SCrZTw8=]
 profile::yourls::yourls_version: '1.9.3' # If you change this version, ensure to update file rubinobs_facts.rb
 profile::yourls::nginx_version: '1.22.1'
 mysql::server::root_password: "%{lookup('mariadb_root_pwd')}"
