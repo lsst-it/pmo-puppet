@@ -26,6 +26,12 @@ include mysql::server
         source   => 'https://github.com/kvspb/nginx-auth-ldap.git',
         user     => 'root',
       }
+    vcsrepo { "/etc/nginx/YOURLS-${yourls_version}":
+      ensure   => present,
+      provider => git,
+      source   => 'https://github.com/YOURLS/YOURLS.git',
+      user     => 'root',
+    }
   }
   archive { '/tmp/mysql-db-yourls.gz' :
     ensure  => present,
