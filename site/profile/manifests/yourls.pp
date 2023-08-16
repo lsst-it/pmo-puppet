@@ -1,4 +1,4 @@
-class profile::yourls ( String
+class profile::yourls (Sensitive[String]
 
 $yourls_version,
 $nginx_version
