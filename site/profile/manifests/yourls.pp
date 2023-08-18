@@ -1,4 +1,5 @@
-# URL Shortener
+# URL Shortener.  Use dnf install nginx instead of the module as it needs to be recompiled. 
+# Ensure PHP 8.2 is installed: dnf install dnf-utils http://rpms.remirepo.net/enterprise/remi-release-8.rpm -- dnf install  php php-fpm php-cli php-devel php-mbstring php-gd php-xml php-curl php-mysqlnd php-pdo php-json php-opcache php-pear php-pecl-apcu php-pecl-crypto
 class profile::yourls (Sensitive[String]
 $yourls_db_pass_hide,
 $yourls_db_user_hide,
