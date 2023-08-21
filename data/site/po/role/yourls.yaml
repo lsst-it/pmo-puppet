@@ -9,3 +9,17 @@ profile::yourls::yourls_db_pass_hide: ENC[PKCS7,MIIBmQYJKoZIhvcNAQcDoIIBijCCAYYC
 profile::yourls::yourls_version: '1.9.3' # If you change this version, ensure to update file rubinobs_facts.rb
 profile::yourls::nginx_version: '1.22.1'
 mysql::server::root_password: "%{lookup('mariadb_root_pwd')}"
+# Cron job for Mysql DB backup
+cron::job:
+  'urlshortnerbackup':
+    command: 'aws s3 cp /tmp/backups/  s3://urlshortener-data/ --recursive --include "*".bz2; rm -rf /tmp/backups'
+    minute: 59
+    hour: 23
+    date: '*'
+    month: '*'
+    weekday: '*'
+    user: root
+    environment:
+      - 'MAILTO=root'
+      - 'PATH="/usr/local/bin/:/usr/bin:/bin"'
+    description: 'mysql-db backup'

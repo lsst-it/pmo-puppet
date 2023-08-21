@@ -194,6 +194,6 @@ file { '/etc/nginx/YOURLS':
     backupdir           => '/tmp/backups',
     backuprotate        => 5,
     execpath            => '/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin',
-    time                => ['22', '05'],
+    time                => ['23', '50'],
   }
 }
