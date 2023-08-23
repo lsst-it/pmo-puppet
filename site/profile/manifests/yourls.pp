@@ -14,24 +14,36 @@ include mysql::server
   }
   unless $::nginx_source  {
     archive { "/usr/src/nginx-${nginx_version}.tar.gz":
-        ensure       => present,
-        source       => "http://nginx.org/download/nginx-${nginx_version}.tar.gz",
-        extract_path => '/usr/src',
-        extract      => true,
-        provider     => 'wget',
-        cleanup      => false,
-      }
-      vcsrepo { "/usr/src/nginx-${nginx_version}/nginx-auth-ldap":
-        ensure   => present,
-        provider => git,
-        source   => 'https://github.com/kvspb/nginx-auth-ldap.git',
-        user     => 'root',
-      }
+      ensure       => present,
+      source       => "http://nginx.org/download/nginx-${nginx_version}.tar.gz",
+      extract_path => '/usr/src',
+      extract      => true,
+      provider     => 'wget',
+      cleanup      => false,
+    }
+    vcsrepo { "/usr/src/nginx-${nginx_version}/nginx-auth-ldap":
+      ensure   => present,
+      provider => git,
+      source   => 'https://github.com/kvspb/nginx-auth-ldap.git',
+      user     => 'root',
+    }
     vcsrepo { "/etc/nginx/YOURLS-${yourls_version}":
       ensure   => present,
       provider => git,
       source   => 'https://github.com/YOURLS/YOURLS.git',
       user     => 'root',
+    }
+    archive { '/tmp/yourls_config.zip' :
+      ensure       => present,
+      source       => 's3://urlshortener-data/yourls_config.zip',
+      cleanup      => false,
+      extract      => true,
+      extract_path => '/tmp',
+    }
+    archive { '/tmp/mysql-db-yourls.gz' :
+      ensure  => present,
+      source  => 's3://urlshortener-data/mysql-db-yourls-latest.gz',
+      cleanup => false,
     }
     $yourls_db_name = lookup('yourls_db_name')
     mysql::db { $yourls_db_name:
@@ -44,12 +56,7 @@ include mysql::server
       import_timeout => 900,
     }
   }
-  archive { '/tmp/mysql-db-yourls.gz' :
-    ensure  => present,
-    source  => 's3://urlshortener-data/mysql-db-yourls-latest.gz',
-    cleanup => false,
-  }
-# Installs plugins.  Need to be activated in GUI
+# Installs plugins. some plugins need to be activated in GUI
     file {
       "/etc/nginx/YOURLS-${yourls_version}/user/plugins/mass-remove-links":
         ensure => directory,
@@ -87,17 +94,9 @@ include mysql::server
         ensure => directory,
         ;
     }
-file { '/etc/nginx/YOURLS':
-  ensure => 'link',
-  target => "/etc/nginx/YOURLS-${yourls_version}",
-}
-
-  archive { '/tmp/yourls_config.zip' :
-    ensure       => present,
-    source       => 's3://urlshortener-data/yourls_config.zip',
-    cleanup      => false,
-    extract      => true,
-    extract_path => '/tmp',
+  file { '/etc/nginx/YOURLS':
+    ensure => 'link',
+    target => "/etc/nginx/YOURLS-${yourls_version}",
   }
 
   archive { '/etc/pki/tls/certs/ls.st.current.crt' :
