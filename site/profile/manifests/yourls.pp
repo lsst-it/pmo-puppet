@@ -83,9 +83,9 @@ include mysql::server
   #   cleanup => false,
   # }
 
-  archive { "/etc/nginx/YOURLS-${yourls_version}/Telescope_Front-470.jpg":
+  archive { "/etc/nginx/YOURLS-${yourls_version}/Rubin_logo.jpg":
     ensure  => present,
-    source  => 'https://www.lsst.org/sites/default/files/Wht-Logo-web_0.png',
+    source  => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY1IYVnzXBxZiG_eIDby1A8boVxvnu3ORcI4BOUN_2Ew&s',
     cleanup => false,
   }
   $phpinfo = lookup ('phpinfo')
