@@ -12,7 +12,7 @@ mysql::server::root_password: "%{lookup('mariadb_root_pwd')}"
 # Cron job for Mysql DB backup
 cron::job:
   'urlshortnerbackup':
-    command: 'aws s3 cp /tmp/backups/  s3://urlshortener-data/ --recursive --include "*".bz2; rm -rf /tmp/backups'
+    command: 'aws s3 cp /backups/dumps  s3://urlshortener-data/ --recursive --include "*".bz2; rm -rf /tmp/backups'
     minute: 59
     hour: 23
     date: '*'

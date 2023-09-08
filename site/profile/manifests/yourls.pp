@@ -190,7 +190,7 @@ include mysql::server
     backuppassword      => $yourls_db_pass_hide.unwrap,
     provider            => 'mysqldump',
     incremental_backups => false,
-    backupdir           => '/tmp/backups',
+    backupdir           => '/backups/dumps',
     backuprotate        => 5,
     execpath            => '/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin',
     time                => ['23', '50'],
