@@ -23,3 +23,15 @@ cron::job:
       - 'MAILTO=root'
       - 'PATH="/usr/local/bin/:/usr/bin:/bin"'
     description: 'mysql-db backup'
+  'nginxbackup':
+    command: 'tar -czf  /backups/dumps/nginx_$(date +\%F).gz /etc/nginx'
+    minute: 10
+    hour: 18
+    date: '*'
+    month: '*'
+    weekday: '*'
+    user: root
+    environment:
+      - 'MAILTO=root'
+      - 'PATH="/usr/local/bin/:/usr/bin:/bin"'
+    description: 'nginx_backup'

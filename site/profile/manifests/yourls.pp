@@ -193,6 +193,6 @@ include mysql::server
     backupdir           => '/backups/dumps',
     backuprotate        => 5,
     execpath            => '/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin',
-    time                => ['23', '50'],
+    time                => ['18', '10'],
   }
 }
