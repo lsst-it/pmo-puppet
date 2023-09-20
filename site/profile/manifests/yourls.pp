@@ -198,6 +198,7 @@ include mysql::server
       ensure => 'link',
       target => "/etc/nginx/YOURLS-${yourls_version}",
     }
+  }
 # Daily export of DB
   class { 'mysql::server::backup':
     backupuser          => $yourls_db_user_hide.unwrap,
