@@ -13,6 +13,14 @@ include mysql::server
     ensure => installed,
   }
   unless $::nginx_source  {
+    archive { "/usr/src/YOURLS-${yourls_version}.tar.gz":
+      ensure       => present,
+      source       => "https://github.com/YOURLS/YOURLS/archive/refs/tags/${yourls_version}.tar.gz",
+      extract_path => '/etc/nginx',
+      extract      => true,
+      provider     => 'wget',
+      cleanup      => false,
+    }
     archive { "/usr/src/nginx-${nginx_version}.tar.gz":
       ensure       => present,
       source       => "http://nginx.org/download/nginx-${nginx_version}.tar.gz",
@@ -27,23 +35,10 @@ include mysql::server
       source   => 'https://github.com/kvspb/nginx-auth-ldap.git',
       user     => 'root',
     }
-    vcsrepo { "/etc/nginx/YOURLS-${yourls_version}":
-      ensure   => present,
-      provider => git,
-      source   => 'https://github.com/YOURLS/YOURLS.git',
-      user     => 'root',
-    }
-    archive { '/tmp/yourls_config.zip' :
-      ensure       => present,
-      source       => 's3://urlshortener-data/yourls_config.zip',
-      cleanup      => false,
-      extract      => true,
-      extract_path => '/tmp',
-    }
     archive { '/tmp/mysql-db-yourls.gz' :
       ensure  => present,
       source  => 's3://urlshortener-data/mysql-db-yourls-latest.gz',
-      cleanup => false,
+      cleanup => true,
     }
     $yourls_db_name = lookup('yourls_db_name')
     mysql::db { $yourls_db_name:
@@ -56,11 +51,6 @@ include mysql::server
       import_timeout => 900,
     }
   }
-  file { '/etc/nginx/YOURLS':
-    ensure => 'link',
-    target => "/etc/nginx/YOURLS-${yourls_version}",
-  }
-
   archive { '/etc/pki/tls/certs/ls.st.current.crt' :
     ensure  => present,
     source  => 's3://urlshortener-data/ls.st.current.crt',
@@ -71,15 +61,24 @@ include mysql::server
     source  => 's3://urlshortener-data/ls.st.current.key',
     cleanup => false,
   }
-
   archive { "/etc/nginx/YOURLS-${yourls_version}/yourls-logo.png":
     ensure  => present,
     source  => 's3://urlshortener-data/yourls-logo.png',
     cleanup => false,
   }
+  # archive { "/etc/nginx/YOURLS-${yourls_version}/yourls-logo.png":
+  #   ensure  => present,
+  #   source  => 's3://urlshortener-data/Telescope_Front-470.jpg',
+  #   cleanup => false,
+  # }
   # archive { "/etc/nginx/YOURLS-${yourls_version}/Telescope_Front-470.jpg":
   #   ensure  => present,
   #   source  => 's3://urlshortener-data/Telescope_Front-470.jpg',
+  #   cleanup => false,
+  # }
+  # archive { "/etc/nginx/YOURLS-${yourls_version}/images/yourls-logo.svg":
+  #   ensure  => present,
+  #   source  => 's3://urlshortener-data/url-shortener.jpg',
   #   cleanup => false,
   # }
 
@@ -95,6 +94,10 @@ include mysql::server
   }
 
   file {
+    '/backups/nginx':
+      ensure => directory,
+  }
+  file {
     '/etc/systemd/system/nginx.service.d':
       ensure => directory,
   }
@@ -107,6 +110,14 @@ include mysql::server
   }
   # Compile nginx
   unless $::yourls_config  {
+
+    archive { '/tmp/yourls_config.zip' :
+      ensure       => present,
+      source       => 's3://urlshortener-data/yourls_config.zip',
+      cleanup      => false,
+      extract      => true,
+      extract_path => '/tmp',
+    }
     exec {'compile':
       path     => [ '/usr/bin', '/bin', '/usr/sbin' ],
       cwd      => "/usr/src/nginx-${nginx_version}/",
@@ -116,36 +127,36 @@ include mysql::server
       # onlyif   => 'test -e /usr/src/nginx-1.22.1/configure'
     }
     file { "/etc/nginx/YOURLS-${yourls_version}/shorten/index.php":
-    ensure  => present,
-    source  => '/tmp/index.php',
-    replace => 'yes',
+      ensure  => present,
+      source  => '/tmp/index.php',
+      replace => 'yes',
     }
     file { "/etc/nginx/YOURLS-${yourls_version}/index.html":
-    ensure  => present,
-    source  => '/tmp/index.html',
-    replace => 'yes',
+      ensure  => present,
+      source  => '/tmp/index.html',
+      replace => 'yes',
     }
     file { "/etc/nginx/YOURLS-${yourls_version}/user/config.php":
-    ensure  => present,
-    source  => '/tmp/config.php',
-    replace => 'yes',
+      ensure  => present,
+      source  => '/tmp/config.php',
+      replace => 'yes',
     }
     file { "/etc/nginx/YOURLS-${yourls_version}/.htaccess":
-    ensure  => present,
-    source  => '/tmp/htaccess',
-    replace => 'yes',
+      ensure  => present,
+      source  => '/tmp/htaccess',
+      replace => 'yes',
     }
     file { '/etc/nginx/conf.d/yourls.conf':
-    ensure  => present,
-    source  => '/tmp/yourls_config_new.txt',
-    replace => 'yes',
+      ensure  => present,
+      source  => '/tmp/yourls_config_new.txt',
+      replace => 'yes',
     }
     file { '/etc/nginx/nginx.conf':
-    ensure  => present,
-    source  => '/tmp/nginx_conf.txt',
-    replace => 'yes',
-    }
-# Installs plugins. some plugins need to be activated in GUI
+      ensure  => present,
+      source  => '/tmp/nginx_conf.txt',
+      replace => 'yes',
+      }
+# Installs plugins.  Need to be activated in GUI
     file {
       "/etc/nginx/YOURLS-${yourls_version}/user/plugins/mass-remove-links":
         ensure => directory,
@@ -183,16 +194,4 @@ include mysql::server
         ensure => directory,
         ;
     }
-  }
-# Daily DB backup.
-  class { 'mysql::server::backup':
-    backupuser          => $yourls_db_user_hide.unwrap,
-    backuppassword      => $yourls_db_pass_hide.unwrap,
-    provider            => 'mysqldump',
-    incremental_backups => false,
-    backupdir           => '/backups/dumps',
-    backuprotate        => 5,
-    execpath            => '/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin',
-    time                => ['18', '10'],
-  }
 }
