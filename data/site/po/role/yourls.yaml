@@ -1,11 +1,18 @@
 ---
 classes:
   - profile::base_linux
-  - profile::yourls
-profile::base_linux::backups: true
+  - profile::yourls2
+  - profile::backups
+# profile::base_linux::backups: true
 profile::base_linux::postfix: true
 profile::base_linux::awscli: true
-profile::base_linux::service1: 'nginx'
+profile::backups::service1: 'yourls'
+profile::backups::bucketlocation: '"urlshortener-data"'
+profile::backups::service_dump: 'yourls'
+profile::backups::listlocations: '"nginx" "php-info"'
+profile::backups::listofdbs: '"mysql" "yourls"'
+profile::backups::source_dir: '/etc/nginx'
+profile::backups::find_days_old: 10
 profile::yourls::yourls_db_user_hide: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEASZbBApVJXgRzuLhKBG3PZRNWBX01UBHewffg9ItbMd6znp6zbnDl4uH4YTwoZ8j1QRTnKqu4GNnuq6vS0I9gKg1ISfEDXr3UoQkFfT43BzcZkA3Pg4p8M/rp4v8v/qGteIQeO/MjbPLY8hwhg8cwX7WfYS8er1mpTs+6QFJ11NGzC16laX48pXzuqBzAE0VECbvs2KqVZtrUWg1NGsuBgiHm9oqHQzLxvXF2Fy1P6S8c4FjC++rEKV0FBELOd3ygZWog+g2T8+F7P4KdoUuVSv8Q+uEQ6QCnG3ykJh3GaWk/FckqyTRpszYIo/54pr7rgLTTIC+IUWk69kK/Nt1RojA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBD4GTNRthrUWR0MG3+GnXmzgBCZeEoYQBAczk2ZCA76aLeM]
 profile::yourls::yourls_db_pass_hide: ENC[PKCS7,MIIBmQYJKoZIhvcNAQcDoIIBijCCAYYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEASynjN9IjfbsQIwyes3kZr+vhadn4e8ICnPtAPfROR9ipm+cYusa8IsYkkdAAz/bvkhgbPHvf+joabhfvIL4ZWjCOfatel4FWgMH95nyjfvdax5C4aBH70uyw2RmRTC9QPCO91yiCJBQ26OMnxFag0iM0PW7M5sqA79Lz6SU6JaerMcKvRq21baJVGPCm/jxiZ9TdgS4daSwjsQ3EfZZrWzbT+oeASU/NTCfwfg9xpFntqQN+ZNb4ovlrRUWNZzsmJeQFo+f4HyCChY1W5X9aVPuJqyZrCsJvU6F9vE5BVdIU9kkByvFKll4suLWBmiWJIsgs7P93AbHV/xkhqL/d1TBcBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBCo/ep2tV2Q1a0xSxmgOyKqgDBq0hE/WREM3zVlXOe8yHmSe47FnDa8Zkmo68+6G/M4VHmvKyWJUYrYY731SCrZTw8=]
 profile::yourls::yourls_version: '1.9.2' 
