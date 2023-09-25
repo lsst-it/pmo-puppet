@@ -1,0 +1,58 @@
+# To Tar the Rsync Diff files from source to local backup
+
+## Declare All Variables here
+
+# Declare Debug value
+debug=0
+#debug=1
+
+# Source library
+source ${ScriptsHome}/library.sh
+
+# Declare location to place tgz to be sync to cloud
+BACKUP_DUMP_LOCATION="${BASE_ROOT_dump}/${BASE_ROOT_service_dump}"
+
+# Declare same info from backup-files
+# List of Locations to rsync diff
+# NEED TO EXPORT INFO
+ListofLocations=(<%= $listlocations %>)
+
+## The body of the script
+
+# Write out debug is on
+if [ ! "$debug" = "1" ]; then echo "debug is on"; fi
+
+# Write out Start of backup of files
+ReportStatement ${ReportofBackups} 'Start tar of files'
+ReportStatement ${ReportofBackups} "${FSStartTime}"
+
+if [ ! -d "${BACKUP_DUMP_LOCATION}" ]; then
+ ReportStatement ${ReportofBackups} 'Backup for dumping the tar file is missing!!'
+ echo "Backup for dumping the tar file is missing!!"
+ echo " "
+else
+ ReportStatement ${ReportofBackups} "The location for the Tar files is ${BACKUP_DUMP_LOCATION}"
+
+ # Write Prepare Tar
+ ReportStatement ${ReportofBackups} 'Prepare Tar'
+ ReportStatement ${ReportofBackups} `echo $(GetTime)`
+
+ for i in "${ListofLocations[@]}"; do
+  ReportStatement ${ReportofBackups} 'Process list of Locations'
+  ReportStatement ${ReportofBackups} `echo $(GetTime)`
+  ReportStatement ${ReportofBackups} "This is the directory to tar up ${BASE_ROOT_rsync_dump}/$i/latest"
+  cd "${BASE_ROOT_rsync_dump}/$i/latest"
+  tar_cmd="tar -czf ${BACKUP_DUMP_LOCATION}/${FSStartTime}-${BASE_ROOT_service_dump}-$i.tgz ./"
+
+  ReportStatement ${ReportofBackups} 'The tar command to run '
+  ReportStatement ${ReportofBackups} "The tar command assumes pwd is ${BASE_ROOT_rsync_dump}/$i"
+  ReportStatement ${ReportofBackups} "${tar_cmd}"
+  ReportStatement ${ReportofBackups} `echo $(GetTime)`
+  ${tar_cmd}
+
+ done # ListofLocations[
+
+ # Write Finished Tar command
+ ReportStatement ${ReportofBackups} 'Finished tar command '
+ ReportStatement ${ReportofBackups} `echo $(GetTime)`
+fi
