@@ -92,11 +92,6 @@ include mysql::server
     ensure  => file,
     content => $phpinfo,
   }
-
-  file {
-    '/backups/nginx':
-      ensure => directory,
-  }
   file {
     '/etc/systemd/system/nginx.service.d':
       ensure => directory,
@@ -198,16 +193,5 @@ include mysql::server
       ensure => 'link',
       target => "/etc/nginx/YOURLS-${yourls_version}",
     }
-  }
-# Daily export of DB
-  class { 'mysql::server::backup':
-    backupuser          => $yourls_db_user_hide.unwrap,
-    backuppassword      => $yourls_db_pass_hide.unwrap,
-    provider            => 'mysqldump',
-    incremental_backups => false,
-    backupdir           => '/backups/dumps',
-    backuprotate        => 10,
-    execpath            => '/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin',
-    time                => ['0', '4'],
   }
 }
