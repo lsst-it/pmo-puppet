@@ -37,7 +37,7 @@ class profile::base_linux (
     timezone => 'UTC',
   }
 
-  Package {['git', 'tree', 'tcpdump', 'telnet', 'gcc', 'xinetd',
+  Package {['git', 'tree', 'tcpdump', 'telnet', 'gcc',
       'bash-completion', 'sudo', 'vim', 'openssl', 'openssl-devel',
     'wget', 'nmap', 'iputils', 'bind-utils', 'traceroute', 'unzip', 'net-tools']:
       ensure => installed,
