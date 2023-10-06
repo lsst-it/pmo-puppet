@@ -1,31 +1,39 @@
 # Grafana url: http://grafana-x.lsst.org:3000
-class profile::grafana ( String
-$pname1,
-$url1,
-$pname2,
-$url2,
+# @param pname1
+#  Prometheus Server name 'mr-tuc-1.lsst.org'
+# @param pname2
+#  Prometheus 2nd Server name 'mr-tuc-2.lsst.org'
+# @param url1
+#  Prometheus URL 'http://mr-tuc-1.lsst.org:9090'
+# @param url2
+#  Prometheus URL 'http://mr-tuc-2.lsst.org:9090'
+class profile::grafana (
+  String $pname1,
+  String $url1,
+  String $pname2,
+  String $url2,
 ) {
   $grafana_pwd = lookup('grafana_pwd')
   class { 'grafana':
     version                  => '9.3.6',
     provisioning_datasources => {
-    apiVersion  => 1,
-    datasources => [
-      {
-        name      => $pname1,
-        type      => 'prometheus',
-        access    => 'proxy',
-        url       => $url1,
-        isDefault => true,
-      },
-      {
-        name      => $pname2,
-        type      => 'prometheus',
-        access    => 'proxy',
-        url       => $url2,
-        isDefault => false,
-      },
-    ],
+      apiVersion  => 1,
+      datasources => [
+        {
+          name      => $pname1,
+          type      => 'prometheus',
+          access    => 'proxy',
+          url       => $url1,
+          isDefault => true,
+        },
+        {
+          name      => $pname2,
+          type      => 'prometheus',
+          access    => 'proxy',
+          url       => $url2,
+          isDefault => false,
+        },
+      ],
     },
     cfg                      => {
       'auth.ldap' => {
@@ -42,7 +50,7 @@ $url2,
         admin_user     => 'admin',
         admin_password => $grafana_pwd,
       },
-    }
+    },
   }
   $domaincert = lookup('domaincert')
   archive { '/etc/grafana/grafana.crt' :

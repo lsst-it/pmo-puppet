@@ -1,9 +1,17 @@
 # Prometheus monitoring URL: http://prometheus.us.lsst.org:9090/ 
-class profile::prometheus (Sensitive[String]
-$slackapi_hide,
-$slackuser_hide,
-$cluster_hide,
-$advertise_ip,
+# @param slackapi_hide
+#  Accept Slack API
+# @param slackuser_hide
+#  Accept Slack user
+# @param cluster_hide
+#  Cluster config
+# @param advertise_ip
+#  IP for cluster
+class profile::prometheus (
+  Sensitive[String] $slackapi_hide,
+  Sensitive[String] $slackuser_hide,
+  Sensitive[String] $cluster_hide,
+  String $advertise_ip,
 ) {
 # Firewall rules are in private repo
   include prometheus
@@ -22,7 +30,7 @@ $advertise_ip,
           'valid_status_codes'    => [],
           'method'                => 'GET',
           'preferred_ip_protocol' => 'ip4',
-        }
+        },
       },
       'tcp_connect' => {
         'prober' => 'tcp',
@@ -30,34 +38,34 @@ $advertise_ip,
       'icmp'        => {
         'prober' => 'icmp',
       },
-    }
+    },
   }
 # Alertmanager config
-class { 'prometheus::alertmanager':
-  version       => '0.25.0',
-  extra_options => "--cluster.advertise-address=${advertise_ip} \--cluster.listen-address=:9797 \--cluster.peer=${unwrap($cluster_hide)}",
-  route         => {
-    'group_by'        => ['job'],
-    'group_wait'      => '30s', # how long to wait to buffer alerts of the same group before sending a notification initially
-    'group_interval'  => '45s',  # ^^before sending an alert that has been added to a group for which there has already been a notification
-    'repeat_interval' => '3h',  # how long to wait before re-sending a given alert that has already been sent in a notification
-    'receiver'        => 'slack',
-  },
-  receivers     => [
-      {
-      'name'          => 'slack',
-      'slack_configs' => [
-        {
-          'api_url'       => unwrap($slackapi_hide),
-          'channel'       => '#it_monitoring',
-          'icon_url'      => 'https://avatars3.githubusercontent.com/u/3380462',
-          'title'         => '{{ template "custom_title" . }}',
-          'text'          => '{{ template "custom_slack_message" . }}',
-          'send_resolved' => true,
-          'username'      => unwrap($slackuser_hide),
-        },
-      ],
+  class { 'prometheus::alertmanager':
+    version       => '0.25.0',
+    extra_options => "--cluster.advertise-address=${advertise_ip} \--cluster.listen-address=:9797 \--cluster.peer=${unwrap($cluster_hide)}",
+    route         => {
+      'group_by'        => ['job'],
+      'group_wait'      => '30s', # how long to wait to buffer alerts of the same group before sending a notification initially
+      'group_interval'  => '45s',  # ^^before sending an alert that has been added to a group for which there has already been a notification
+      'repeat_interval' => '3h',  # how long to wait before re-sending a given alert that has already been sent in a notification
+      'receiver'        => 'slack',
     },
-  ],
-}
+    receivers     => [
+      {
+        'name'          => 'slack',
+        'slack_configs' => [
+          {
+            'api_url'       => unwrap($slackapi_hide),
+            'channel'       => '#it_monitoring',
+            'icon_url'      => 'https://avatars3.githubusercontent.com/u/3380462',
+            'title'         => '{{ template "custom_title" . }}',
+            'text'          => '{{ template "custom_slack_message" . }}',
+            'send_resolved' => true,
+            'username'      => unwrap($slackuser_hide),
+          },
+        ],
+      },
+    ],
+  }
 }

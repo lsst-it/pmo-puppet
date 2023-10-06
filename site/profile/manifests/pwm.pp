@@ -1,6 +1,5 @@
 # Reboot required following the initial run
 class profile::pwm {
-
   archive { '/tmp/pwm-1.9.2.war':
     ensure   => present,
     source   => 'https://github.com/pwm-project/pwm/releases/download/v1_9_2/pwm-1.9.2.war',
@@ -12,7 +11,7 @@ class profile::pwm {
   $pwmconfig_dest = lookup('pwmconfig_dest')
   $pwmconfig_source = lookup('pwmconfig_source')
   file { '/opt/tomcat/webapps/ROOT.war':
-    ensure => present,
+    ensure => file,
     source => '/tmp/pwm-1.9.2.war',
   }
   $pwmkeystore = lookup('pwmkeystore')
@@ -61,34 +60,34 @@ class profile::pwm {
     password_fail_reset => true,
   }
   file { $pwmconfig_dest:
-    ensure  => present,
+    ensure  => file,
     source  => '/tmp/PwmConfiguration.xml',
     replace => 'no',
   }
-$applicationpath = lookup('application_path')
+  $applicationpath = lookup('application_path')
   $webpath = lookup('web_path')
   file { '/opt/tomcat/webapps/ROOT/WEB-INF/web.xml':
-    ensure => present,
+    ensure => file,
   }
   -> file_line { 'Append line to ROOT/WEB-INF/web.xml':
-      path  => $webpath,
-      line  => "<param-value>${applicationpath}</param-value>",
-      match => '<param-value>unspecified</param-value>',
-    }
-    $lsst_theme = lookup('lsst_theme')
-    file {
-      '/opt/tomcat/webapps/ROOT/public/resources/themes/lsst':
-        ensure => directory,
-    }
-    archive { '/tmp/lsst.zip' :
-      source       => $lsst_theme,
-      cleanup      => false,
-      extract      => true,
-      extract_path => '/opt/tomcat/webapps/ROOT/public/resources/themes/lsst',
-    }
+    path  => $webpath,
+    line  => "<param-value>${applicationpath}</param-value>",
+    match => '<param-value>unspecified</param-value>',
+  }
+  $lsst_theme = lookup('lsst_theme')
+  file {
+    '/opt/tomcat/webapps/ROOT/public/resources/themes/lsst':
+      ensure => directory,
+  }
+  archive { '/tmp/lsst.zip' :
+    source       => $lsst_theme,
+    cleanup      => false,
+    extract      => true,
+    extract_path => '/opt/tomcat/webapps/ROOT/public/resources/themes/lsst',
+  }
   $favicon = lookup('favicon')
   file { '/opt/tomcat/webapps/ROOT/public/resources/favicon.png':
-    ensure => present,
+    ensure => file,
     source => $favicon,
   }
   archive { '/tmp/PwmConfiguration.xml' :
