@@ -1,0 +1,85 @@
+# To Rsync Diff files from source to local backup
+
+## Declare All Variables here
+
+# Declare Debug value
+debug=0
+#debug=1
+
+# Source library
+source ${ScriptsHome}/library.sh
+
+# Declare location of the root destination for rsync
+
+# List of Locations to rsync diff
+# See SOURCE_DIR used in case
+ListofLocations=(<%= $listlocations %>)
+
+# Declare SOURCE_DIR in the case evaluation
+# YOU NEED TO DO THIS CHANGE SOURCE_DIR
+# WILL USE VARIABLE for case check
+
+## The body of the script
+
+# Write out debug is on
+if [ "$debug" = "1" ]; then echo "debug is on"; fi
+
+# Write out location of scripts
+ReportStatement ${ReportofBackups} "Location of Service Backup Scripts is ${ScriptsHome}"
+
+# Write out Start of backup of files
+ReportStatement ${ReportofBackups} 'Start backup of files'
+ReportStatement ${ReportofBackups} "${FSStartTime}"
+
+if [ ! -d "${BASE_ROOT_rsync_dump}" ]; then
+ ReportStatement ${ReportofBackups} 'Backup Rsync Location is missing!!'
+ echo "Backup Rsync Location is missing, ${BASE_ROOT_rsync_dump}!!"
+ echo " "
+else
+ ReportStatement ${ReportofBackups} "Backup Rsync Location is ${BASE_ROOT_rsync_dump}"
+
+ # Clear Variables known to cause a problem
+ LATEST_LINK=""
+ SOURCE_DIR=""
+
+ for i in "${ListofLocations[@]}"; do
+  case $i in
+   ${ListofLocations[0]})
+    SOURCE_DIR="/etc/nginx"
+    [ ! -d "${BASE_ROOT_rsync_dump}/$i" ] && mkdir ${BASE_ROOT_rsync_dump}/$i
+    BACKUP_PATH="$BASE_ROOT_rsync_dump/$i/${FSStartTime}"
+    LATEST_LINK="${BASE_ROOT_rsync_dump}/$i/latest"
+    rsync_cmd="rsync -av --delete ${SOURCE_DIR}/ --link-dest ${LATEST_LINK} ${BACKUP_PATH}"
+    ReportStatement ${ReportofBackups} "${rsync_cmd}"
+    ;;
+   ${ListofLocations[1]})
+    SOURCE_DIR="/etc"
+    echo "php-info"
+    [ ! -d "${BASE_ROOT_rsync_dump}/$i" ] && mkdir ${BASE_ROOT_rsync_dump}/$i
+    BACKUP_PATH="${BASE_ROOT_rsync_dump}/$i/${FSStartTime}"
+    LATEST_LINK="${BASE_ROOT_rsync_dump}/$i/latest"
+    rsync_cmd="rsync -av --delete ${SOURCE_DIR}/php-fpm.conf ${SOURCE_DIR}/php-fpm.d ${SOURCE_DIR}/php.ini --link-dest ${LATEST_LINK} ${BACKUP_PATH}"
+    ReportStatement ${ReportofBackups} "${rsync_cmd}"
+    ;;
+  esac
+
+# Write out the info
+ReportStatement ${ReportofBackups} 'The Source Directory is '
+ReportStatement ${ReportofBackups} "${SOURCE_DIR}"
+ReportStatement ${ReportofBackups} 'The Backup Path is '
+ReportStatement ${ReportofBackups} "${BACKUP_PATH}"
+ReportStatement ${ReportofBackups} 'The Latest Link is '
+ReportStatement ${ReportofBackups} "${LATEST_LINK}"
+
+# Write out Start Rsync
+ReportStatement ${ReportofBackups} 'Started rsync'
+${rsync_cmd}
+rm -rf "${LATEST_LINK}"
+ln -s "${BACKUP_PATH}" "${LATEST_LINK}"
+
+# Write Out Finished Rysnc
+ReportStatement ${ReportofBackups} 'Finished rsync'
+
+done # for loop of ListofLocations
+
+fi # end of if directory BASE_ROOT_rsync_dump

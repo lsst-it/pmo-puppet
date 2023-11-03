@@ -3,9 +3,11 @@
 # It will be bumped up once testing is complete
 # Since 0.3.7 is a very old version, the newer versions' service name is changed to ncp.
 # as a result puppet run will throw an error but it should still work.
+# @param nagios_password
+#  Accept nagios pwd
 class profile::nsclient (Sensitive[String]
-$nagios_password,
-){
+  $nagios_password,
+) {
   class { 'nsclient':
     package_source_location => 'https://github.com/mickem/nscp/releases/download/0.3.7',
     package_name            => 'NSClient++ (x64)',
@@ -16,6 +18,6 @@ $nagios_password,
   }
 # Below service will be removed once we have upgraded to newer version of NSClient.
   service { 'NSClientpp':
-  ensure => 'running',
-}
+    ensure => 'running',
+  }
 }

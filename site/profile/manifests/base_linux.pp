@@ -1,6 +1,15 @@
 # Base profile for Linux OS
+# @param backups
+#  If true will deploy backup scripts
+# @param awscli
+#  If true will install and configure awscli
+# @param postfix
+#  If `true`, configure postfix
+# @param graylog
+#  If `true`, configure graylog
 class profile::base_linux (
   Boolean $awscli  = false,
+  Boolean $backups = false,
   Boolean $postfix = false,
   Boolean $graylog = false,
 ) {
@@ -22,27 +31,27 @@ class profile::base_linux (
     extra_options => '--collector.systemd \--collector.processes \--collector.meminfo_numa',
   }
   class { 'chrony':
-    servers => [ '140.252.1.140', '140.252.1.141', '0.pool.ntp.arizona.edu' ],
+    servers => ['140.252.1.140', '140.252.1.141', '0.pool.ntp.arizona.edu'],
   }
   class { 'timezone':
-      timezone => 'UTC',
+    timezone => 'UTC',
   }
 
-  Package { [ 'git', 'tree', 'tcpdump', 'telnet', 'gcc', 'xinetd',
-  'bash-completion', 'sudo', 'vim', 'openssl', 'openssl-devel',
-  'wget', 'nmap', 'iputils', 'bind-utils', 'traceroute', 'unzip', 'net-tools' ]:
-    ensure => installed,
-  }
-  if $awscli {
-    Package { [ 'python3-pip', 'python3-devel' ]:
+  Package {['git', 'tree', 'tcpdump', 'telnet', 'gcc',
+      'bash-completion', 'sudo', 'vim', 'openssl', 'openssl-devel',
+    'wget', 'nmap', 'iputils', 'bind-utils', 'traceroute', 'unzip', 'net-tools']:
       ensure => installed,
   }
-  exec { 'Install awscli':
-    path    => [ '/usr/bin', '/bin', '/usr/sbin' ],
-    command => 'sudo pip3 install awscli',
-    onlyif  => '/usr/bin/test ! -x /usr/local/bin/aws'
-  }
-  $awscreds = lookup('awscreds')
+  if $awscli {
+    Package {['python3-pip', 'python3-devel']:
+      ensure => installed,
+    }
+    exec { 'Install awscli':
+      path    => ['/usr/bin', '/bin', '/usr/sbin'],
+      command => 'sudo pip3 install awscli',
+      onlyif  => '/usr/bin/test ! -x /usr/local/bin/aws',
+    }
+    $awscreds = lookup('awscreds')
     file {
       '/root/.aws':
         ensure => directory,
