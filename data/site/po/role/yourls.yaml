@@ -6,6 +6,7 @@ classes:
 # profile::base_linux::backups: true
 profile::base_linux::postfix: true
 profile::base_linux::awscli: true
+profile::base_linux::graylog: true
 profile::backups::service1: 'yourls'
 profile::backups::bucketlocation: '"urlshortener-data"'
 profile::backups::service_dump: 'yourls'
