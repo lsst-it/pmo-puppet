@@ -1,0 +1,84 @@
+# Backup Components of a Service
+# In This case YOURLS
+
+## Declare All Variables here
+
+# Source library
+source ${ScriptsHome}/library.sh
+
+# Declare the service dump location
+export BASE_ROOT_service_dump="<%= $service_dump %>"
+
+# Declare the rsync destination
+export BASE_ROOT_rsync_dump="/backups/backup-files-${BASE_ROOT_service_dump}"
+
+# Declare the start time
+# Will use local start time for each service backup
+# This implies the Parent script will have a different value for Start Time
+export FSStartTime=$(GetTime)
+
+# Declare number of days old to remove
+FindDaysOld="<%= $finddaysold %>"
+
+# Declare where to start find based on tar, db locations
+StartFindHere="${BASE_ROOT_dump}/${BASE_ROOT_service_dump}"
+
+# Declare list of scripts to backup the service
+ListofBackupScripts=("backup-files.sh" "backup-db.sh" "backup-tar.sh")
+
+# Declare a list of relatvie locations sources rsync and tar up
+
+## The body of the script
+
+# Write out location of scripts
+ReportStatement ${ReportofBackups} "Location of Service Backup Scripts is ${ScriptsHome}"
+
+# Write out First Service Start time
+# This may be different form the backups-daily.sh StartTime
+ReportStatement ${ReportofBackups} 'The start time of the actual functions and scripts'
+ReportStatement ${ReportofBackups} "${FSStartTime}"
+
+# Write Find and Remove all Backup Sets
+ReportStatement ${ReportofBackups} 'Started Find and Remove'
+ReportStatement ${ReportofBackups} `echo $(GetTime)`
+
+# Write out
+ReportStatement ${ReportofBackups} "Find files older than ${FindDaysOld}"
+ReportStatement ${ReportofBackups} `echo $(GetTime)`
+
+# Start Find and Remove all Backup Sets
+ReportStatement ${ReportofBackups} 'Running script find and remove'
+ReportStatement ${ReportofBackups} `echo $(GetTime)`
+
+# Run the function to find and delete
+FindOldBackupSet ${StartFindHere} ${FindDaysOld}
+
+# Write Finished Find and Remove
+ReportStatement ${ReportofBackups} 'Finished Find and Remove'
+ReportStatement ${ReportofBackups} `echo $(GetTime)`
+
+# Loop through scripts
+for i in "${ListofBackupScripts[@]}"; do
+
+ # Write out
+ ReportStatement ${ReportofBackups} 'Start Backup script'
+ ReportStatement ${ReportofBackups} `echo $(GetTime)`
+
+ # Write out
+ ReportStatement ${ReportofBackups} "Running backup script"
+ ReportStatement ${ReportofBackups} "${i}"
+ ReportStatement ${ReportofBackups} `echo $(GetTime)`
+
+ # Run the first script
+ sh "${ScriptsHome}/${i}"
+
+ # Write out backup script has finished
+ ReportStatement ${ReportofBackups} "Finished Backup script"
+ ReportStatement ${ReportofBackups} `echo $(GetTime)`
+
+done # for ListofBackupScripts
+
+# Remove exported variables
+export -n BASE_ROOT_service_dump
+export -n BASE_ROOT_rsync_dump
+export -n FSStartTime

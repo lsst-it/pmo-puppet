@@ -65,3 +65,4 @@ mod 'puppet-alternatives', '4.0.0' # postfix dependency
 mod 'puppetlabs-mailalias_core', '1.1.0' # postfix dependency
 mod 'puppet-chrony', '2.1.0'
 mod 'npwalker-recursive_file_permissions', '0.6.2'
+mod 'puppetlabs-mysql', '14.0.0'

@@ -1,0 +1,49 @@
+# To Dump the DB
+
+## Declare All Variables here
+
+# Declare Debug value
+debug=0
+#debug=1
+
+# Source library
+source ${ScriptsHome}/library.sh
+
+# Declare dump location
+BACKUP_DUMP_LOCATION="${BASE_ROOT_dump}/${BASE_ROOT_service_dump}"
+
+# Declare list of databases to dump including system db
+ListofDBs=(<%= $listofdbs %>)
+
+## The body of the script
+
+# Write out location of scripts
+ReportStatement ${ReportofBackups} "Location of Service Backup Scripts is ${ScriptsHome}"
+
+# Write out debug is on
+if [ "$debug" = "1" ]; then echo "debug is on"; fi
+
+# Write out Start of backup of dbs
+ReportStatement ${ReportofBackups} 'Start backup of dbs'
+ReportStatement ${ReportofBackups} `echo $(GetTime)`
+
+if [ ! -d "${BACKUP_DUMP_LOCATION}" ]; then
+ ReportStatement ${ReportofBackups} 'Backup db dump location is missing!!'
+ echo "Backup dump location is missing!!"
+else
+ ReportStatement ${ReportofBackups} "Backup dump location is ${BACKUP_DUMP_LOCATION}"
+
+ # Write out Starting DB Backup
+ ReportStatement ${ReportofBackups} 'Started DB Backup'
+ ReportStatement ${ReportofBackups} `echo $(GetTime)`
+
+ # Start Backup
+ for i in "${ListofDBs[@]}"; do
+  mysqldump $i |gzip -9 > ${BACKUP_DUMP_LOCATION}/${FSStartTime}-mysql-db-${i}.gz
+ done # for ListofDB
+
+ # Write Out Finished DB
+ ReportStatement ${ReportofBackups} 'Finished DB Backup'
+ ReportStatement ${ReportofBackups} `echo $(GetTime)`
+
+fi

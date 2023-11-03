@@ -1,0 +1,109 @@
+# Daily script to run other scripts.
+
+# Declare Debug value
+# It is not used here but place holder anyway
+#debug=0
+#debug=1
+
+## Declare All Variables here
+
+# Declare location of the scripts and the source library
+export ScriptsHome="/backups/scripts"
+
+# Source library
+source ${ScriptsHome}/library.sh
+
+# Declare base dump location
+export BASE_ROOT_dump="/backups/dumps"
+
+# Declare the official start time
+StartTime=$(GetTime)
+
+# Declare the Report file's absolute path
+export ReportofBackups="${BASE_ROOT_dump}/${StartTime}-report-backup.txt"
+
+# Declare the scripts to backup each service
+#ListScripts='FirstService.sh SecondService.sh ThirdServices.sh'
+ListScripts='FirstService.sh'
+
+# Declare bucket path to the cloud destination
+export BucketLocation=<%= $bucketlocation %>
+
+## The body of the script
+
+# Write out the process is starting
+echo "Start Main Backup Daily Scripts at ${StartTime}"
+echo " "
+
+# Write the First Statement stating the backup sequence has started
+ReportStatement ${ReportofBackups} "The Report is ${ReportofBackups}"
+ReportStatement ${ReportofBackups} "${StartTime} is the start of the backup"
+ReportStatement ${ReportofBackups} 'Start Backup'
+ReportStatement ${ReportofBackups} `echo $(GetTime)`
+
+# Loop through the scripts in the proper order
+for i in ${ListScripts}; do
+ ReportStatement ${ReportofBackups} 'Name of Service Backup Script to run is'
+ ReportStatement ${ReportofBackups} "${ScriptsHome}/$i"
+
+ # Declare the Service Backup script
+ ServiceBackupScript="${ScriptsHome}/$i"
+ echo "Running script ${ServiceBackupScript}"
+ echo " "
+
+ # Write the Service Backup script has started
+ ReportStatement ${ReportofBackups} "Started Service Backup Script ${ServiceBackupScript}"
+ ReportStatement ${ReportofBackups} `echo $(GetTime)`
+
+ # Run the script to backup the particular service
+ sh ${ScriptsHome}/$i
+
+ # Write the Service Backup script has finished
+ ReportStatement ${ReportofBackups} "Finished Service Backup Script Named ${ServiceBackupScript}"
+ ReportStatement ${ReportofBackups} `echo $(GetTime)`
+
+done # for i in ListScripts
+
+# Prepare the 2Cloud Backup script for all service dumped
+ReportStatement ${ReportofBackups} "Prepare 2Cloud Script Named ${CloudBackupScript}"
+ReportStatement ${ReportofBackups} `echo $(GetTime)`
+
+# Check AWS installed on assumed path
+# AWS Bucket should be version controlled
+# AWS Bucket should be WORM
+AWSCommand="/usr/local/bin/aws"
+if [ ! -f "${AWSCommand}" ]; then
+ ReportStatement ${ReportofBackups} 'AWS Missing!!'
+ echo "AWS Missing"
+ echo " "
+else
+ # Start the script
+ ReportStatement ${ReportofBackups} 'Start the cloud script'
+ ReportStatement ${ReportofBackups} `echo $(GetTime)`
+ Sync2Cloud ${AWSCommand} ${BucketLocation} ${BASE_ROOT_dump}
+fi
+
+# Write the 2Cloud Backup script has finished
+ReportStatement ${ReportofBackups} "This statemnet not in aws Finished 2Cloud Script Named ${CloudBackupScript}"
+ReportStatement ${ReportofBackups} `echo $(GetTime)`
+
+# Write the Statement stating the backup sequence has finished
+ReportStatement ${ReportofBackups} 'Finished Backup'
+ReportStatement ${ReportofBackups} `echo $(GetTime)`
+
+# Should add the last sync of the text file after 2cloud
+
+# Write Last Statement not in destination report
+ReportStatement ${ReportofBackups} 'This statement not in aws and scripts have completed'
+ReportStatement ${ReportofBackups} `echo $(GetTime)`
+
+# Send Report
+# Need proper email sending setup
+#SendReport ${ReportofBackups} 'Stuff Nothing' igoodenow@lsst.org
+#ReportStatement ${ReportofBackups} `echo $(GetTime)`
+
+# Remove the export variable
+export -n ScriptsHome
+export -n BASE_ROOT_dump
+export -n ReportofBackups
+export -n BucketLocation
