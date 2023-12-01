@@ -31,6 +31,11 @@ profile::tomcat::ciphers: |
   ECDHE-ARIA256-GCM-SHA384
   ECDHE-RSA-AES128-GCM-SHA256
   ECDHE-RSA-AES256-GCM-SHA384
+  TLS_AES_256_GCM_SHA384
+  TLS_CHACHA20_POLY1305_SHA256
+  TLS_AES_128_GCM_SHA256
+  TLS_AES_128_CCM_8_SHA256
+  TLS_AES_128_CCM_SHA256
 cron::job:
   'pwmbackup':
     command: "aws s3 cp %{lookup('pwmconfig_dest')} s3://pwm/%{facts.fqdn}-PwmConfiguration_bak ;
