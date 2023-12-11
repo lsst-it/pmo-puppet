@@ -7,19 +7,24 @@ $pf_version,
 include 'archive'
 
 # Ensures recursive perm change will run only initially
-  unless $::pf_svc  {
-    archive { '/tmp/pingfed.zip':
-      source       => "http://wsus.lsst.org/puppetfiles/pingfederate/pingfederate-${pf_version}.zip",
-      cleanup      => true,
-      extract      => true,
-      extract_path => '/opt',
-    }
-    # Required for Atlassian connector
-    archive { '/tmp/atlassianpingfed.zip':
-      source       => 'http://wsus.lsst.org/puppetfiles/pingfederate/pf-atlassian-cloud-connector-1.0.zip',
-      cleanup      => true,
-      extract      => true,
-      extract_path => '/tmp/',
+  # unless $::pf_svc  {
+  #   archive { '/tmp/pingfed.zip':
+  #     source       => "http://wsus.lsst.org/puppetfiles/pingfederate/pingfederate-${pf_version}.zip",
+  #     cleanup      => true,
+  #     extract      => true,
+  #     extract_path => '/opt',
+  #   }
+  #   # Required for Atlassian connector
+  #   archive { '/tmp/atlassianpingfed.zip':
+  #     source       => 'http://wsus.lsst.org/puppetfiles/pingfederate/pf-atlassian-cloud-connector-1.0.zip',
+  #     cleanup      => true,
+  #     extract      => true,
+  #     extract_path => '/tmp/',
+  #   }
+    # zoom provisioner /opt/pingfederate-11.0.7/pingfederate/server/default/deploy/
+    archive { '/opt/pingfederate-11.0.7/pingfederate/server/default/deploy/pf-zoom-quickconnection-1.0.jar':
+      source   => 'http://wsus.lsst.org/puppetfiles/pingfederate/pf-zoom-quickconnection-1.0.jar',
+      cleanup  => false,
     }
     recursive_file_permissions { "/opt/pingfederate-${pf_version}/pingfederate/":
       file_mode => '0775',
@@ -27,7 +32,7 @@ include 'archive'
       owner     => $pf_user_hide.unwrap,
       group     => $pf_user_hide.unwrap,
     }
-  }
+  # }
   # Copy file needed for Atlassian connector... 
   file { "/opt/pingfederate-${pf_version}/pingfederate/server/default/deploy/pf-atlassian-cloud-quickconnection-1.0.jar":
     ensure => present,
