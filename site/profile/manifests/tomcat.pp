@@ -43,7 +43,7 @@ tomcat::config::server::connector { 'default-https':
       'secure'                     => true, # bool2str($https_connector_secure),
       'clientAuth'                 => 'false',
       'sslProtocol'                => 'TLS',
-      'sslEnabledProtocols'        => 'TLSv1.2',
+      'sslEnabledProtocols'        => 'TLSv1.2+TLSv1.3',
       'useServerCipherSuitesOrder' => true,
       'ciphers'                    => $ciphers,
       'keystorePass'               => $keystorepass_hide.unwrap,
