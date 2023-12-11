@@ -1,6 +1,6 @@
 forge 'https://forgeapi.puppetlabs.com'
 # Windows
-mod 'puppetlabs-chocolatey', '6.2.0'
+mod 'puppetlabs-chocolatey', '8.0.0'
 mod 'puppetlabs-ruby_task_helper', '0.6.1' # Chocolately dependency
 mod 'puppetlabs-registry', '4.1.0'
 mod 'AlexCline-dirtree', '0.2.1'
