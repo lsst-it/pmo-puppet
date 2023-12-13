@@ -21,6 +21,11 @@ include 'archive'
       extract      => true,
       extract_path => '/tmp/',
     }
+    # zoom provisioner /opt/pingfederate-11.0.7/pingfederate/server/default/deploy/
+    archive { '/opt/pingfederate-11.0.7/pingfederate/server/default/deploy/pf-zoom-quickconnection-1.0.jar':
+      source   => 'http://wsus.lsst.org/puppetfiles/pingfederate/pf-zoom-quickconnection-1.0.jar',
+      cleanup  => false,
+    }
     recursive_file_permissions { "/opt/pingfederate-${pf_version}/pingfederate/":
       file_mode => '0775',
       dir_mode  => '0775',
