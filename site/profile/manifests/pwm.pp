@@ -18,7 +18,7 @@ class profile::pwm (
   $pwmconfig_source = lookup('pwmconfig_source')
   file { '/opt/tomcat/webapps/ROOT.war':
     ensure => file,
-    source => '/tmp/pwm-1.9.2.war',
+    source => "/tmp/pwm-${war_version}.war",
   }
   $pwmkeystore = lookup('pwmkeystore')
   archive { '/etc/pki/keystore' :
