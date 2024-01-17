@@ -1,10 +1,10 @@
 ---
-profile::pwm::pwm_version: '1_9_2'
-profile::pwm::war_version: '1.9.2'
+profile::pwm::pwm_version: '2_0_6'
+profile::pwm::war_version: '2.0.6'
 network::interfaces_hash:
   eth0:
     type: Ethernet
-    ipaddress: 140.252.201.21
+    ipaddress: 140.252.201.18
     netmask: 255.255.255.0
     gateway: 140.252.201.1
     dns1: 140.252.32.125
