@@ -1,8 +1,14 @@
 # Reboot required following the initial run
-class profile::pwm {
-  archive { '/tmp/pwm-1.9.2.war':
+# @param war_version 
+# @param pwm_version 
+#  Accepts pwm_version
+class profile::pwm (
+  String $war_version,
+  String $pwm_version,
+) {
+  archive { "/tmp/pwm-${war_version}.war":
     ensure   => present,
-    source   => 'https://github.com/pwm-project/pwm/releases/download/v1_9_2/pwm-1.9.2.war',
+    source   => "https://github.com/pwm-project/pwm/releases/download/v${pwm_version}/pwm-${war_version}.war",
     provider => 'wget',
     cleanup  => false,
   }
@@ -12,7 +18,7 @@ class profile::pwm {
   $pwmconfig_source = lookup('pwmconfig_source')
   file { '/opt/tomcat/webapps/ROOT.war':
     ensure => file,
-    source => '/tmp/pwm-1.9.2.war',
+    source => "/tmp/pwm-${war_version}.war",
   }
   $pwmkeystore = lookup('pwmkeystore')
   archive { '/etc/pki/keystore' :
