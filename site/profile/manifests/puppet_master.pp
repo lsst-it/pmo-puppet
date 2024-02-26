@@ -6,6 +6,10 @@ class profile::puppet_master {
     ensure   => present,
     provider => 'puppetserver_gem',
   }
+  package { 'hiera-eyaml':
+    ensure   => '3.4.0',
+    provider => 'puppetserver_gem',
+  }
   # $prkpem = lookup('prkpem')
   # $pukpem = lookup('pukpem')
   # file {
