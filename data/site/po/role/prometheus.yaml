@@ -77,6 +77,7 @@ prometheus::alerts:
           annotations:
             summary: Host high CPU load (instance {{ $labels.instance }})
             description: "CPU load is > 90%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"# Windows Defender Firewall service
+# Windows Defender Firewall service
         - alert: WindowsFirewallServiceStatus
           expr: windows_service_state{name="mpssvc", state="running"} == 0
           for: 10m
