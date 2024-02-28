@@ -71,7 +71,7 @@ prometheus::alerts:
 # windows high CPU usage
         - alert: windowsHostHighCpuLoad
           expr: 100 - (avg by(instance) (rate(windows_cpu_time_total{mode="idle"}[2m])) * 100) > 90
-          for: 1m
+          for: 5m
           labels:
             severity: warning
           annotations:
@@ -598,7 +598,7 @@ prometheus::alerts:
 # Linux high cpu usage
         - alert: HostHighCpuLoad
           expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100) > 90
-          for: 1m
+          for: 5m
           labels:
             severity: warning
           annotations:
