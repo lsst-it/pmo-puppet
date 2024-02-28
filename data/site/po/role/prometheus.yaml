@@ -586,3 +586,21 @@ prometheus::alerts:
           annotations:
             summary: pingfederate.service down (instance {{ $labels.instance }})
             description: "pingfederate.service service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Linux memory usage
+        - alert: HighMemoryUsage
+          expr: node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100 < 20
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High memory usage on Windows server"
+            description: "Memory usage is above 80% on Linux server {{ $labels.instance }}"
+# Linux high cpu usage
+        - alert: HostHighCpuLoad
+          expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100) > 90
+          for: 1m
+          labels:
+            severity: warning
+          annotations:
+            summary: Host high CPU load (instance {{ $labels.instance }})
+            description: "CPU load is > 90%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
