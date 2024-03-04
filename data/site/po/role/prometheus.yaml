@@ -59,6 +59,24 @@ prometheus::alerts:
             summary: Windows Server disk Space Usage (instance {{ $labels.instance }})
             identifier: '{{ $labels.instance }}'
             description: "Disk usage is more than 85%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Windows memory usage
+        - alert: WindowsHighMemoryUsage
+          expr: ((windows_cs_physical_memory_bytes - windows_os_physical_memory_free_bytes) / (windows_cs_physical_memory_bytes)) * 100 > 80
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High memory usage on Windows server"
+            description: "Memory usage is above 80% on Windows server {{ $labels.instance }}"
+# windows high CPU usage
+        - alert: windowsHostHighCpuLoad
+          expr: 100 - (avg by(instance) (rate(windows_cpu_time_total{mode="idle"}[2m])) * 100) > 80
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: Host high CPU load (instance {{ $labels.instance }})
+            description: "CPU load is > 80%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"# Windows Defender Firewall service
 # Windows Defender Firewall service
         - alert: WindowsFirewallServiceStatus
           expr: windows_service_state{name="mpssvc", state="running"} == 0
@@ -569,3 +587,21 @@ prometheus::alerts:
           annotations:
             summary: pingfederate.service down (instance {{ $labels.instance }})
             description: "pingfederate.service service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Linux memory usage
+        - alert: HighMemoryUsage
+          expr: node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100 < 20
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High memory usage on Windows server"
+            description: "Memory usage is above 80% on Linux server {{ $labels.instance }}"
+# Linux high cpu usage
+        - alert: HostHighCpuLoad
+          expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100) > 90
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: Host high CPU load (instance {{ $labels.instance }})
+            description: "CPU load is > 90%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
