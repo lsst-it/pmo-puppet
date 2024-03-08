@@ -589,7 +589,7 @@ prometheus::alerts:
             description: "pingfederate.service service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Linux memory usage
         - alert: HighMemoryUsage
-          expr: node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100 > 80
+          expr: node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100 < 20
           for: 5m
           labels:
             severity: warning
