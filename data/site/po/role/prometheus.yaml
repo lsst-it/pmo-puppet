@@ -67,7 +67,7 @@ prometheus::alerts:
             severity: warning
           annotations:
             summary: "High memory usage on Windows server"
-            description: "Memory usage is above 80% on Windows server {{ $labels.instance }}"
+            description: "Memory usage is above 80%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # windows high CPU usage
         - alert: windowsHostHighCpuLoad
           expr: 100 - (avg by(instance) (rate(windows_cpu_time_total{mode="idle"}[2m])) * 100) > 80
