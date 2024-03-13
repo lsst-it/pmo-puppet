@@ -598,7 +598,7 @@ prometheus::alerts:
             description: "Memory usage is above 80%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Linux high cpu usage
         - alert: HostHighCpuLoad
-          expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100) > 90
+          expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 90
           for: 5m
           labels:
             severity: warning
