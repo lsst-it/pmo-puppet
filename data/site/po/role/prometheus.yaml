@@ -384,6 +384,15 @@ prometheus::alerts:
           annotations:
             summary: NSClient++ service Status (instance {{ $labels.instance }})
             description: "NSClient++ state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# NSCP (NSCLient) different version down
+        - alert: NSCP (NSCLient)
+          expr: windows_service_state{name="nscp", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: NSCP (NSCLient) service Status (instance {{ $labels.instance }})
+            description: "NSCP (NSCLient) state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # NXlog down
         - alert: nxlog
           expr: windows_service_state{name="nxlog", state="running"} == 0
