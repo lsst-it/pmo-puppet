@@ -70,13 +70,13 @@ prometheus::alerts:
             description: "Memory usage including pageing file is above 80%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # windows high CPU usage
         - alert: windowsHostHighCpuLoad
-          expr: 100 - (avg by(instance) (rate(windows_cpu_time_total{mode="idle"}[2m])) * 100) > 80
+          expr: 100 - (avg by(instance) (rate(windows_cpu_time_total{mode="idle"}[5m])) * 100) > 90
           for: 5m
           labels:
             severity: warning
           annotations:
             summary: Host high CPU load (instance {{ $labels.instance }})
-            description: "CPU load is > 80%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"# Windows Defender Firewall service
+            description: "CPU load is > 90%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"# Windows Defender Firewall service
 # Windows Defender Firewall service
         - alert: WindowsFirewallServiceStatus
           expr: windows_service_state{name="mpssvc", state="running"} == 0
