@@ -61,13 +61,13 @@ prometheus::alerts:
             description: "Disk usage is more than 85%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Windows memory usage
         - alert: WindowsHighMemoryUsage
-          expr: ((windows_cs_physical_memory_bytes - windows_os_physical_memory_free_bytes) / (windows_cs_physical_memory_bytes)) * 100 > 80
+          expr: 100 * (1 - ((avg_over_time(windows_os_physical_memory_free_bytes[2m]) + avg_over_time(windows_os_paging_limit_bytes [2m])) / avg_over_time(windows_cs_physical_memory_bytes[2m]))) > 80
           for: 5m
           labels:
             severity: warning
           annotations:
             summary: "High memory usage on Windows server"
-            description: "Memory usage is above 80%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+            description: "Memory usage including pageing file is above 80%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # windows high CPU usage
         - alert: windowsHostHighCpuLoad
           expr: 100 - (avg by(instance) (rate(windows_cpu_time_total{mode="idle"}[2m])) * 100) > 80
