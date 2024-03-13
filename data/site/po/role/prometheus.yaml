@@ -375,6 +375,15 @@ prometheus::alerts:
             summary: Puppet agent service Status (instance {{ $labels.instance }})
             identifier: '{{ $labels.instance }}'
             description: "Puppet agent state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# NSClient++ down
+        - alert: NSClient++
+          expr: windows_service_state{name="nsclientpp", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: NSClient++ service Status (instance {{ $labels.instance }})
+            description: "NSClient++ state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # NXlog down
         - alert: nxlog
           expr: windows_service_state{name="nxlog", state="running"} == 0
