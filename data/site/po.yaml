@@ -83,6 +83,26 @@ rsyslog::config::actions:
       Target: "graylog-tuc.lsst.org"
       Port: 5514
       Protocol: "udp"
+  messages:
+    type: "omfile"
+    facility: "*.info;mail.none;authpriv.none;cron.none;local6.none"
+    config:
+      file: "/var/log/messages"
+  secure:
+    type: "omfile"
+    facility: "authpriv.*"
+    config:
+      file: "/var/log/secure"
+  maillog:
+    type: "omfile"
+    facility: "mail.*"
+    config:
+      file: "/var/log/maillog"
+  cron:
+    type: "omfile"
+    facility: "cron.*"
+    config:
+      file: "/var/log/cron"
 postfix::mta: true
 postfix::inet_protocols: "ipv4"
 postfix::manage_root_alias: true
