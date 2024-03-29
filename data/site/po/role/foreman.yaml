@@ -1,0 +1,13 @@
+---
+r10k::version: '3.15.4'
+r10k::mcollective: false
+r10k::cachedir: "/var/cache/r10k"
+r10k::sources:
+  private:
+    remote: "git@github.com:/lsst-it/pmo-puppet-private.git"
+    basedir: "/etc/puppetlabs/code/data/private"
+    invalid_branches: "correct"
+  control:
+    remote: "https://github.com/lsst-it/pmo-puppet"
+    basedir: "/etc/puppetlabs/code/environments"
+    invalid_branches: "correct"

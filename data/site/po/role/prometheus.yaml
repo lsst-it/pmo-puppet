@@ -59,6 +59,24 @@ prometheus::alerts:
             summary: Windows Server disk Space Usage (instance {{ $labels.instance }})
             identifier: '{{ $labels.instance }}'
             description: "Disk usage is more than 85%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Windows memory usage
+        - alert: WindowsHighMemoryUsage
+          expr: 100 * (1 - ((avg_over_time(windows_os_physical_memory_free_bytes[5m]) + avg_over_time(windows_os_paging_free_bytes[5m])) / (avg_over_time(windows_cs_physical_memory_bytes[5m]) + avg_over_time(windows_os_paging_limit_bytes[5m])))) > 80
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High memory usage on Windows server"
+            description: "Memory usage including pageing file is above 80%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# windows high CPU usage
+        - alert: windowsHostHighCpuLoad
+          expr: 100 - (avg by(instance) (rate(windows_cpu_time_total{mode="idle"}[5m])) * 100) > 90
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: Host high CPU load (instance {{ $labels.instance }})
+            description: "CPU load is > 90%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"# Windows Defender Firewall service
 # Windows Defender Firewall service
         - alert: WindowsFirewallServiceStatus
           expr: windows_service_state{name="mpssvc", state="running"} == 0
@@ -357,6 +375,24 @@ prometheus::alerts:
             summary: Puppet agent service Status (instance {{ $labels.instance }})
             identifier: '{{ $labels.instance }}'
             description: "Puppet agent state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# NSClient++ down
+        - alert: NSClient++
+          expr: windows_service_state{name="nsclientpp", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: NSClient++ service Status (instance {{ $labels.instance }})
+            description: "NSClient++ state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# NSCP (NSCLient) different version down
+        - alert: NSCP (NSCLient)
+          expr: windows_service_state{name="nscp", state="running"} == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: NSCP (NSCLient) service Status (instance {{ $labels.instance }})
+            description: "NSCP (NSCLient) state is not OK\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # NXlog down
         - alert: nxlog
           expr: windows_service_state{name="nxlog", state="running"} == 0
@@ -490,6 +526,15 @@ prometheus::alerts:
             summary: Crowd down (instance {{ $labels.instance }})
             identifier: '{{ $labels.instance }}'
             description: "Crowd service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Chrony down 
+        - alert: Chrony
+          expr: node_systemd_unit_state{name="chronyd.service", state="active"} != 1
+          for: 4m
+          labels:
+            severity: critical
+          annotations:
+            summary: chronyd down (instance {{ $labels.instance }})
+            description: "chronyd service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # SSH down 
         - alert: SSH
           expr: node_systemd_unit_state{name="sshd.service", state="active"} != 1
@@ -530,6 +575,15 @@ prometheus::alerts:
             summary: Apache down (instance {{ $labels.instance }})
             identifier: '{{ $labels.instance }}'
             description: "Apache service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# HTTPD down 
+        - alert: HTTPD
+          expr: node_systemd_unit_state{name="httpd.service", state="active"} != 1
+          for: 3m
+          labels:
+            severity: critical
+          annotations:
+            summary: HTTPD down (instance {{ $labels.instance }})
+            description: "HTTPD service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Nginx down 
         - alert: Nginx
           expr: node_systemd_unit_state{name="nginx.service", state="active"} != 1
@@ -569,3 +623,21 @@ prometheus::alerts:
           annotations:
             summary: pingfederate.service down (instance {{ $labels.instance }})
             description: "pingfederate.service service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Linux memory usage
+        - alert: HighMemoryUsage
+          expr: 100 * ((node_memory_MemTotal_bytes - node_memory_MemFree_bytes) / (node_memory_MemTotal_bytes + node_memory_SwapTotal_bytes))  > 80
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High memory usage Linux server"
+            description: "Memory usage is above 80%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Linux high cpu usage
+        - alert: HostHighCpuLoad
+          expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 90
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: Host high CPU load (instance {{ $labels.instance }})
+            description: "CPU load is > 90%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
