@@ -5,6 +5,7 @@ class profile::graylog {
   $root_password_sha2 = lookup('root_password_sha2')
   $glog_pwd = lookup('glog_pwd')
   $ssldir = lookup('ssldir')
+  include java_ks::config
 
   class { 'elastic_stack::repo':
     version => 7,
@@ -54,6 +55,12 @@ class profile::graylog {
       ensure  => file,
       content => $tlschain.unwrap,
   }
+  # java_ks cannot find keytool, so this symlink is needed
+  file { '/usr/local/bin/keytool':
+    ensure => link,
+    target => '/usr/share/graylog-server/jvm/bin/keytool',
+    # require => Class['graylog-server'],
+  }
   class { 'graylog::repository':
     version => '5.2',
   }
@@ -84,5 +91,6 @@ class profile::graylog {
       elasticsearch_hosts                 => 'http://127.0.0.1:9200',
       mongodb_uri                         => 'mongodb://127.0.0.1:27017/graylog',
     },
+    java_opts       => "-Xms4g -Xmx4g -XX:NewRatio=1 -server -XX:+ResizeTLAB -XX:-OmitStackTraceInFastThrow -Djavax.net.ssl.trustStore=${ssldir}/cacerts.jks",
   }
 }
