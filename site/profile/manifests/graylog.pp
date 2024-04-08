@@ -64,7 +64,6 @@ class profile::graylog {
   file { '/usr/local/bin/keytool':
     ensure => link,
     target => '/usr/share/graylog-server/jvm/bin/keytool',
-    # require => Class['graylog-server'],
   }
   java_ks { "lss.org:${ssldir}//cacerts.jks":
     ensure              => latest,
