@@ -4,6 +4,7 @@ class profile::graylog {
   $pass_secret = lookup('pass_secret')
   $root_password_sha2 = lookup('root_password_sha2')
   $glog_pwd = lookup('glog_pwd')
+  $ssldir = lookup('ssldir')
 
   class { 'elastic_stack::repo':
     version => 7,
@@ -30,6 +31,29 @@ class profile::graylog {
   ->class { 'mongodb::server':
     bind_ip       => ['127.0.0.1'],
   }
+  # Directory and files for TLS
+  $tlskey = lookup('tlskey')
+  $tlscert = lookup('tlscert')
+  $tlschain = lookup('tlschain')
+  file {
+    $ssldir:
+      ensure => directory,
+      mode   => '0700',
+      owner  => 'graylog',
+      group  => 'graylog',
+      ;
+    "${ssldir}/graylog.key":
+      ensure  => file,
+      content => $tlskey.unwrap,
+      ;
+    "${ssldir}/graylog.crt":
+      ensure  => file,
+      content => $tlscert.unwrap,
+      ;
+    "${ssldir}/graylog.pem":
+      ensure  => file,
+      content => $tlschain.unwrap,
+  }
   class { 'graylog::repository':
     version => '5.2',
   }
@@ -47,7 +71,9 @@ class profile::graylog {
       http_bind_address                   => '0.0.0.0:443',
       http_external_uri                   => "https://${fqdn}/",
       http_publish_uri                    => "https://${fqdn}/",
-      http_enable_tls                     => false,
+      http_enable_tls                     => true,
+      http_tls_cert_file                  => "${ssldir}/graylog.crt",
+      http_tls_key_file                   => "${ssldir}/graylog.key",
       rotation_strategy                   => 'time',
       retention_strategy                  => 'delete',
       elasticsearch_max_time_per_index    => '7d',
