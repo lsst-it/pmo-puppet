@@ -66,6 +66,14 @@ class profile::graylog {
     target => '/usr/share/graylog-server/jvm/bin/keytool',
     # require => Class['graylog-server'],
   }
+  java_ks { "lss.org:${ssldir}//cacerts.jks":
+    ensure              => latest,
+    certificate         => "${ssldir}/graylog.crt",
+    private_key         => "${ssldir}/graylog.key",
+    chain               => "${ssldir}/graylog.pem",
+    password            => 'changeit',
+    password_fail_reset => true,
+  }
   class { 'graylog::repository':
     version => '5.2',
   }
