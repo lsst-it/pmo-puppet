@@ -54,6 +54,11 @@ class profile::graylog {
     "${ssldir}/graylog.pem":
       ensure  => file,
       content => $tlschain.unwrap,
+      ;
+    "${ssldir}/cacerts.jks":
+      ensure  => file,
+      source  => '/usr/share/graylog-server/jvm/lib/security/cacerts',
+      replace => false,
   }
   # java_ks cannot find keytool, so this symlink is needed
   file { '/usr/local/bin/keytool':
