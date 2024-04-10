@@ -31,6 +31,7 @@ class profile::graylog {
   }
   ->class { 'mongodb::server':
     bind_ip       => ['127.0.0.1'],
+    set_parameter => ['diagnosticDataCollectionEnabled: false'], # Makes SELinux happy
   }
   # Directory and files for TLS
   $tlskey = lookup('tlskey')
