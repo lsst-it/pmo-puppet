@@ -21,7 +21,7 @@ class profile::base_windows (
     }
     file { 'C:/Program Files (x86)/nxlog/conf/nxlog.conf':
       ensure => file,
-      source => 'http://wsus.lsst.org/puppetfiles/nxlog/nxlog.txt',
+      source => 'http://wsus.lsst.org/puppetfiles/nxlog/nxlog.conf',
     }
   }
 }
