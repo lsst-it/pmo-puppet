@@ -17,15 +17,11 @@ class profile::base_windows (
   if $graylog {
     package { 'NXLog-CE':
       ensure => '2.10.2150',
-      source => 'https://project.lsst.org/zpuppet/nxlog/nxlog-ce-2.10.2150.msi',
+      source => 'http://wsus.lsst.org/puppetfiles/nxlog/nxlog-ce-2.10.2150.msi',
     }
     file { 'C:/Program Files (x86)/nxlog/conf/nxlog.conf':
       ensure => file,
-      source => 'https://project.lsst.org/zpuppet/nxlog/nxlog.conf',
-    }
-    service { 'nxlog':
-      ensure => 'running',
-      enable => true,
+      source => 'http://wsus.lsst.org/puppetfiles/nxlog/nxlog.txt',
     }
   }
 }
