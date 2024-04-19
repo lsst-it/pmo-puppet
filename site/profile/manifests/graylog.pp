@@ -66,7 +66,7 @@ class profile::graylog {
     ensure => link,
     target => '/usr/share/graylog-server/jvm/bin/keytool',
   }
-  java_ks { "lss.org:${ssldir}//cacerts.jks":
+  java_ks { "lsst.org:${ssldir}//cacerts.jks":
     ensure              => latest,
     certificate         => "${ssldir}/graylog.crt",
     private_key         => "${ssldir}/graylog.key",
