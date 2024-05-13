@@ -21,8 +21,8 @@ class profile::graylog {
       'network.host' => '127.0.0.1',
     },
     jvm_options       => [
-      '-Xms2g',
-      '-Xmx2g',
+      '-Xms4g',
+      '-Xmx4g',
     ],
   }
   class { 'mongodb::globals':
@@ -104,6 +104,6 @@ class profile::graylog {
       elasticsearch_hosts                 => 'http://127.0.0.1:9200',
       mongodb_uri                         => 'mongodb://127.0.0.1:27017/graylog',
     },
-    java_opts       => "-Xms4g -Xmx4g -XX:NewRatio=1 -server -XX:+ResizeTLAB -XX:-OmitStackTraceInFastThrow -Djavax.net.ssl.trustStore=${ssldir}/cacerts.jks",
+    java_opts       => "-Xms2g -Xmx2g -XX:NewRatio=1 -server -XX:+ResizeTLAB -XX:-OmitStackTraceInFastThrow -Djavax.net.ssl.trustStore=${ssldir}/cacerts.jks",
   }
 }
