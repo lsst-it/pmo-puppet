@@ -529,7 +529,7 @@ prometheus::alerts:
 # Graylog down 
         - alert: Graylog
           expr: node_systemd_unit_state{name="graylog-server.service", state="active"} != 1
-          for: 1m
+          for: 5m
           labels:
             severity: critical
           annotations:
@@ -538,7 +538,7 @@ prometheus::alerts:
 # mongodb down 
         - alert: mongodb
           expr: node_systemd_unit_state{name="mongodb.service", state="active"} != 1
-          for: 1m
+          for: 5m
           labels:
             severity: critical
           annotations:
@@ -547,7 +547,7 @@ prometheus::alerts:
 # elasticsearch.service down 
         - alert: elasticsearch
           expr: node_systemd_unit_state{name="elasticsearch.service", state="active"} != 1
-          for: 1m
+          for: 5m
           labels:
             severity: critical
           annotations:
