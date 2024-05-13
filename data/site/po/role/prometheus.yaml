@@ -526,6 +526,33 @@ prometheus::alerts:
             summary: Crowd down (instance {{ $labels.instance }})
             identifier: '{{ $labels.instance }}'
             description: "Crowd service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Graylog down 
+        - alert: Graylog
+          expr: node_systemd_unit_state{name="graylog-server.service", state="active"} != 1
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: graylog-server down (instance {{ $labels.instance }})
+            description: "graylog-server service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# mongodb down 
+        - alert: mongodb
+          expr: node_systemd_unit_state{name="mongodb.service", state="active"} != 1
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: mongodb down (instance {{ $labels.instance }})
+            description: "mongodb service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# elasticsearch.service down 
+        - alert: elasticsearch
+          expr: node_systemd_unit_state{name="elasticsearch.service", state="active"} != 1
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: elasticsearch.service down (instance {{ $labels.instance }})
+            description: "elasticsearch.service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Chrony down 
         - alert: Chrony
           expr: node_systemd_unit_state{name="chronyd.service", state="active"} != 1
