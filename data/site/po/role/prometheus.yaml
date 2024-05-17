@@ -70,7 +70,7 @@ prometheus::alerts:
             description: "Memory usage including pageing file is above 80%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # windows high CPU usage
         - alert: windowsHostHighCpuLoad
-          expr: 100 - (avg by(instance) (rate(windows_cpu_time_total{mode="idle"}[5m])) * 100) > 90
+          expr: 100 - (avg by(instance) (rate(windows_cpu_time_total{mode="idle"}[5m])) * 100) > 85
           for: 5m
           labels:
             severity: warning
