@@ -70,7 +70,7 @@ prometheus::alerts:
             description: "Memory usage including pageing file is above 80%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # windows high CPU usage
         - alert: windowsHostHighCpuLoad
-          expr: 100 - (avg by(instance) (rate(windows_cpu_time_total{mode="idle"}[5m])) * 100) > 90
+          expr: 100 - (avg by(instance) (irate(windows_cpu_time_total{mode="idle"}[5m])) * 100) > 90
           for: 5m
           labels:
             severity: warning
@@ -526,6 +526,33 @@ prometheus::alerts:
             summary: Crowd down (instance {{ $labels.instance }})
             identifier: '{{ $labels.instance }}'
             description: "Crowd service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# Graylog down 
+        - alert: Graylog
+          expr: node_systemd_unit_state{name="graylog-server.service", state="active"} != 1
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: graylog-server down (instance {{ $labels.instance }})
+            description: "graylog-server service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# mongodb down 
+        - alert: mongodb
+          expr: node_systemd_unit_state{name="mongod.service", state="active"} != 1
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: mongodb down (instance {{ $labels.instance }})
+            description: "mongod service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+# elasticsearch.service down 
+        - alert: elasticsearch
+          expr: node_systemd_unit_state{name="elasticsearch.service", state="active"} != 1
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: elasticsearch.service down (instance {{ $labels.instance }})
+            description: "elasticsearch.service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Chrony down 
         - alert: Chrony
           expr: node_systemd_unit_state{name="chronyd.service", state="active"} != 1
@@ -625,7 +652,7 @@ prometheus::alerts:
             description: "pingfederate.service service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Linux memory usage
         - alert: HighMemoryUsage
-          expr: 100 * ((node_memory_MemTotal_bytes - node_memory_MemFree_bytes) / (node_memory_MemTotal_bytes + node_memory_SwapTotal_bytes))  > 80
+          expr: 100 - (((node_memory_MemAvailable_bytes + node_memory_SwapFree_bytes) * 100) / (node_memory_MemTotal_bytes + node_memory_SwapTotal_bytes  )) > 80
           for: 5m
           labels:
             severity: warning
@@ -634,7 +661,7 @@ prometheus::alerts:
             description: "Memory usage is above 80%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Linux high cpu usage
         - alert: HostHighCpuLoad
-          expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 90
+          expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 90
           for: 5m
           labels:
             severity: warning
