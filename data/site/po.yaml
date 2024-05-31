@@ -83,8 +83,7 @@ rsyslog::config::actions:
       Target: "graylog-tuc.lsst.org"
       Port: 5514
       Protocol: "udp"
-rsyslog::config::actions:
-  graylogAWS:
+  graylogTuc:
     type: "omfwd"
     facility: "*.*"
     config:
