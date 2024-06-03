@@ -16,12 +16,17 @@ class profile::base_windows (
 # Graylog config
   if $graylog {
     package { 'NXLog-CE':
-      ensure => '2.10.2150',
-      source => 'http://wsus.lsst.org/puppetfiles/nxlog/nxlog-ce-2.10.2150.msi',
+      ensure => '3.2.2329',
+      source => 'http://wsus.lsst.org/puppetfiles/nxlog/nxlog-ce-3.2.2329.msi',
     }
-    file { 'C:/Program Files (x86)/nxlog/conf/nxlog.conf':
+    file { 'C:/Program Files/nxlog/conf/nxlog.conf':
       ensure => file,
-      source => 'http://wsus.lsst.org/puppetfiles/nxlog/nxlog.conf',
+      source => 'http://wsus.lsst.org/puppetfiles/nxlog/nxlog3.2.2329.conf',
+      notify => Service['nxlog'],
+    }
+    file { 'C:/Program Files (x86)/nxlog': # removes the old orphaned folder
+      ensure => absent,
+      force  => true,
     }
     service { 'nxlog':
       ensure => 'running',
