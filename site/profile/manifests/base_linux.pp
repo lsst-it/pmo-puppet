@@ -31,7 +31,7 @@ class profile::base_linux (
     extra_options => '--collector.systemd \--collector.processes \--collector.meminfo_numa',
   }
   class { 'chrony':
-    servers => ['140.252.1.140', '140.252.1.141', '0.pool.ntp.arizona.edu'],
+    servers => ['140.252.1.140', '140.252.1.141', '0.pool.ntp.arizona.edu', '169.254.169.123'], #AWS NTP
   }
   class { 'timezone':
     timezone => 'UTC',
