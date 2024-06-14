@@ -76,13 +76,6 @@ rsyslog::config::global_config:
 rsyslog::config::modules:
   imuxsock: {}
 rsyslog::config::actions:
-  graylogAWS:
-    type: "omfwd"
-    facility: "*.*"
-    config:
-      Target: "graylog-tuc.lsst.org"
-      Port: 5514
-      Protocol: "udp"
   graylogTuc1:
     type: "omfwd"
     facility: "*.*"
