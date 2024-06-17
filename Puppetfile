@@ -27,7 +27,7 @@ mod 'puppetlabs-puppetserver_gem', '1.1.1'
 mod 'puppet-grafana', '11.0.0'
 mod 'puppet-prometheus', '12.4.0'
 mod 'saz/timezone', '6.1.0'
-mod 'puppet-rsyslog', '6.0.0'
+mod 'puppet-rsyslog', '7.1.0'
 mod 'saz/ssh', '6.0.0'
 mod 'puppet/selinux', '3.0.0'
 mod 'puppet-firewalld', '4.4.0'
@@ -66,3 +66,8 @@ mod 'puppetlabs-mailalias_core', '1.1.0' # postfix dependency
 mod 'puppet-chrony', '2.1.0'
 mod 'npwalker-recursive_file_permissions', '0.6.2'
 mod 'puppetlabs-mysql', '14.0.0'
+mod 'graylog-graylog', '2.0.0'
+mod 'puppet-elasticsearch', '8.1.0'
+mod 'puppet-elastic_stack', '8.0.2' #dependency for elastic
+mod 'puppet-mongodb', '4.2.0'
+mod 'puppet-zypprepo', '5.0.0' # dependency for PHP & MongoDB
