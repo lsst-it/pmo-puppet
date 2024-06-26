@@ -3,7 +3,6 @@ profile::grafana::pname1: 'mr-tuc-2'
 profile::grafana::url1: 'http://mr-tuc-2.lsst.org:9090/'
 profile::grafana::pname2: 'mr-tuc-1'
 profile::grafana::url2: 'http://mr-tuc-1.lsst.org:9090/'
-profile::base_linux::network: true 
 # network::interfaces_hash:
 #   eth0:
 #     type: Ethernet
