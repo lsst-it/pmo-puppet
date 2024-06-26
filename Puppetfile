@@ -47,15 +47,18 @@ mod 'bodgit/scl', '1.0.1'
 mod 'theforeman/dhcp', '6.1.0'
 mod 'theforeman/dns', '8.0.0'
 mod 'puppet-archive', '6.0.2'
-mod 'puppetlabs/concat', '6.0.0'
+mod 'puppetlabs-concat', '9.0.2'
 mod 'puppetlabs-inifile', '5.2.0'
 mod 'puppetlabs-java', '7.3.0'
 mod 'puppetlabs-java_ks', '4.2.0'
-mod 'puppetlabs-stdlib', '8.4.0'
+mod 'puppetlabs-stdlib', '9.6.0'
 mod 'puppetlabs-vcsrepo', '5.0.0'
 mod 'puppet/ssh_keygen', '4.0.0'
 mod 'puppetlabs-hocon', '1.1.0'  # dependency
-mod 'example42-network', '3.6.0'
+# mod 'example42-network', '3.6.0'
+mod 'puppet-network', '2.2.0'
+mod 'puppet-filemapper', '4.0.0' #puppet-network dependency
+mod 'puppet-kmod', '4.0.1' #puppet-network dependency
 # Encryption
 mod 'puppetlabs-puppet_authorization', '0.5.1'
 mod 'binford2k-node_encrypt', '0.4.1'
