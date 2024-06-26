@@ -21,7 +21,7 @@ class profile::base_linux (
   include cron
   include accounts
   if $network {
-    include network
+    include ::network
     create_resources('network_config', hiera('network_config'))
   }
   if $postfix {
