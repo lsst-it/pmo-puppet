@@ -7,23 +7,33 @@ profile::prometheus::slackapi_hide: ENC[PKCS7,MIIBuQYJKoZIhvcNAQcDoIIBqjCCAaYCAQ
 profile::prometheus::cluster_hide: ENC[PKCS7,MIIBiQYJKoZIhvcNAQcDoIIBejCCAXYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAGzQnF2ZbDmEDg5xwlMxs4XW8s1YhqSRpFQ0I18SUQQ63umULQBNUb+BwVxYBiQ96fhw44At9oup9GgSZ3MnDShP2ALNHydWMpwsddMId54/J9rkXMGeEAaq9dd7A0Xb2q+pVXZYQWQ+map7pKL00TxiSiOo3KXrGYe1972dXjssYyS5JvCokvHodm1aBzcezZyi1oD6QUjeAWiQd139Ul5yQH22PNx+MfE3qp8uWw4ueLu005j2+k4zE1eOz87Gxf+0NTEJkeWvVmrwdIGJb4uzXOObEMDGrz2itRYCMYZwFsJfA9Rry4rirRbVjg3e5mPxMk7SYdvZWJVVMvVPGgjBMBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBBsrTaPdZGuo0p2ZKvDmDa1gCBWITTDyO8Gr/tFlkmrJcFIBIdjfVGui26qS0BYtC6PkA==]
 profile::prometheus::advertise_ip: 192.168.50.11:9093
 # Network config 
-network::interfaces_hash:
+network_config:
   eth0:
-    type: Ethernet
+    name: eth0
+    ensure: present
     ipaddress: 140.252.32.21
     netmask: 255.255.254.0
-    gateway: 140.252.32.1
-    dns1: 140.252.32.125
-    dns2: 140.252.32.126
-    peerdns: yes
-    bootproto: none
-    onboot: yes
+    method: static
+    onboot: true
+    options:
+      GATEWAY: 140.252.32.1
+      DNS1: 140.252.32.125
+      DNS2: 140.252.32.126
+      DNS3: 140.252.32.127
+# network::interfaces_hash:
+#   eth0:
+#     type: Ethernet
+#     ipaddress: 140.252.32.21
+#     netmask: 255.255.254.0
+#     gateway: 140.252.32.1
+#     dns1: 140.252.32.125
+#     dns2: 140.252.32.126
+#     peerdns: yes
+#     bootproto: none
+#     onboot: yes
 # Network config for cluster
   eth1:
-    ipaddress: '192.168.50.11'
-    netmask: '255.255.255.0'
-    dns1: "140.252.32.126"
-    dns2: "140.252.32.125"
-    peerdns: 'yes'
-    bootproto: 'none'
-    onboot: 'yes'
+    ipaddress: 192.168.50.11
+    netmask: 255.255.255.0
+    method: static
+    onboot: true
