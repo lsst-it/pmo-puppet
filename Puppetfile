@@ -72,5 +72,5 @@ mod 'puppetlabs-mysql', '14.0.0'
 mod 'graylog-graylog', '2.0.0'
 mod 'puppet-elasticsearch', '8.1.0'
 mod 'puppet-elastic_stack', '8.0.2' #dependency for elastic
-mod 'puppet-mongodb', '4.2.0'
+mod 'puppet-mongodb', '6.0.1'
 mod 'puppet-zypprepo', '5.0.0' # dependency for PHP & MongoDB
