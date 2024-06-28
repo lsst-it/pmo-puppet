@@ -6,7 +6,6 @@ profile::prometheus::slackuser_hide: ENC[PKCS7,MIIBiQYJKoZIhvcNAQcDoIIBejCCAXYCA
 profile::prometheus::slackapi_hide: ENC[PKCS7,MIIBuQYJKoZIhvcNAQcDoIIBqjCCAaYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAVeRiDIioUKNOrDQuzoi3JPDTs0xLE3cvivudtlZd9Ksfh/hJFKOQ89a5a8aB9priDEXtHV36G9X/6FJ/FLvhM/xvtvyeBrVMJ7b3uTJRNvCnBTlexkKUX36yDFJBqiyQAebeaLNrTrURUDum0PK8vi5V3a6+vLkCHz4cxWisDFbkdxYDI4NTJ1HFg3eHED5RyFLTd2lf1y3jFSAhu1vn6Nmq85Pqy0SXzSHehDls+SLkimaUwfWn4oujVfm7TU29xIinAQ7bgmAk+UuuKtxGYsmNvdsNRy0LX+H9Mm23UgfpcyuRJZaqyWEuHdtZ035aOnYBqTvWUYgcmv1d1LNZpjB8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBBoP2c/stbffP1wOOZV9mfNgFDEviEzDQoK35MZhA9NCYoZY7m9sZ73fzDnnk9PraNNnZaW5J0lfiyMAzDeFyZQEqkQ/R9da5Ow1zR7+oiDLaTm0Pgmxc4nEWVatOhHKZE0RQ==]
 profile::prometheus::cluster_hide: ENC[PKCS7,MIIBiQYJKoZIhvcNAQcDoIIBejCCAXYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAbio7LJxB92I8J1SRY2QT6JnIRya1Rwiu95tiRxORlkMcZKlK8UnWMxcSfc9fahsvWqEpb8oJOItnuoxM3Q5RyuRUy4diZUg6lIk65Ovjd4IMAYwPfBpFhyvEpBerzeZHOFP1neDepO8j2ELoGmrbuhtYJMIZ6xu5+5OI6JlBmM00lnScIZWstBcg4Y7jRD+DiRbD7E+QPn7bJTtQISmQH1sh/wgcohn7vvJDvKldao/of8mZc+Q8unXnziYGeqmnHckQFwQPj5SycnXEao/Ymi6yR3klzWwfDW4Fs4ZeWbHiqiKNrf2Edsfx8L8QTCdFe+oDhj0EGm+McoKdg387cDBMBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBBuBFkSWbLCr+zUu0/03hoQgCAi305bSze4b7B4pyx4jY74GPAXIWM/PCJnmzYbkltyig==]
 profile::prometheus::advertise_ip: 192.168.50.12:9093
-network::interfaces_hash:
 # Network config 
 network_config:
   eth0:
@@ -21,6 +20,7 @@ network_config:
       DNS1: 140.252.32.125
       DNS2: 140.252.32.126
       DNS3: 140.252.32.127
+# network::interfaces_hash:
   # eth0:
   #   type: Ethernet
   #   ipaddress: 140.252.32.46
