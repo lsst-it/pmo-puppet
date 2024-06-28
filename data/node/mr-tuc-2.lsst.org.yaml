@@ -20,18 +20,7 @@ network_config:
       DNS1: 140.252.32.125
       DNS2: 140.252.32.126
       DNS3: 140.252.32.127
-# network::interfaces_hash:
-  # eth0:
-  #   type: Ethernet
-  #   ipaddress: 140.252.32.46
-  #   netmask: 255.255.254.0
-  #   gateway: 140.252.32.1
-  #   dns1: 140.252.32.125
-  #   dns2: 140.252.32.126
-  #   peerdns: yes
-  #   bootproto: none
-  #   onboot: yes
-# Network config for cluster
+# Sync interface
   eth1:
     ipaddress: 192.168.50.12
     netmask: 255.255.255.0
