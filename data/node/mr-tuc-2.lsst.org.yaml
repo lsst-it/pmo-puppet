@@ -8,22 +8,32 @@ profile::prometheus::cluster_hide: ENC[PKCS7,MIIBiQYJKoZIhvcNAQcDoIIBejCCAXYCAQA
 profile::prometheus::advertise_ip: 192.168.50.12:9093
 network::interfaces_hash:
 # Network config 
+network_config:
   eth0:
-    type: Ethernet
+    name: eth0
+    ensure: present
     ipaddress: 140.252.32.46
     netmask: 255.255.254.0
-    gateway: 140.252.32.1
-    dns1: 140.252.32.125
-    dns2: 140.252.32.126
-    peerdns: yes
-    bootproto: none
-    onboot: yes
+    method: static
+    onboot: true
+    options:
+      GATEWAY: 140.252.32.1
+      DNS1: 140.252.32.125
+      DNS2: 140.252.32.126
+      DNS3: 140.252.32.127
+  # eth0:
+  #   type: Ethernet
+  #   ipaddress: 140.252.32.46
+  #   netmask: 255.255.254.0
+  #   gateway: 140.252.32.1
+  #   dns1: 140.252.32.125
+  #   dns2: 140.252.32.126
+  #   peerdns: yes
+  #   bootproto: none
+  #   onboot: yes
 # Network config for cluster
   eth1:
-    ipaddress: '192.168.50.12'
-    netmask: '255.255.255.0'
-    dns1: "140.252.32.126"
-    dns2: "140.252.32.125"
-    peerdns: 'yes'
-    bootproto: 'none'
-    onboot: 'yes'
+    ipaddress: 192.168.50.12
+    netmask: 255.255.255.0
+    method: static
+    onboot: true
