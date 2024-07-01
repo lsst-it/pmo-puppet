@@ -1,12 +1,15 @@
 ---
-network::interfaces_hash:
+profile::base_linux::network: true 
+network_config:
   eth0:
-    type: Ethernet
+    name: eth0
+    ensure: present
     ipaddress: 140.252.32.117
     netmask: 255.255.254.0
-    gateway: 140.252.32.1
-    dns1: 140.252.32.125
-    dns2: 140.252.32.126
-    peerdns: yes
-    bootproto: none
-    onboot: yes
+    method: static
+    onboot: true
+    options:
+      GATEWAY: 140.252.32.1
+      DNS1: 140.252.32.125
+      DNS2: 140.252.32.126
+      DNS3: 140.252.32.127
