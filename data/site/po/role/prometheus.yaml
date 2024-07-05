@@ -1,5 +1,6 @@
 ---
 profile::base_linux::graylog: true
+profile::base_linux::network: true 
 prometheus::alertmanager::template:
   - '/alertmanager/notifications.tmpl'
 prometheus::manage_prometheus_server: true
@@ -61,7 +62,7 @@ prometheus::alerts:
             description: "Disk usage is more than 85%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Windows memory usage
         - alert: WindowsHighMemoryUsage
-          expr: 100 * (1 - ((avg_over_time(windows_os_physical_memory_free_bytes[5m]) + avg_over_time(windows_os_paging_free_bytes[5m])) / (avg_over_time(windows_cs_physical_memory_bytes[5m]) + avg_over_time(windows_os_paging_limit_bytes[5m])))) > 80
+          expr: 100 * (1 - ((avg_over_time(windows_os_physical_memory_free_bytes[5m]) + avg_over_time(windows_os_paging_free_bytes[5m])) / (avg_over_time(windows_cs_physical_memory_bytes[5m]) + avg_over_time(windows_os_paging_limit_bytes[5m])))) > 90
           for: 5m
           labels:
             severity: warning
@@ -652,13 +653,13 @@ prometheus::alerts:
             description: "pingfederate.service service is down on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Linux memory usage
         - alert: HighMemoryUsage
-          expr: 100 - (((node_memory_MemAvailable_bytes + node_memory_SwapFree_bytes) * 100) / (node_memory_MemTotal_bytes + node_memory_SwapTotal_bytes  )) > 80
+          expr: 100 - (((node_memory_MemAvailable_bytes + node_memory_SwapFree_bytes) * 100) / (node_memory_MemTotal_bytes + node_memory_SwapTotal_bytes  )) > 90
           for: 5m
           labels:
             severity: warning
           annotations:
             summary: "High memory usage Linux server"
-            description: "Memory usage is above 80%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+            description: "Memory usage is above 90%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 # Linux high cpu usage
         - alert: HostHighCpuLoad
           expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 90
