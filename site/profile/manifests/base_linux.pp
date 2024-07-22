@@ -7,17 +7,23 @@
 #  If `true`, configure postfix
 # @param graylog
 #  If `true`, configure graylog
+# @param network
+#  If `true`, configure network
 class profile::base_linux (
   Boolean $awscli  = false,
   Boolean $backups = false,
   Boolean $postfix = false,
   Boolean $graylog = false,
+  Boolean $network = false,
 ) {
-  include network
   include ::firewalld
   include ssh
   include cron
   include accounts
+  if $network {
+    include ::network
+    create_resources('network_config', hiera('network_config'))
+  }
   if $postfix {
     include postfix
   }
