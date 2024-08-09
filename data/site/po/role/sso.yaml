@@ -13,9 +13,9 @@ profile::base_linux::awscli: true
 profile::base_linux::postfix: true
 profile::base_linux::graylog: true
 profile::sso::pf_user_hide: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEALeU/IXAFtUUHXKMaKgkXgRbx9eDBmn86qet35pNVWiylbkIcwjDrZe6GW1IUu4FOHY1ZYE4Bcd8pIHRW7oSWDmhjnICGfikXADlYnVxfBLG84MpNrnw1eBylpY4xibmEIpEr5rqtrTlmNo6yPVZYeuB83taoGnPvCRnFlKpGr0TwNTS4IMKnv3CbjswZhr9VCryA5r2HMk6VqIN0sbSjj1w3HotYeEHPXhd8cksm0SdPkpnqUUgILK4GTPSpLQn3sUKIef3DW1fookyllBLShx9tbNUmusehrDkTebgPOjjIid3b4G4ygCPAIIOaoJf3hYayd+U/Og4FXPLxKIZ1ajA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBAEjbZdo5vaUnuqvAhpSFnDgBD/Z+L4zu/ZCfezJ4PoN3m/]
-profile::sso::pf_version: '11.0.7'
+profile::sso::pf_version: '11.0.10'
 profile::sso::java_home: '/usr/java/jdk-11.0.2+9-jre' #'/usr/java/jdk-11.0.2+9'
-profile::sso::pf_home: '/opt/pingfederate-11.0.7/pingfederate'
+profile::sso::pf_home: '/opt/pingfederate-11.0.10/pingfederate'
 profile::java::version: 'latest'
 profile::java::distribution: 'jre'
 profile::java::java_home: '/usr/java/jdk-11.0.2+9-jre' #'/usr/java/jdk-11.0.2+9'
