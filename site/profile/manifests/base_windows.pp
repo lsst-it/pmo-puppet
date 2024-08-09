@@ -8,6 +8,7 @@ class profile::base_windows (
   package { 'windows_exporter':
     ensure => '0.26.2',
     source => 'https://github.com/prometheus-community/windows_exporter/releases/download/v0.26.2/windows_exporter-0.26.2-amd64.msi',
+    notify => Service['windows_exporter'],
   }
   # Start service if it has stopped or crashed.
   service { 'windows_exporter':
