@@ -4,7 +4,7 @@ profile::base_linux::network: true
 prometheus::alertmanager::template:
   - '/alertmanager/notifications.tmpl'
 prometheus::manage_prometheus_server: true
-prometheus::version: '2.53.1'
+prometheus::version: '2.54.0'
 prometheus::storage_retention: '30d'
 prometheus::alerts:
   groups:
