@@ -15,7 +15,7 @@ class profile::grafana (
 ) {
   $grafana_pwd = lookup('grafana_pwd')
   class { 'grafana':
-    version                  => '9.3.6',
+    version                  => '11.1.4',
     provisioning_datasources => {
       apiVersion  => 1,
       datasources => [
