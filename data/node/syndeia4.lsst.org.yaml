@@ -7,7 +7,7 @@ network_config:
   eth0:
     name: eth0
     ensure: present
-    ipaddress: 140.252.32.109
+    ipaddress: 140.252.32.114
     netmask: 255.255.254.0
     method: static
     onboot: true
