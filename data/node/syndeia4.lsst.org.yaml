@@ -1,7 +1,7 @@
 ---
 classes:
   - profile::base_linux
-  # Network config 
+# Network config 
 profile::base_linux::network: true 
 network_config:
   eth0:
