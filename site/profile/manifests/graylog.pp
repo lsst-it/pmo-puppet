@@ -75,10 +75,10 @@ class profile::graylog {
     password_fail_reset => true,
   }
   class { 'graylog::repository':
-    version => '6.0',
+    version => '6.1',
   }
   ->class { 'graylog::server':
-    package_version => '6.0.3',
+    package_version => '6.1.2',
     config          => {
       is_leader                           => true,
       node_id_file                        => '/etc/graylog/server/node-id',
