@@ -1,2 +1,3 @@
 ---
-profile::base_linux
+classes:
+  - profile::base_linux
