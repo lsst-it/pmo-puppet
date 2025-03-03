@@ -97,7 +97,7 @@ include 'archive'
     source       => 'http://wsus.lsst.org/puppetfiles/pingfederate/duopingfederate.zip',
     cleanup      => false,
     extract      => true,
-    extract_path => "/opt/pingfederate-${pf_version}/",
+    extract_path => '/tmp/',
   }
   file { "/opt/pingfederate-${pf_version}/pingfederate/server/default/deploy/pf-duo-security-adapter-3.1.2.jar":
     ensure => present,
