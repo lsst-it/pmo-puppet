@@ -99,4 +99,20 @@ include 'archive'
     extract      => true,
     extract_path => "/opt/pingfederate-${pf_version}/",
   }
+  file { "/opt/pingfederate-${pf_version}/pingfederate/server/default/deploy/pf-duo-security-adapter-3.1.2.jar":
+    ensure => present,
+    source => '/tmp/pingfederate/server/default/deploy/pf-duo-security-adapter-3.1.2.jar',
+    mode => '0775',
+    # dir_mode  => '0775',
+    owner     => $pf_user,
+    group     => $pf_user,
+  }
+ file { "/opt/pingfederate-${pf_version}/pingfederate/server/default/lib/pf-authn-api-sdk-1.0.0.81.jar":
+    ensure => present,
+    source => '/tmp/pingfederate/server/default/lib/pf-authn-api-sdk-1.0.0.81.jar',
+    mode => '0775',
+    # dir_mode  => '0775',
+    owner     => $pf_user,
+    group     => $pf_user,
+  }
 }
