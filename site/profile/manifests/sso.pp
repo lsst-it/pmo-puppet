@@ -92,4 +92,11 @@ include 'archive'
       ensure    => 'running',
       enable    => true,
     }
+# Downloads the duo connector
+  archive { '/tmp/duopingfederate.zip':
+    source       => 'http://wsus.lsst.org/puppetfiles/pingfederate/duopingfederate.zip',
+    cleanup      => false,
+    extract      => true,
+    extract_path => "/opt/pingfederate-${pf_version}/",
+  }
 }
