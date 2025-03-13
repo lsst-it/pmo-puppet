@@ -2,3 +2,4 @@
 classes:
   - profile::base_linux
 profile::base_linux::graylog: true
+profile::base_linux::awscli: true
