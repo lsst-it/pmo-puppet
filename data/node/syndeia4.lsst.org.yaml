@@ -12,6 +12,7 @@ network_config:
     method: static
     onboot: true
     options:
+      MACADDR: 00:15:5d:21:0e:42
       GATEWAY: 140.252.32.1
       DNS1: 140.252.32.125
       DNS2: 140.252.32.126
