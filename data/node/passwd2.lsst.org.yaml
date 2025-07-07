@@ -1,6 +1,6 @@
 ---
-profile::pwm::pwm_version: '2_0_6'
-profile::pwm::war_version: '2.0.6'
+profile::pwm::pwm_version: '2_0_8'
+profile::pwm::war_version: '2.0.8'
 profile::base_linux::network: true 
 network_config:
   eth0:
