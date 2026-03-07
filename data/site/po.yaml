@@ -123,7 +123,7 @@ rsyslog::config::actions:
     facility: "*.notice;cron.none"
     target: logstash.conf       # Create this configuration in its own file.
     config:    
-      target: “10.22.43.22”
+      target: "10.22.43.22"
       Port: 514
       protocol: udp
 postfix::mta: true
