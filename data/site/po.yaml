@@ -117,6 +117,14 @@ rsyslog::config::actions:
     facility: "cron.*"
     config:
       file: "/var/log/cron"
+rsyslog::config::actions:
+  noirlab_elk:
+    facility: "*.notice;cron.none"
+    target: logstash.conf       # Create this configuration in its own file.
+    config:    
+      target: “10.22.43.22”
+      Port: 514
+      protocol: udp
 postfix::mta: true
 postfix::inet_protocols: "ipv4"
 postfix::manage_root_alias: true
