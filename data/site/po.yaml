@@ -119,6 +119,7 @@ rsyslog::config::actions:
       file: "/var/log/cron"
 rsyslog::config::actions:
   noirlab_elk:
+    type: "omfwd"
     facility: "*.notice;cron.none"
     target: logstash.conf       # Create this configuration in its own file.
     config:    
