@@ -102,7 +102,7 @@ rsyslog::config::actions:
     facility: "*.notice;cron.none"
     config:
       Target: "10.22.43.22"
-      Port: 5514
+      Port: 514
       Protocol: "udp"
   messages:
     type: "omfile"
