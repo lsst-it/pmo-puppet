@@ -97,6 +97,13 @@ rsyslog::config::actions:
       Target: "graylog-tuc-3.lsst.org"
       Port: 5514
       Protocol: "udp"
+  noirlab:
+    type: "omfwd"
+    facility: "*.notice;cron.none"
+    config:
+      Target: "10.22.43.22"
+      Port: 5514
+      Protocol: "udp"
   messages:
     type: "omfile"
     facility: "*.info;mail.none;authpriv.none;cron.none;local6.none"
@@ -117,6 +124,7 @@ rsyslog::config::actions:
     facility: "cron.*"
     config:
       file: "/var/log/cron"
+    
 postfix::mta: true
 postfix::inet_protocols: "ipv4"
 postfix::manage_root_alias: true
