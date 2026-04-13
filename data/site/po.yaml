@@ -131,7 +131,7 @@ postfix::inet_protocols: "ipv4"
 postfix::manage_root_alias: true
 postfix::inet_interfaces: "localhost"
 postfix::mydestination: "$myhostname, localhost.$mydomain, localhost"
-postfix::relayhost: "mail.lsst.org"
+postfix::relayhost: "tucsmtp-lv1.noirlab.edu"
 postfix::root_mail_recipient: 'alerts@lsst.org'
 postfix::configs:
 # Shows changes in logs
